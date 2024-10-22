@@ -3,16 +3,24 @@ DSA2101 Taylor Swifties
 
 ## GitHub Documents
 
+<<<<<<< HEAD
 Testing! Nullus This is an R Markdown format used for publishing
 markdown documents to GitHub. When you click the **Knit** button all R
 code chunks are run and a markdown file (.md) suitable for publishing to
 GitHub is generated.
+=======
+testing Testing! Hee hee This is an R Markdown format used for
+publishing markdown documents to GitHub. When you click the **Knit**
+button all R code chunks are run and a markdown file (.md) suitable for
+publishing to GitHub is generated.
+>>>>>>> 8a6cad4f5f3c2215907d037eb7fb3522bbefa179
 
 ## Including Code
 
 You can include R code in the document as follows:
 
 ``` r
+<<<<<<< HEAD
 install.packages("tidytuesdayR")
 ```
 
@@ -74,3 +82,24 @@ tuesdata <- tidytuesdayR::tt_load('2023-10-17')
 ``` r
 # Test
 ```
+=======
+summary(cars)
+```
+
+    ##      speed           dist       
+    ##  Min.   : 4.0   Min.   :  2.00  
+    ##  1st Qu.:12.0   1st Qu.: 26.00  
+    ##  Median :15.0   Median : 36.00  
+    ##  Mean   :15.4   Mean   : 42.98  
+    ##  3rd Qu.:19.0   3rd Qu.: 56.00  
+    ##  Max.   :25.0   Max.   :120.00
+
+## Including Plots
+
+You can also embed plots, for example:
+
+![](Code_files/figure-gfm/pressure-1.png)<!-- -->
+
+Note that the `echo = FALSE` parameter was added to the code chunk to
+prevent printing of the R code that generated the plot.
+>>>>>>> 8a6cad4f5f3c2215907d037eb7fb3522bbefa179
