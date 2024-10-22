@@ -5,7 +5,6 @@ output: github_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-
 ```
 
 ## GitHub Documents
@@ -17,16 +16,13 @@ This is an R Markdown format used for publishing markdown documents to GitHub. W
 
 You can include R code in the document as follows:
 
-```{r cars}
-summary(cars)
+```{r}
+tuesdata <- tidytuesdayR::tt_load('2023-10-17')
 ```
 
 ## Including Plots
 
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-# plot(pressure)
+```{r}
+# Test
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
