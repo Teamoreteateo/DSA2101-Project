@@ -12,15 +12,27 @@ knitr::opts_chunk$set(echo = TRUE)
 You can include R code in the document as follows:
 
 ```{r}
-install.packages("tidytuesdayR")
-tuesdata <- tidytuesdayR::tt_load('2023-10-17')
+library("tidytuesdayR")
+
+# Load the Tidy Tuesday datasets for Taylor Swift from Week 42 of 2023
+tuesdata <- tidytuesdayR::tt_load(2023, week = 42)
+
+# Extract specific datasets
+taylor_album_songs <- tuesdata$taylor_album_songs
+taylor_all_songs <- tuesdata$taylor_all_songs
+taylor_albums <- tuesdata$taylor_albums
+
+# Save each dataset to CSV files
+write.csv(taylor_album_songs, "taylor_album_songs.csv", row.names = FALSE)
+write.csv(taylor_all_songs, "taylor_all_songs.csv", row.names = FALSE)
+write.csv(taylor_albums, "taylor_albums.csv", row.names = FALSE)
 ```
 
 ## Including Plots
 
 You can also embed plots, for example:
 
-```{r pressure, echo=FALSE}
-# plot(pressure)
+```{r}
+#
 ```
 
