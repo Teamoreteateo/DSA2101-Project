@@ -7,23 +7,12 @@ output: github_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## GitHub Documents
-
-<<<<<<< HEAD
-
-
-testing
-Testing! Hee hee
-=======
-Testing! Nullus
->>>>>>> bbcd0e8a466c8224e9b3a6c743e188d1b04419ae
-This is an R Markdown format used for publishing markdown documents to GitHub. When you click the **Knit** button all R code chunks are run and a markdown file (.md) suitable for publishing to GitHub is generated.
-
 ## Including Code
 
 You can include R code in the document as follows:
 
 ```{r}
+install.packages("tidytuesdayR")
 tuesdata <- tidytuesdayR::tt_load('2023-10-17')
 ```
 
