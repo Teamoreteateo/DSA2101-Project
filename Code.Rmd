@@ -4,7 +4,9 @@ output: github_document
 ---
 
 ```{r setup, include=FALSE}
+
 knitr::opts_chunk$set(echo = TRUE)
+<<<<<<< HEAD
 <<<<<<< HEAD
 
 ```
@@ -18,13 +20,14 @@ This is an R Markdown format used for publishing markdown documents to GitHub. W
 =======
 
 ```{r}
+=======
+>>>>>>> 7b7fc0971f994643abd2687356af0cb14991d6df
 library(tidytuesdayR)
 library(tidyverse)
 library(readr)
 ```
 
 # Analysis of Taylor Swift Spotify Data
->>>>>>> e3542bd358543883b147a6664c5777a5ed2ce66e
 
 Name                 | Matriculation number
 Chua Yong Sheng Joel | A_
@@ -33,9 +36,12 @@ Robin Ghosh          | A0271671A
 Timothy Teo Shao Jun | A0272851B
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 ```{r cars}
 summary(cars)
 ```
+=======
+>>>>>>> 7b7fc0971f994643abd2687356af0cb14991d6df
 =======
 
 ## Introduction
@@ -58,17 +64,15 @@ taylor_albums <- tuesdata$taylor_albums
 # write.csv(taylor_all_songs, "taylor_all_songs.csv", row.names = FALSE)
 # write.csv(taylor_albums, "taylor_albums.csv", row.names = FALSE)
 ```
+<<<<<<< HEAD
+=======
+# >>>>>> e3542bd358543883b147a6664c5777a5ed2ce66e
+>>>>>>> 7b7fc0971f994643abd2687356af0cb14991d6df
+
 >>>>>>> e3542bd358543883b147a6664c5777a5ed2ce66e
 
 
 
-<<<<<<< HEAD
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
-=======
 ## Description of our Data
 ```{r}
 summary(taylor_album_songs)
@@ -85,10 +89,10 @@ A brief description of the variables relevant to our project is given below:
 Start off by filtering for the columns that we want:
 ```{r}
 taylor_album_songs <- taylor_album_songs %>%
-    select(album_name, album_release, track_name, single_release, loudness, mode, speechiness, acousticness, instrumentalness, valence, tempo)
+    select(album_name, album_release, track_name, loudness, mode, speechiness, acousticness, instrumentalness, valence, tempo)
 
 taylor_all_songs <- taylor_all_songs %>%
-    select(album_name, album_release, track_name, single_release, loudness, mode, speechiness, acousticness, instrumentalness, valence, tempo)
+    select(album_name, album_release, track_name, loudness, mode, speechiness, acousticness, instrumentalness, valence, tempo)
 
 taylor_albums <- taylor_albums %>%
     select(!ep)
@@ -136,6 +140,7 @@ write.csv(taylor_album_songs, "CSV files/taylor_album_songs_cleaned.csv", row.na
 write.csv(taylor_all_songs, "CSV files/taylor_all_songs_cleaned.csv", row.names = FALSE)
 write.csv(taylor_albums, "CSV files/taylor_albums.csv_cleaned", row.names = FALSE)
 ```
+<<<<<<< HEAD
 >>>>>>> e3542bd358543883b147a6664c5777a5ed2ce66e
 
 ```{r reading-new-csvs}
@@ -143,3 +148,5 @@ taylor_all_songs = read_csv("../CSV files/taylor_all_songs_cleaned.csv")
 str(taylor_all_songs)
 
 ```
+=======
+>>>>>>> 7b7fc0971f994643abd2687356af0cb14991d6df
