@@ -10,7 +10,8 @@ Name \| Matriculation number Chua Yong Sheng Joel \| A\_ Lim Zeen Kiat
 
 ## Introduction
 
-(To start on)
+(To start on) Reminders: Define musical attributes (features of the
+songs) in intro
 
 ## Loading Data
 
@@ -289,3 +290,161 @@ write.csv(taylor_album_songs, "CSV files/taylor_album_songs_cleaned.csv", row.na
 write.csv(taylor_all_songs, "CSV files/taylor_all_songs_cleaned.csv", row.names = FALSE)
 write.csv(taylor_albums, "CSV files/taylor_albums.csv_cleaned", row.names = FALSE)
 ```
+
+``` r
+head(taylor_album_songs)
+```
+
+    ## # A tibble: 6 × 11
+    ## # Groups:   album_name [1]
+    ##   album_name   album_release track_name  loudness  mode speechiness acousticness
+    ##   <chr>        <date>        <chr>          <dbl> <dbl>       <dbl>        <dbl>
+    ## 1 Taylor Swift 2006-10-24    Tim McGraw     -6.46     1      0.0251      0.575  
+    ## 2 Taylor Swift 2006-10-24    Picture To…    -2.10     1      0.0323      0.173  
+    ## 3 Taylor Swift 2006-10-24    Teardrops …    -6.94     1      0.0231      0.288  
+    ## 4 Taylor Swift 2006-10-24    A Place In…    -2.88     1      0.0324      0.051  
+    ## 5 Taylor Swift 2006-10-24    Cold As You    -5.77     1      0.0266      0.217  
+    ## 6 Taylor Swift 2006-10-24    The Outside    -4.06     1      0.0293      0.00491
+    ## # ℹ 4 more variables: instrumentalness <dbl>, valence <dbl>, tempo <dbl>,
+    ## #   explicit <lgl>
+
+``` r
+head(taylor_all_songs)
+```
+
+    ## # A tibble: 6 × 11
+    ## # Groups:   album_name [1]
+    ##   album_name   album_release track_name  loudness  mode speechiness acousticness
+    ##   <chr>        <date>        <chr>          <dbl> <dbl>       <dbl>        <dbl>
+    ## 1 Taylor Swift 2006-10-24    Tim McGraw     -6.46     1      0.0251      0.575  
+    ## 2 Taylor Swift 2006-10-24    Picture To…    -2.10     1      0.0323      0.173  
+    ## 3 Taylor Swift 2006-10-24    Teardrops …    -6.94     1      0.0231      0.288  
+    ## 4 Taylor Swift 2006-10-24    A Place In…    -2.88     1      0.0324      0.051  
+    ## 5 Taylor Swift 2006-10-24    Cold As You    -5.77     1      0.0266      0.217  
+    ## 6 Taylor Swift 2006-10-24    The Outside    -4.06     1      0.0293      0.00491
+    ## # ℹ 4 more variables: instrumentalness <dbl>, valence <dbl>, tempo <dbl>,
+    ## #   explicit <lgl>
+
+``` r
+head(taylor_albums)
+```
+
+    ## # A tibble: 6 × 4
+    ## # Groups:   album_name [6]
+    ##   album_name   album_release metacritic_score user_score
+    ##   <chr>        <date>                   <dbl>      <dbl>
+    ## 1 Taylor Swift 2006-10-24                  67        8.5
+    ## 2 Fearless     2008-11-11                  73        8.4
+    ## 3 Speak Now    2010-10-25                  77        8.6
+    ## 4 Red          2012-10-22                  77        8.5
+    ## 5 1989         2014-10-27                  76        8.2
+    ## 6 reputation   2017-11-10                  71        8.3
+
+``` r
+names(taylor_album_songs)==names(taylor_all_songs)
+```
+
+    ##  [1] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+
+``` r
+checking_conflicts <- taylor_album_songs %>% anti_join(taylor_all_songs, by=names(taylor_all_songs))
+head(checking_conflicts)
+```
+
+    ## # A tibble: 0 × 11
+    ## # Groups:   album_name [0]
+    ## # ℹ 11 variables: album_name <chr>, album_release <date>, track_name <chr>,
+    ## #   loudness <dbl>, mode <dbl>, speechiness <dbl>, acousticness <dbl>,
+    ## #   instrumentalness <dbl>, valence <dbl>, tempo <dbl>, explicit <lgl>
+
+All the column names match for both tables. A tibble of no elements was
+generated, thus confirming that all rows are present in either tables.
+Since we can choose which table we want, we will use taylor_album_songs.
+
+Next, since we are trying to compare popularity statistics by album, we
+need to check which albums are present in “taylor_album_songs” and
+“taylor_albums”.
+
+``` r
+names1 <- taylor_albums %>% select(album_name) %>% unique() %>% arrange(album_name)
+names2 <- taylor_album_songs %>% select(album_name) %>% unique() %>% arrange(album_name)
+
+comp_table=left_join(names1, names2, by=c("album_name"))
+
+combined_table = rep(NA,length(comp_table$album_name))
+
+for (i in 1:length(names1$album_name) ){
+  if (names1$album_name[i] %in% names2$album_name) {
+    combined_table[i] <- comp_table$album_name[i]
+  }
+}
+
+combined_table = cbind(names1$album_name,combined_table)
+knitr::kable(combined_table, col.names = c("Taylor Albums","Taylor Album Songs"), caption="Comparison of album names between the tables")
+```
+
+| Taylor Albums               | Taylor Album Songs          |
+|:----------------------------|:----------------------------|
+| 1989                        | 1989                        |
+| Fearless                    | NA                          |
+| Fearless (Taylor’s Version) | Fearless (Taylor’s Version) |
+| Lover                       | Lover                       |
+| Midnights                   | Midnights                   |
+| Red                         | NA                          |
+| Red (Taylor’s Version)      | Red (Taylor’s Version)      |
+| Speak Now                   | Speak Now                   |
+| Taylor Swift                | Taylor Swift                |
+| evermore                    | evermore                    |
+| folklore                    | folklore                    |
+| reputation                  | reputation                  |
+
+Comparison of album names between the tables
+
+Checking the table generated, Fearless and Red do not appear in Taylor
+Album Songs, thus they will not be considered for popularity comparison.
+Next, we will aggregate statistics for each of the musical attributes by
+taking their mean. Then, we will combine “taylor_album_songs” and
+“taylor_albums” to tie the popularity metrics with each common album.
+
+``` r
+taylor_album_summary <- taylor_album_songs %>% group_by(album_name)%>% summarize(
+  mean_loudness = mean(loudness),
+  mean_mode = round(mean(mode)),
+  mean_speechiness = mean(speechiness),
+  mean_acousticness = mean(acousticness),
+  mean_instrumentalness = mean(instrumentalness),
+  mean_valence = mean(valence),
+  mean_tempo = mean(tempo)
+) %>% inner_join(taylor_albums, by=c("album_name")) %>% relocate(album_release, .after=album_name)
+```
+
+Metacritic scores and User scores are representative of the popularity
+of the albums because they are averaged ratings of the albums from
+critics and the public respectively (Source: NEED SOURCE metacritic.com,
+another one).
+
+Metacritic score ranges from 0 to 100 while User Score ranges from 0 to
+10. We will agregate these into one statistic, “Popularity”, weighted by
+their respective ranges. (Source: NEED SOURCE)
+
+Hence we use the following formula: Popularity =
+(metacritic_score+(user_score\*10))/2
+
+``` r
+taylor_album_summary <- taylor_album_summary %>% mutate(Popularity = (metacritic_score+user_score*10)/2)
+taylor_album_summary[, c(1,2,12)]
+```
+
+    ## # A tibble: 10 × 3
+    ##    album_name                  album_release Popularity
+    ##    <chr>                       <date>             <dbl>
+    ##  1 1989                        2014-10-27          79  
+    ##  2 Fearless (Taylor's Version) 2021-04-09          85.5
+    ##  3 Lover                       2019-08-23          81.5
+    ##  4 Midnights                   2022-10-21          84  
+    ##  5 Red (Taylor's Version)      2021-11-12          90.5
+    ##  6 Speak Now                   2010-10-25          81.5
+    ##  7 Taylor Swift                2006-10-24          76  
+    ##  8 evermore                    2020-12-11          87  
+    ##  9 folklore                    2020-07-24          89  
+    ## 10 reputation                  2017-11-10          77
