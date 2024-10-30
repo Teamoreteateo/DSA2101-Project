@@ -130,8 +130,6 @@ table we want, we will use taylor_album_songs.
 
 Next, since we are trying to compare popularity statistics by album, we need to check which albums are present in `r taylor_album_songs` and `r taylor_albums`.
 
-
-
 ```{r}
 names1 <- taylor_albums %>% select(album_name) %>% unique() %>% arrange(album_name)
 names2 <- taylor_album_songs %>% select(album_name) %>% unique() %>% arrange(album_name)
@@ -149,3 +147,5 @@ for (i in 1:length(names1$album_name) ){
 combined_table = cbind(names1$album_name,combined_table)
 knitr::kable(combined_table, col.names = c("Taylor Albums","Taylor Album Songs"), caption="Comparison of album names between the tables")
 ```
+
+Checking the table generated, Fearless and Red does not appear in Taylor Album Songs, thus they will not be considered for popularity comparison.
