@@ -149,7 +149,7 @@ combined_table = cbind(names1$album_name,combined_table)
 knitr::kable(combined_table, col.names = c("Taylor Albums","Taylor Album Songs"), caption="Comparison of album names between the tables")
 ```
 
-Checking the table generated, Fearless and Red does not appear in Taylor Album Songs, thus they will not be considered for popularity comparison.
+Checking the table generated, Fearless and Red do not appear in Taylor Album Songs, thus they will not be considered for popularity comparison.
 Next, we will aggregate statistics for each of the musical attributes by taking their mean. Then, we will combine `r taylor_album_songs` and `r taylor_albums` tie the popularity metrics with each common album.
 
 ```{r aggregating-statistics}
