@@ -66,10 +66,10 @@ A brief description of the variables relevant to our project is given below:
 Start off by filtering for the columns that we want:
 ```{r}
 taylor_album_songs <- taylor_album_songs %>%
-    select(album_name, album_release, track_name, loudness, mode, speechiness, acousticness, instrumentalness, valence, tempo, explicit)
+    select(album_name, album_release, track_name, energy, loudness, mode, speechiness, acousticness, instrumentalness, valence, tempo, explicit)
 
 taylor_all_songs <- taylor_all_songs %>%
-    select(album_name, album_release, track_name, loudness, mode, speechiness, acousticness, instrumentalness, valence, tempo, explicit)
+    select(album_name, album_release, track_name, energy, loudness, mode, speechiness, acousticness, instrumentalness, valence, tempo, explicit)
 
 taylor_albums <- taylor_albums %>%
     select(!ep)
@@ -160,6 +160,7 @@ Next, we will aggregate statistics for each of the musical attributes by taking 
 ```{r aggregating-statistics}
 taylor_album_summary <- taylor_album_songs %>% group_by(album_name)%>% summarize(
   mean_loudness = mean(loudness),
+  mean_energy = mean(energy),
   mean_mode = round(mean(mode)),
   mean_speechiness = mean(speechiness),
   mean_acousticness = mean(acousticness),
@@ -188,16 +189,19 @@ Exploratory plots: May or may not use, just to select
 ```{r}
 points = lm(data=taylor_album_summary, album_release~Popularity)
 ggplot(taylor_album_summary, aes(x=album_release, y=Popularity, color=album_name)) +
-  geom_point() 
+  geom_point(size=2) 
 ```
 
 ```{r}
-plotting = taylor_album_summary %>% pivot_longer(cols =c(mean_acousticness, mean_instrumentalness, mean_valence), names_to="variable", values_to="value")
+plotting = taylor_album_summary %>% pivot_longer(cols =c(mean_energy, mean_acousticness, mean_instrumentalness, mean_valence), names_to="variable", values_to="value")
 ggplot(plotting, aes(x=album_release, y=value, color = variable)) +
-  geom_point(size=8) +
+  geom_point(size=3) +
   geom_smooth(method="lm") +
   theme_classic()
 ```
 
 Valence dropped, songs became sadder. Instrumentalness dropped, songs became more vocally driven.
-Acousticness increased, songs involved lesser electronic sounds and sounded more raw.
+Acousticness increased sharply, songs involved lesser electronic sounds and sounded more raw.
+Energy of the tracks have also reduced, further emphasising the mellow trend of her music.
+It seems that Taylor Swift aims to be more intimate with her audience. Her popularity has
+increased over the years also.
