@@ -24,6 +24,7 @@ Timothy Teo Shao Jun | A0272851B
 ## Introduction
 
 (To start on)
+Reminders: Define musical attributes (features of the songs) in intro
 
 
 ## Loading Data
@@ -149,3 +150,16 @@ knitr::kable(combined_table, col.names = c("Taylor Albums","Taylor Album Songs")
 ```
 
 Checking the table generated, Fearless and Red does not appear in Taylor Album Songs, thus they will not be considered for popularity comparison.
+Next, we will aggregate statistics for each of the musical attributes by taking their mean. Then, we will combine `r taylor_album_songs` and `r taylor_albums` tie the popularity metrics with each common album.
+
+```{r aggregating-statistics}
+taylor_album_songs %>% group_by(album_name)%>% summarize(
+  mean_loudness = mean(loudness),
+  mean_mode = round(mean(mode)),
+  mean_speechiness = mean(speechiness),
+  mean_acousticness = mean(acousticness),
+  mean_instrumentalness = mean(instrumentalness),
+  mean_valence = mean(valence),
+  mean_tempo = mean(tempo)
+) %>% inner_join(taylor_albums, by=c("album_name"))
+```
