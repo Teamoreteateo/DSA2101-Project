@@ -150,7 +150,7 @@ knitr::kable(combined_table, col.names = c("Taylor Albums","Taylor Album Songs")
 ```
 
 Checking the table generated, Fearless and Red do not appear in Taylor Album Songs, thus they will not be considered for popularity comparison.
-Next, we will aggregate statistics for each of the musical attributes by taking their mean. Then, we will combine `r taylor_album_songs` and `r taylor_albums` tie the popularity metrics with each common album.
+Next, we will aggregate statistics for each of the musical attributes by taking their mean. Then, we will combine `r taylor_album_songs` and `r taylor_albums` to tie the popularity metrics with each common album.
 
 ```{r aggregating-statistics}
 taylor_album_summary <- taylor_album_songs %>% group_by(album_name)%>% summarize(
