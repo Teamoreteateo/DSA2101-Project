@@ -60,10 +60,10 @@ A brief description of the variables relevant to our project is given below:
 Start off by filtering for the columns that we want:
 ```{r}
 taylor_album_songs <- taylor_album_songs %>%
-    select(album_name, album_release, track_name, single_release, loudness, mode, speechiness, acousticness, instrumentalness, valence, tempo, explicit, lyrics)
+    select(album_name, album_release, track_name, loudness, mode, speechiness, acousticness, instrumentalness, valence, tempo, explicit)
 
 taylor_all_songs <- taylor_all_songs %>%
-    select(album_name, album_release, track_name, single_release, loudness, mode, speechiness, acousticness, instrumentalness, valence, tempo, explicit, lyrics)
+    select(album_name, album_release, track_name, loudness, mode, speechiness, acousticness, instrumentalness, valence, tempo, explicit)
 
 taylor_albums <- taylor_albums %>%
     select(!ep)
