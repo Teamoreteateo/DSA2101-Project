@@ -3,8 +3,24 @@ DSA2101 Group Project
 
 # Analysis of Taylor Swift Spotify Data
 
-Name \| Matriculation number Chua Yong Sheng Joel \| A\_ Lim Zeen Kiat
-\| A\_ Robin Ghosh \| A0271671A Timothy Teo Shao Jun \| A0272851B
+``` r
+students <- data.frame(
+  Group_Members = c("Chua Yong Sheng Joel", "Lim Zeen Kiat", "Robin Ghosh", "Timothy Teo Shao Jun"),
+  Matriculation_Number = c("A_", "A_", "A0271671A", "A0272851B")
+)
+
+kable(students, col.names = c("Group Members", "Matriculation Number"), 
+      caption = "Student Information")
+```
+
+| Group Members        | Matriculation Number |
+|:---------------------|:---------------------|
+| Chua Yong Sheng Joel | A\_                  |
+| Lim Zeen Kiat        | A\_                  |
+| Robin Ghosh          | A0271671A            |
+| Timothy Teo Shao Jun | A0272851B            |
+
+Student Information
 
 =======
 
@@ -362,8 +378,8 @@ generated, thus confirming that all rows are present in either tables.
 Since we can choose which table we want, we will use taylor_album_songs.
 
 Next, since we are trying to compare popularity statistics by album, we
-need to check which albums are present in “taylor_album_songs” and
-“taylor_albums”.
+need to check which albums are present in `taylor_album_songs` and
+`taylor_albums`.
 
 ``` r
 names1 <- taylor_albums %>% select(album_name) %>% unique() %>% arrange(album_name)
@@ -403,8 +419,8 @@ Comparison of album names between the tables
 Checking the table generated, Fearless and Red do not appear in Taylor
 Album Songs, thus they will not be considered for popularity comparison.
 Next, we will aggregate statistics for each of the musical attributes by
-taking their mean. Then, we will combine “taylor_album_songs” and
-“taylor_albums” to tie the popularity metrics with each common album.
+taking their mean. Then, we will combine `taylor_album_songs` and
+`taylor_albums` to tie the popularity metrics with each common album.
 
 ``` r
 taylor_album_summary <- taylor_album_songs %>% group_by(album_name)%>% summarize(
@@ -424,8 +440,8 @@ critics and the public respectively (Source: NEED SOURCE metacritic.com,
 another one).
 
 Metacritic score ranges from 0 to 100 while User Score ranges from 0 to
-10. We will agregate these into one statistic, “Popularity”, weighted by
-their respective ranges. (Source: NEED SOURCE)
+10. We will aggregate these into one statistic, “Popularity”, weighted
+by their respective ranges. (Source: NEED SOURCE)
 
 Hence we use the following formula: Popularity =
 (metacritic_score+(user_score\*10))/2

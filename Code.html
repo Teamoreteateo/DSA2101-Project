@@ -604,15 +604,47 @@ padding-top: 0px;
 <h1 id="dsa2101-group-project">DSA2101 Group Project</h1>
 <h1 id="analysis-of-taylor-swift-spotify-data">Analysis of Taylor Swift
 Spotify Data</h1>
-<p>Name | Matriculation number Chua Yong Sheng Joel | A_ Lim Zeen Kiat |
-A_ Robin Ghosh | A0271671A Timothy Teo Shao Jun | A0272851B</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>students <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>  <span class="at">Group_Members =</span> <span class="fu">c</span>(<span class="st">&quot;Chua Yong Sheng Joel&quot;</span>, <span class="st">&quot;Lim Zeen Kiat&quot;</span>, <span class="st">&quot;Robin Ghosh&quot;</span>, <span class="st">&quot;Timothy Teo Shao Jun&quot;</span>),</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>  <span class="at">Matriculation_Number =</span> <span class="fu">c</span>(<span class="st">&quot;A_&quot;</span>, <span class="st">&quot;A_&quot;</span>, <span class="st">&quot;A0271671A&quot;</span>, <span class="st">&quot;A0272851B&quot;</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a>)</span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a><span class="fu">kable</span>(students, <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&quot;Group Members&quot;</span>, <span class="st">&quot;Matriculation Number&quot;</span>), </span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a>      <span class="at">caption =</span> <span class="st">&quot;Student Information&quot;</span>)</span></code></pre></div>
+<table>
+<thead>
+<tr>
+<th align="left">Group Members</th>
+<th align="left">Matriculation Number</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">Chua Yong Sheng Joel</td>
+<td align="left">A_</td>
+</tr>
+<tr>
+<td align="left">Lim Zeen Kiat</td>
+<td align="left">A_</td>
+</tr>
+<tr>
+<td align="left">Robin Ghosh</td>
+<td align="left">A0271671A</td>
+</tr>
+<tr>
+<td align="left">Timothy Teo Shao Jun</td>
+<td align="left">A0272851B</td>
+</tr>
+</tbody>
+</table>
+<p>Student Information</p>
 <p>=======</p>
 <h2 id="introduction">Introduction</h2>
 <p>(To start on) Reminders: Define musical attributes (features of the
 songs) in intro</p>
 <h2 id="loading-data">Loading Data</h2>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="co"># Load the Tidy Tuesday datasets for Taylor Swift from Week 42 of 2023</span></span>
-<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>tuesdata <span class="ot">&lt;-</span> tidytuesdayR<span class="sc">::</span><span class="fu">tt_load</span>(<span class="dv">2023</span>, <span class="at">week =</span> <span class="dv">42</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="co"># Load the Tidy Tuesday datasets for Taylor Swift from Week 42 of 2023</span></span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>tuesdata <span class="ot">&lt;-</span> tidytuesdayR<span class="sc">::</span><span class="fu">tt_load</span>(<span class="dv">2023</span>, <span class="at">week =</span> <span class="dv">42</span>)</span></code></pre></div>
 <pre><code>## ---- Compiling #TidyTuesday Information for 2023-10-17 ----
 ## --- There are 3 files available ---
 ## 
@@ -622,18 +654,18 @@ songs) in intro</p>
 ##   1 of 3: &quot;taylor_album_songs.csv&quot;
 ##   2 of 3: &quot;taylor_all_songs.csv&quot;
 ##   3 of 3: &quot;taylor_albums.csv&quot;</code></pre>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="co"># Extract specific datasets</span></span>
-<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>taylor_album_songs <span class="ot">&lt;-</span> tuesdata<span class="sc">$</span>taylor_album_songs</span>
-<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>taylor_all_songs <span class="ot">&lt;-</span> tuesdata<span class="sc">$</span>taylor_all_songs</span>
-<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>taylor_albums <span class="ot">&lt;-</span> tuesdata<span class="sc">$</span>taylor_albums</span>
-<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a></span>
-<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a><span class="co"># Save each dataset to CSV files</span></span>
-<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a><span class="co"># write.csv(taylor_album_songs, &quot;taylor_album_songs.csv&quot;, row.names = FALSE)</span></span>
-<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a><span class="co"># write.csv(taylor_all_songs, &quot;taylor_all_songs.csv&quot;, row.names = FALSE)</span></span>
-<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a><span class="co"># write.csv(taylor_albums, &quot;taylor_albums.csv&quot;, row.names = FALSE)</span></span>
-<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a><span class="co"># &gt;&gt;&gt;&gt;&gt;&gt; e3542bd358543883b147a6664c5777a5ed2ce66e</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="co"># Extract specific datasets</span></span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>taylor_album_songs <span class="ot">&lt;-</span> tuesdata<span class="sc">$</span>taylor_album_songs</span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>taylor_all_songs <span class="ot">&lt;-</span> tuesdata<span class="sc">$</span>taylor_all_songs</span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a>taylor_albums <span class="ot">&lt;-</span> tuesdata<span class="sc">$</span>taylor_albums</span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a><span class="co"># Save each dataset to CSV files</span></span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a><span class="co"># write.csv(taylor_album_songs, &quot;taylor_album_songs.csv&quot;, row.names = FALSE)</span></span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a><span class="co"># write.csv(taylor_all_songs, &quot;taylor_all_songs.csv&quot;, row.names = FALSE)</span></span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a><span class="co"># write.csv(taylor_albums, &quot;taylor_albums.csv&quot;, row.names = FALSE)</span></span>
+<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a><span class="co"># &gt;&gt;&gt;&gt;&gt;&gt; e3542bd358543883b147a6664c5777a5ed2ce66e</span></span></code></pre></div>
 <h2 id="description-of-our-data">Description of our Data</h2>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="fu">summary</span>(taylor_album_songs)</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="fu">summary</span>(taylor_album_songs)</span></code></pre></div>
 <pre><code>##   album_name            ep          album_release         track_number  
 ##  Length:194         Mode :logical   Min.   :2006-10-24   Min.   : 1.00  
 ##  Class :character   FALSE:194       1st Qu.:2017-11-10   1st Qu.: 5.00  
@@ -698,7 +730,7 @@ songs) in intro</p>
 ##                
 ##                
 ## </code></pre>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="fu">summary</span>(taylor_all_songs)</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="fu">summary</span>(taylor_all_songs)</span></code></pre></div>
 <pre><code>##   album_name            ep          album_release         track_number  
 ##  Length:274         Mode :logical   Min.   :2006-10-24   Min.   : 1.00  
 ##  Class :character   FALSE:235       1st Qu.:2010-10-25   1st Qu.: 5.00  
@@ -763,7 +795,7 @@ songs) in intro</p>
 ##                                   
 ##                                   
 ## </code></pre>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="fu">summary</span>(taylor_albums)</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="fu">summary</span>(taylor_albums)</span></code></pre></div>
 <pre><code>##   album_name            ep          album_release        metacritic_score
 ##  Length:14          Mode :logical   Min.   :2006-10-24   Min.   :67.00   
 ##  Class :character   FALSE:12        1st Qu.:2009-05-08   1st Qu.:75.25   
@@ -784,59 +816,59 @@ songs) in intro</p>
 below: (To start on)</p>
 <h2 id="data-cleaning">Data Cleaning</h2>
 <p>Start off by filtering for the columns that we want:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>taylor_album_songs <span class="ot">&lt;-</span> taylor_album_songs <span class="sc">%&gt;%</span></span>
-<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>    <span class="fu">select</span>(album_name, album_release, track_name, loudness, mode, speechiness, acousticness, instrumentalness, valence, tempo, explicit)</span>
-<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a></span>
-<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a>taylor_all_songs <span class="ot">&lt;-</span> taylor_all_songs <span class="sc">%&gt;%</span></span>
-<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a>    <span class="fu">select</span>(album_name, album_release, track_name, loudness, mode, speechiness, acousticness, instrumentalness, valence, tempo, explicit)</span>
-<span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a></span>
-<span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a>taylor_albums <span class="ot">&lt;-</span> taylor_albums <span class="sc">%&gt;%</span></span>
-<span id="cb10-8"><a href="#cb10-8" tabindex="-1"></a>    <span class="fu">select</span>(<span class="sc">!</span>ep)</span></code></pre></div>
-<p>Group by albums:</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a>taylor_album_songs <span class="ot">&lt;-</span> taylor_album_songs <span class="sc">%&gt;%</span></span>
-<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a>  <span class="fu">group_by</span>(album_name)</span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a>    <span class="fu">select</span>(album_name, album_release, track_name, loudness, mode, speechiness, acousticness, instrumentalness, valence, tempo, explicit)</span>
 <span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a></span>
 <span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a>taylor_all_songs <span class="ot">&lt;-</span> taylor_all_songs <span class="sc">%&gt;%</span></span>
-<span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a>  <span class="fu">group_by</span>(album_name)</span>
+<span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a>    <span class="fu">select</span>(album_name, album_release, track_name, loudness, mode, speechiness, acousticness, instrumentalness, valence, tempo, explicit)</span>
 <span id="cb11-6"><a href="#cb11-6" tabindex="-1"></a></span>
 <span id="cb11-7"><a href="#cb11-7" tabindex="-1"></a>taylor_albums <span class="ot">&lt;-</span> taylor_albums <span class="sc">%&gt;%</span></span>
-<span id="cb11-8"><a href="#cb11-8" tabindex="-1"></a>  <span class="fu">group_by</span>(album_name)</span></code></pre></div>
+<span id="cb11-8"><a href="#cb11-8" tabindex="-1"></a>    <span class="fu">select</span>(<span class="sc">!</span>ep)</span></code></pre></div>
+<p>Group by albums:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a>taylor_album_songs <span class="ot">&lt;-</span> taylor_album_songs <span class="sc">%&gt;%</span></span>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a>  <span class="fu">group_by</span>(album_name)</span>
+<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a>taylor_all_songs <span class="ot">&lt;-</span> taylor_all_songs <span class="sc">%&gt;%</span></span>
+<span id="cb12-5"><a href="#cb12-5" tabindex="-1"></a>  <span class="fu">group_by</span>(album_name)</span>
+<span id="cb12-6"><a href="#cb12-6" tabindex="-1"></a></span>
+<span id="cb12-7"><a href="#cb12-7" tabindex="-1"></a>taylor_albums <span class="ot">&lt;-</span> taylor_albums <span class="sc">%&gt;%</span></span>
+<span id="cb12-8"><a href="#cb12-8" tabindex="-1"></a>  <span class="fu">group_by</span>(album_name)</span></code></pre></div>
 <p>Checking for NA values in each file:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a>taylor_album_songs_na_count <span class="ot">&lt;-</span> <span class="fu">sapply</span>(taylor_album_songs, <span class="cf">function</span>(x) <span class="fu">sum</span>(<span class="fu">is.na</span>(x)))</span>
-<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a><span class="fu">print</span>(taylor_album_songs_na_count)</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a>taylor_album_songs_na_count <span class="ot">&lt;-</span> <span class="fu">sapply</span>(taylor_album_songs, <span class="cf">function</span>(x) <span class="fu">sum</span>(<span class="fu">is.na</span>(x)))</span>
+<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a><span class="fu">print</span>(taylor_album_songs_na_count)</span></code></pre></div>
 <pre><code>##       album_name    album_release       track_name         loudness 
 ##                0                0                0                3 
 ##             mode      speechiness     acousticness instrumentalness 
 ##                3                3                3                3 
 ##          valence            tempo         explicit 
 ##                3                3                3</code></pre>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a>taylor_all_songs_na_count <span class="ot">&lt;-</span> <span class="fu">sapply</span>(taylor_all_songs, <span class="cf">function</span>(x) <span class="fu">sum</span>(<span class="fu">is.na</span>(x)))</span>
-<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a><span class="fu">print</span>(taylor_all_songs_na_count)</span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a>taylor_all_songs_na_count <span class="ot">&lt;-</span> <span class="fu">sapply</span>(taylor_all_songs, <span class="cf">function</span>(x) <span class="fu">sum</span>(<span class="fu">is.na</span>(x)))</span>
+<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a><span class="fu">print</span>(taylor_all_songs_na_count)</span></code></pre></div>
 <pre><code>##       album_name    album_release       track_name         loudness 
 ##               27               27                0               11 
 ##             mode      speechiness     acousticness instrumentalness 
 ##               11               11               11               11 
 ##          valence            tempo         explicit 
 ##               11               11               11</code></pre>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a>taylor_albums_na_count <span class="ot">&lt;-</span> <span class="fu">sapply</span>(taylor_albums, <span class="cf">function</span>(x) <span class="fu">sum</span>(<span class="fu">is.na</span>(x)))</span>
-<span id="cb16-2"><a href="#cb16-2" tabindex="-1"></a><span class="fu">print</span>(taylor_albums_na_count)</span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a>taylor_albums_na_count <span class="ot">&lt;-</span> <span class="fu">sapply</span>(taylor_albums, <span class="cf">function</span>(x) <span class="fu">sum</span>(<span class="fu">is.na</span>(x)))</span>
+<span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a><span class="fu">print</span>(taylor_albums_na_count)</span></code></pre></div>
 <pre><code>##       album_name    album_release metacritic_score       user_score 
 ##                0                0                2                2</code></pre>
 <p>There are many occurences of NA data present. Hence, we will need to
 remove them:</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a>taylor_album_songs <span class="ot">&lt;-</span> taylor_album_songs <span class="sc">%&gt;%</span></span>
-<span id="cb18-2"><a href="#cb18-2" tabindex="-1"></a>    <span class="fu">na.omit</span>()</span>
-<span id="cb18-3"><a href="#cb18-3" tabindex="-1"></a></span>
-<span id="cb18-4"><a href="#cb18-4" tabindex="-1"></a>taylor_all_songs <span class="ot">&lt;-</span> taylor_all_songs <span class="sc">%&gt;%</span></span>
-<span id="cb18-5"><a href="#cb18-5" tabindex="-1"></a>    <span class="fu">na.omit</span>()</span>
-<span id="cb18-6"><a href="#cb18-6" tabindex="-1"></a></span>
-<span id="cb18-7"><a href="#cb18-7" tabindex="-1"></a>taylor_albums <span class="ot">&lt;-</span> taylor_albums <span class="sc">%&gt;%</span></span>
-<span id="cb18-8"><a href="#cb18-8" tabindex="-1"></a>    <span class="fu">na.omit</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a>taylor_album_songs <span class="ot">&lt;-</span> taylor_album_songs <span class="sc">%&gt;%</span></span>
+<span id="cb19-2"><a href="#cb19-2" tabindex="-1"></a>    <span class="fu">na.omit</span>()</span>
+<span id="cb19-3"><a href="#cb19-3" tabindex="-1"></a></span>
+<span id="cb19-4"><a href="#cb19-4" tabindex="-1"></a>taylor_all_songs <span class="ot">&lt;-</span> taylor_all_songs <span class="sc">%&gt;%</span></span>
+<span id="cb19-5"><a href="#cb19-5" tabindex="-1"></a>    <span class="fu">na.omit</span>()</span>
+<span id="cb19-6"><a href="#cb19-6" tabindex="-1"></a></span>
+<span id="cb19-7"><a href="#cb19-7" tabindex="-1"></a>taylor_albums <span class="ot">&lt;-</span> taylor_albums <span class="sc">%&gt;%</span></span>
+<span id="cb19-8"><a href="#cb19-8" tabindex="-1"></a>    <span class="fu">na.omit</span>()</span></code></pre></div>
 <p>Save cleaned data as new files:</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a><span class="fu">write.csv</span>(taylor_album_songs, <span class="st">&quot;CSV files/taylor_album_songs_cleaned.csv&quot;</span>, <span class="at">row.names =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb19-2"><a href="#cb19-2" tabindex="-1"></a><span class="fu">write.csv</span>(taylor_all_songs, <span class="st">&quot;CSV files/taylor_all_songs_cleaned.csv&quot;</span>, <span class="at">row.names =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb19-3"><a href="#cb19-3" tabindex="-1"></a><span class="fu">write.csv</span>(taylor_albums, <span class="st">&quot;CSV files/taylor_albums.csv_cleaned&quot;</span>, <span class="at">row.names =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a><span class="fu">head</span>(taylor_album_songs)</span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a><span class="fu">write.csv</span>(taylor_album_songs, <span class="st">&quot;CSV files/taylor_album_songs_cleaned.csv&quot;</span>, <span class="at">row.names =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb20-2"><a href="#cb20-2" tabindex="-1"></a><span class="fu">write.csv</span>(taylor_all_songs, <span class="st">&quot;CSV files/taylor_all_songs_cleaned.csv&quot;</span>, <span class="at">row.names =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb20-3"><a href="#cb20-3" tabindex="-1"></a><span class="fu">write.csv</span>(taylor_albums, <span class="st">&quot;CSV files/taylor_albums.csv_cleaned&quot;</span>, <span class="at">row.names =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" tabindex="-1"></a><span class="fu">head</span>(taylor_album_songs)</span></code></pre></div>
 <pre><code>## # A tibble: 6 × 11
 ## # Groups:   album_name [1]
 ##   album_name   album_release track_name  loudness  mode speechiness acousticness
@@ -849,7 +881,7 @@ remove them:</p>
 ## 6 Taylor Swift 2006-10-24    The Outside    -4.06     1      0.0293      0.00491
 ## # ℹ 4 more variables: instrumentalness &lt;dbl&gt;, valence &lt;dbl&gt;, tempo &lt;dbl&gt;,
 ## #   explicit &lt;lgl&gt;</code></pre>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" tabindex="-1"></a><span class="fu">head</span>(taylor_all_songs)</span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" tabindex="-1"></a><span class="fu">head</span>(taylor_all_songs)</span></code></pre></div>
 <pre><code>## # A tibble: 6 × 11
 ## # Groups:   album_name [1]
 ##   album_name   album_release track_name  loudness  mode speechiness acousticness
@@ -862,7 +894,7 @@ remove them:</p>
 ## 6 Taylor Swift 2006-10-24    The Outside    -4.06     1      0.0293      0.00491
 ## # ℹ 4 more variables: instrumentalness &lt;dbl&gt;, valence &lt;dbl&gt;, tempo &lt;dbl&gt;,
 ## #   explicit &lt;lgl&gt;</code></pre>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" tabindex="-1"></a><span class="fu">head</span>(taylor_albums)</span></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" tabindex="-1"></a><span class="fu">head</span>(taylor_albums)</span></code></pre></div>
 <pre><code>## # A tibble: 6 × 4
 ## # Groups:   album_name [6]
 ##   album_name   album_release metacritic_score user_score
@@ -873,10 +905,10 @@ remove them:</p>
 ## 4 Red          2012-10-22                  77        8.5
 ## 5 1989         2014-10-27                  76        8.2
 ## 6 reputation   2017-11-10                  71        8.3</code></pre>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" tabindex="-1"></a><span class="fu">names</span>(taylor_album_songs)<span class="sc">==</span><span class="fu">names</span>(taylor_all_songs)</span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" tabindex="-1"></a><span class="fu">names</span>(taylor_album_songs)<span class="sc">==</span><span class="fu">names</span>(taylor_all_songs)</span></code></pre></div>
 <pre><code>##  [1] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE</code></pre>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" tabindex="-1"></a>checking_conflicts <span class="ot">&lt;-</span> taylor_album_songs <span class="sc">%&gt;%</span> <span class="fu">anti_join</span>(taylor_all_songs, <span class="at">by=</span><span class="fu">names</span>(taylor_all_songs))</span>
-<span id="cb28-2"><a href="#cb28-2" tabindex="-1"></a><span class="fu">head</span>(checking_conflicts)</span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" tabindex="-1"></a>checking_conflicts <span class="ot">&lt;-</span> taylor_album_songs <span class="sc">%&gt;%</span> <span class="fu">anti_join</span>(taylor_all_songs, <span class="at">by=</span><span class="fu">names</span>(taylor_all_songs))</span>
+<span id="cb29-2"><a href="#cb29-2" tabindex="-1"></a><span class="fu">head</span>(checking_conflicts)</span></code></pre></div>
 <pre><code>## # A tibble: 0 × 11
 ## # Groups:   album_name [0]
 ## # ℹ 11 variables: album_name &lt;chr&gt;, album_release &lt;date&gt;, track_name &lt;chr&gt;,
@@ -887,23 +919,23 @@ was generated, thus confirming that all rows are present in either
 tables. Since we can choose which table we want, we will use
 taylor_album_songs.</p>
 <p>Next, since we are trying to compare popularity statistics by album,
-we need to check which albums are present in “taylor_album_songs” and
-“taylor_albums”.</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" tabindex="-1"></a>names1 <span class="ot">&lt;-</span> taylor_albums <span class="sc">%&gt;%</span> <span class="fu">select</span>(album_name) <span class="sc">%&gt;%</span> <span class="fu">unique</span>() <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(album_name)</span>
-<span id="cb30-2"><a href="#cb30-2" tabindex="-1"></a>names2 <span class="ot">&lt;-</span> taylor_album_songs <span class="sc">%&gt;%</span> <span class="fu">select</span>(album_name) <span class="sc">%&gt;%</span> <span class="fu">unique</span>() <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(album_name)</span>
-<span id="cb30-3"><a href="#cb30-3" tabindex="-1"></a></span>
-<span id="cb30-4"><a href="#cb30-4" tabindex="-1"></a>comp_table<span class="ot">=</span><span class="fu">left_join</span>(names1, names2, <span class="at">by=</span><span class="fu">c</span>(<span class="st">&quot;album_name&quot;</span>))</span>
-<span id="cb30-5"><a href="#cb30-5" tabindex="-1"></a></span>
-<span id="cb30-6"><a href="#cb30-6" tabindex="-1"></a>combined_table <span class="ot">=</span> <span class="fu">rep</span>(<span class="cn">NA</span>,<span class="fu">length</span>(comp_table<span class="sc">$</span>album_name))</span>
-<span id="cb30-7"><a href="#cb30-7" tabindex="-1"></a></span>
-<span id="cb30-8"><a href="#cb30-8" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(names1<span class="sc">$</span>album_name) ){</span>
-<span id="cb30-9"><a href="#cb30-9" tabindex="-1"></a>  <span class="cf">if</span> (names1<span class="sc">$</span>album_name[i] <span class="sc">%in%</span> names2<span class="sc">$</span>album_name) {</span>
-<span id="cb30-10"><a href="#cb30-10" tabindex="-1"></a>    combined_table[i] <span class="ot">&lt;-</span> comp_table<span class="sc">$</span>album_name[i]</span>
-<span id="cb30-11"><a href="#cb30-11" tabindex="-1"></a>  }</span>
-<span id="cb30-12"><a href="#cb30-12" tabindex="-1"></a>}</span>
-<span id="cb30-13"><a href="#cb30-13" tabindex="-1"></a></span>
-<span id="cb30-14"><a href="#cb30-14" tabindex="-1"></a>combined_table <span class="ot">=</span> <span class="fu">cbind</span>(names1<span class="sc">$</span>album_name,combined_table)</span>
-<span id="cb30-15"><a href="#cb30-15" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(combined_table, <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&quot;Taylor Albums&quot;</span>,<span class="st">&quot;Taylor Album Songs&quot;</span>), <span class="at">caption=</span><span class="st">&quot;Comparison of album names between the tables&quot;</span>)</span></code></pre></div>
+we need to check which albums are present in
+<code>taylor_album_songs</code> and <code>taylor_albums</code>.</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" tabindex="-1"></a>names1 <span class="ot">&lt;-</span> taylor_albums <span class="sc">%&gt;%</span> <span class="fu">select</span>(album_name) <span class="sc">%&gt;%</span> <span class="fu">unique</span>() <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(album_name)</span>
+<span id="cb31-2"><a href="#cb31-2" tabindex="-1"></a>names2 <span class="ot">&lt;-</span> taylor_album_songs <span class="sc">%&gt;%</span> <span class="fu">select</span>(album_name) <span class="sc">%&gt;%</span> <span class="fu">unique</span>() <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(album_name)</span>
+<span id="cb31-3"><a href="#cb31-3" tabindex="-1"></a></span>
+<span id="cb31-4"><a href="#cb31-4" tabindex="-1"></a>comp_table<span class="ot">=</span><span class="fu">left_join</span>(names1, names2, <span class="at">by=</span><span class="fu">c</span>(<span class="st">&quot;album_name&quot;</span>))</span>
+<span id="cb31-5"><a href="#cb31-5" tabindex="-1"></a></span>
+<span id="cb31-6"><a href="#cb31-6" tabindex="-1"></a>combined_table <span class="ot">=</span> <span class="fu">rep</span>(<span class="cn">NA</span>,<span class="fu">length</span>(comp_table<span class="sc">$</span>album_name))</span>
+<span id="cb31-7"><a href="#cb31-7" tabindex="-1"></a></span>
+<span id="cb31-8"><a href="#cb31-8" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(names1<span class="sc">$</span>album_name) ){</span>
+<span id="cb31-9"><a href="#cb31-9" tabindex="-1"></a>  <span class="cf">if</span> (names1<span class="sc">$</span>album_name[i] <span class="sc">%in%</span> names2<span class="sc">$</span>album_name) {</span>
+<span id="cb31-10"><a href="#cb31-10" tabindex="-1"></a>    combined_table[i] <span class="ot">&lt;-</span> comp_table<span class="sc">$</span>album_name[i]</span>
+<span id="cb31-11"><a href="#cb31-11" tabindex="-1"></a>  }</span>
+<span id="cb31-12"><a href="#cb31-12" tabindex="-1"></a>}</span>
+<span id="cb31-13"><a href="#cb31-13" tabindex="-1"></a></span>
+<span id="cb31-14"><a href="#cb31-14" tabindex="-1"></a>combined_table <span class="ot">=</span> <span class="fu">cbind</span>(names1<span class="sc">$</span>album_name,combined_table)</span>
+<span id="cb31-15"><a href="#cb31-15" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(combined_table, <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&quot;Taylor Albums&quot;</span>,<span class="st">&quot;Taylor Album Songs&quot;</span>), <span class="at">caption=</span><span class="st">&quot;Comparison of album names between the tables&quot;</span>)</span></code></pre></div>
 <table>
 <thead>
 <tr>
@@ -967,28 +999,28 @@ we need to check which albums are present in “taylor_album_songs” and
 Taylor Album Songs, thus they will not be considered for popularity
 comparison. Next, we will aggregate statistics for each of the musical
 attributes by taking their mean. Then, we will combine
-“taylor_album_songs” and “taylor_albums” to tie the popularity metrics
-with each common album.</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" tabindex="-1"></a>taylor_album_summary <span class="ot">&lt;-</span> taylor_album_songs <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(album_name)<span class="sc">%&gt;%</span> <span class="fu">summarize</span>(</span>
-<span id="cb31-2"><a href="#cb31-2" tabindex="-1"></a>  <span class="at">mean_loudness =</span> <span class="fu">mean</span>(loudness),</span>
-<span id="cb31-3"><a href="#cb31-3" tabindex="-1"></a>  <span class="at">mean_mode =</span> <span class="fu">round</span>(<span class="fu">mean</span>(mode)),</span>
-<span id="cb31-4"><a href="#cb31-4" tabindex="-1"></a>  <span class="at">mean_speechiness =</span> <span class="fu">mean</span>(speechiness),</span>
-<span id="cb31-5"><a href="#cb31-5" tabindex="-1"></a>  <span class="at">mean_acousticness =</span> <span class="fu">mean</span>(acousticness),</span>
-<span id="cb31-6"><a href="#cb31-6" tabindex="-1"></a>  <span class="at">mean_instrumentalness =</span> <span class="fu">mean</span>(instrumentalness),</span>
-<span id="cb31-7"><a href="#cb31-7" tabindex="-1"></a>  <span class="at">mean_valence =</span> <span class="fu">mean</span>(valence),</span>
-<span id="cb31-8"><a href="#cb31-8" tabindex="-1"></a>  <span class="at">mean_tempo =</span> <span class="fu">mean</span>(tempo)</span>
-<span id="cb31-9"><a href="#cb31-9" tabindex="-1"></a>) <span class="sc">%&gt;%</span> <span class="fu">inner_join</span>(taylor_albums, <span class="at">by=</span><span class="fu">c</span>(<span class="st">&quot;album_name&quot;</span>)) <span class="sc">%&gt;%</span> <span class="fu">relocate</span>(album_release, <span class="at">.after=</span>album_name)</span></code></pre></div>
+<code>taylor_album_songs</code> and <code>taylor_albums</code> to tie
+the popularity metrics with each common album.</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" tabindex="-1"></a>taylor_album_summary <span class="ot">&lt;-</span> taylor_album_songs <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(album_name)<span class="sc">%&gt;%</span> <span class="fu">summarize</span>(</span>
+<span id="cb32-2"><a href="#cb32-2" tabindex="-1"></a>  <span class="at">mean_loudness =</span> <span class="fu">mean</span>(loudness),</span>
+<span id="cb32-3"><a href="#cb32-3" tabindex="-1"></a>  <span class="at">mean_mode =</span> <span class="fu">round</span>(<span class="fu">mean</span>(mode)),</span>
+<span id="cb32-4"><a href="#cb32-4" tabindex="-1"></a>  <span class="at">mean_speechiness =</span> <span class="fu">mean</span>(speechiness),</span>
+<span id="cb32-5"><a href="#cb32-5" tabindex="-1"></a>  <span class="at">mean_acousticness =</span> <span class="fu">mean</span>(acousticness),</span>
+<span id="cb32-6"><a href="#cb32-6" tabindex="-1"></a>  <span class="at">mean_instrumentalness =</span> <span class="fu">mean</span>(instrumentalness),</span>
+<span id="cb32-7"><a href="#cb32-7" tabindex="-1"></a>  <span class="at">mean_valence =</span> <span class="fu">mean</span>(valence),</span>
+<span id="cb32-8"><a href="#cb32-8" tabindex="-1"></a>  <span class="at">mean_tempo =</span> <span class="fu">mean</span>(tempo)</span>
+<span id="cb32-9"><a href="#cb32-9" tabindex="-1"></a>) <span class="sc">%&gt;%</span> <span class="fu">inner_join</span>(taylor_albums, <span class="at">by=</span><span class="fu">c</span>(<span class="st">&quot;album_name&quot;</span>)) <span class="sc">%&gt;%</span> <span class="fu">relocate</span>(album_release, <span class="at">.after=</span>album_name)</span></code></pre></div>
 <p>Metacritic scores and User scores are representative of the
 popularity of the albums because they are averaged ratings of the albums
 from critics and the public respectively (Source: NEED SOURCE
 metacritic.com, another one).</p>
 <p>Metacritic score ranges from 0 to 100 while User Score ranges from 0
-to 10. We will agregate these into one statistic, “Popularity”, weighted
-by their respective ranges. (Source: NEED SOURCE)</p>
+to 10. We will aggregate these into one statistic, “Popularity”,
+weighted by their respective ranges. (Source: NEED SOURCE)</p>
 <p>Hence we use the following formula: Popularity =
 (metacritic_score+(user_score*10))/2</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" tabindex="-1"></a>taylor_album_summary <span class="ot">&lt;-</span> taylor_album_summary <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">Popularity =</span> (metacritic_score<span class="sc">+</span>user_score<span class="sc">*</span><span class="dv">10</span>)<span class="sc">/</span><span class="dv">2</span>)</span>
-<span id="cb32-2"><a href="#cb32-2" tabindex="-1"></a>taylor_album_summary[, <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">12</span>)]</span></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" tabindex="-1"></a>taylor_album_summary <span class="ot">&lt;-</span> taylor_album_summary <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">Popularity =</span> (metacritic_score<span class="sc">+</span>user_score<span class="sc">*</span><span class="dv">10</span>)<span class="sc">/</span><span class="dv">2</span>)</span>
+<span id="cb33-2"><a href="#cb33-2" tabindex="-1"></a>taylor_album_summary[, <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">12</span>)]</span></code></pre></div>
 <pre><code>## # A tibble: 10 × 3
 ##    album_name                  album_release Popularity
 ##    &lt;chr&gt;                       &lt;date&gt;             &lt;dbl&gt;
