@@ -126,3 +126,7 @@ head(checking_conflicts)
 
 A tibble of no elements was generated, thus confirming that all rows are present in either tables. Since we can choose which
 table we want, we will use taylor_album_songs.
+
+```{r}
+
+```
