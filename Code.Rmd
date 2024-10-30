@@ -120,13 +120,32 @@ head(taylor_albums)
 ```
 
 ```{r}
+names(taylor_album_songs)==names(taylor_all_songs)
 checking_conflicts <- taylor_album_songs %>% anti_join(taylor_all_songs, by=names(taylor_all_songs))
 head(checking_conflicts)
 ```
 
-A tibble of no elements was generated, thus confirming that all rows are present in either tables. Since we can choose which
+All the column names match for both tables. A tibble of no elements was generated, thus confirming that all rows are present in either tables. Since we can choose which
 table we want, we will use taylor_album_songs.
 
-```{r}
+Next, since we are trying to compare popularity statistics by album, we need to check which albums are present in `r taylor_album_songs` and `r taylor_albums`.
 
+
+
+```{r}
+names1 <- taylor_albums %>% select(album_name) %>% unique() %>% arrange(album_name)
+names2 <- taylor_album_songs %>% select(album_name) %>% unique() %>% arrange(album_name)
+
+comp_table=left_join(names1, names2, by=c("album_name"))
+
+combined_table = rep(NA,length(comp_table$album_name))
+
+for (i in 1:length(names1$album_name) ){
+  if (names1$album_name[i] %in% names2$album_name) {
+    combined_table[i] <- comp_table$album_name[i]
+  }
+}
+
+combined_table = cbind(names1$album_name,combined_table)
+knitr::kable(combined_table, col.names = c("Taylor Albums","Taylor Album Songs"), caption="Comparison of album names between the tables")
 ```
