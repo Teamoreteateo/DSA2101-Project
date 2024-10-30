@@ -181,3 +181,23 @@ Hence we use the following formula: Popularity = (metacritic_score+(user_score*1
 taylor_album_summary <- taylor_album_summary %>% mutate(Popularity = (metacritic_score+user_score*10)/2)
 taylor_album_summary[, c(1,2,12)]
 ```
+
+
+Exploratory plots: May or may not use, just to select
+
+```{r}
+points = lm(data=taylor_album_summary, album_release~Popularity)
+ggplot(taylor_album_summary, aes(x=album_release, y=Popularity, color=album_name)) +
+  geom_point() 
+```
+
+```{r}
+plotting = taylor_album_summary %>% pivot_longer(cols =c(mean_acousticness, mean_instrumentalness, mean_valence), names_to="variable", values_to="value")
+ggplot(plotting, aes(x=album_release, y=value, color = variable)) +
+  geom_point(size=8) +
+  geom_smooth(method="lm") +
+  theme_classic()
+```
+
+Valence dropped, songs became sadder. Instrumentalness dropped, songs became more vocally driven.
+Acousticness increased, songs involved lesser electronic sounds and sounded more raw.
