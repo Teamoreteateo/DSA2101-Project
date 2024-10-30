@@ -4,7 +4,9 @@ DSA2101 Group Project
 # Analysis of Taylor Swift Spotify Data
 
 Name \| Matriculation number Chua Yong Sheng Joel \| A\_ Lim Zeen Kiat
-\| A\_ Robin Ghosh \| A\_ Timothy Teo Shao Jun \| A0272851B
+\| A\_ Robin Ghosh \| A0271671A Timothy Teo Shao Jun \| A0272851B
+
+=======
 
 ## Introduction
 
@@ -37,6 +39,7 @@ taylor_albums <- tuesdata$taylor_albums
 # write.csv(taylor_album_songs, "taylor_album_songs.csv", row.names = FALSE)
 # write.csv(taylor_all_songs, "taylor_all_songs.csv", row.names = FALSE)
 # write.csv(taylor_albums, "taylor_albums.csv", row.names = FALSE)
+# >>>>>> e3542bd358543883b147a6664c5777a5ed2ce66e
 ```
 
 ## Description of our Data
@@ -209,10 +212,10 @@ Start off by filtering for the columns that we want:
 
 ``` r
 taylor_album_songs <- taylor_album_songs %>%
-    select(album_name, album_release, track_name, single_release, loudness, mode, speechiness, acousticness, instrumentalness, valence, tempo, explicit, lyrics)
+    select(album_name, album_release, track_name, loudness, mode, speechiness, acousticness, instrumentalness, valence, tempo, explicit)
 
 taylor_all_songs <- taylor_all_songs %>%
-    select(album_name, album_release, track_name, single_release, loudness, mode, speechiness, acousticness, instrumentalness, valence, tempo, explicit, lyrics)
+    select(album_name, album_release, track_name, loudness, mode, speechiness, acousticness, instrumentalness, valence, tempo, explicit)
 
 taylor_albums <- taylor_albums %>%
     select(!ep)
@@ -238,28 +241,24 @@ taylor_album_songs_na_count <- sapply(taylor_album_songs, function(x) sum(is.na(
 print(taylor_album_songs_na_count)
 ```
 
-    ##       album_name    album_release       track_name   single_release 
-    ##                0                0                0              158 
-    ##         loudness             mode      speechiness     acousticness 
+    ##       album_name    album_release       track_name         loudness 
+    ##                0                0                0                3 
+    ##             mode      speechiness     acousticness instrumentalness 
     ##                3                3                3                3 
-    ## instrumentalness          valence            tempo         explicit 
-    ##                3                3                3                3 
-    ##           lyrics 
-    ##              194
+    ##          valence            tempo         explicit 
+    ##                3                3                3
 
 ``` r
 taylor_all_songs_na_count <- sapply(taylor_all_songs, function(x) sum(is.na(x)))
 print(taylor_all_songs_na_count)
 ```
 
-    ##       album_name    album_release       track_name   single_release 
-    ##               27               27                0              213 
-    ##         loudness             mode      speechiness     acousticness 
+    ##       album_name    album_release       track_name         loudness 
+    ##               27               27                0               11 
+    ##             mode      speechiness     acousticness instrumentalness 
     ##               11               11               11               11 
-    ## instrumentalness          valence            tempo         explicit 
-    ##               11               11               11               11 
-    ##           lyrics 
-    ##              274
+    ##          valence            tempo         explicit 
+    ##               11               11               11
 
 ``` r
 taylor_albums_na_count <- sapply(taylor_albums, function(x) sum(is.na(x)))

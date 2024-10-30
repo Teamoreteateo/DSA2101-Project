@@ -6,22 +6,6 @@ output: github_document
 ```{r setup, include=FALSE}
 
 knitr::opts_chunk$set(echo = TRUE)
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-```
-
-## GitHub Documents
-
-Testing! Nullus
-This is an R Markdown format used for publishing markdown documents to GitHub. When you click the **Knit** button all R code chunks are run and a markdown file (.md) suitable for publishing to GitHub is generated.
-
-## Including Code
-=======
-
-```{r}
-=======
->>>>>>> 7b7fc0971f994643abd2687356af0cb14991d6df
 library(tidytuesdayR)
 library(tidyverse)
 library(readr)
@@ -35,13 +19,6 @@ Lim Zeen Kiat        | A_
 Robin Ghosh          | A0271671A
 Timothy Teo Shao Jun | A0272851B
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-```{r cars}
-summary(cars)
-```
-=======
->>>>>>> 7b7fc0971f994643abd2687356af0cb14991d6df
 =======
 
 ## Introduction
@@ -63,14 +40,8 @@ taylor_albums <- tuesdata$taylor_albums
 # write.csv(taylor_album_songs, "taylor_album_songs.csv", row.names = FALSE)
 # write.csv(taylor_all_songs, "taylor_all_songs.csv", row.names = FALSE)
 # write.csv(taylor_albums, "taylor_albums.csv", row.names = FALSE)
-```
-<<<<<<< HEAD
-=======
 # >>>>>> e3542bd358543883b147a6664c5777a5ed2ce66e
->>>>>>> 7b7fc0971f994643abd2687356af0cb14991d6df
-
->>>>>>> e3542bd358543883b147a6664c5777a5ed2ce66e
-
+```
 
 
 ## Description of our Data
@@ -89,10 +60,10 @@ A brief description of the variables relevant to our project is given below:
 Start off by filtering for the columns that we want:
 ```{r}
 taylor_album_songs <- taylor_album_songs %>%
-    select(album_name, album_release, track_name, loudness, mode, speechiness, acousticness, instrumentalness, valence, tempo)
+    select(album_name, album_release, track_name, loudness, mode, speechiness, acousticness, instrumentalness, valence, tempo, explicit)
 
 taylor_all_songs <- taylor_all_songs %>%
-    select(album_name, album_release, track_name, loudness, mode, speechiness, acousticness, instrumentalness, valence, tempo)
+    select(album_name, album_release, track_name, loudness, mode, speechiness, acousticness, instrumentalness, valence, tempo, explicit)
 
 taylor_albums <- taylor_albums %>%
     select(!ep)
@@ -100,7 +71,7 @@ taylor_albums <- taylor_albums %>%
 
 Group by albums:
 ```{r}
-taylor_album_songs <- taylor_album_songs %>% 
+taylor_album_songs <- taylor_album_songs %>%
   group_by(album_name)
 
 taylor_all_songs <- taylor_all_songs %>%
@@ -140,13 +111,3 @@ write.csv(taylor_album_songs, "CSV files/taylor_album_songs_cleaned.csv", row.na
 write.csv(taylor_all_songs, "CSV files/taylor_all_songs_cleaned.csv", row.names = FALSE)
 write.csv(taylor_albums, "CSV files/taylor_albums.csv_cleaned", row.names = FALSE)
 ```
-<<<<<<< HEAD
->>>>>>> e3542bd358543883b147a6664c5777a5ed2ce66e
-
-```{r reading-new-csvs}
-taylor_all_songs = read_csv("../CSV files/taylor_all_songs_cleaned.csv")
-str(taylor_all_songs)
-
-```
-=======
->>>>>>> 7b7fc0971f994643abd2687356af0cb14991d6df
