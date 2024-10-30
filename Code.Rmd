@@ -16,6 +16,8 @@ This is an R Markdown format used for publishing markdown documents to GitHub. W
 
 ## Including Code
 =======
+
+```{r}
 library(tidytuesdayR)
 library(tidyverse)
 library(readr)
@@ -33,6 +35,7 @@ Timothy Teo Shao Jun | A0272851B
 <<<<<<< HEAD
 ```{r cars}
 summary(cars)
+```
 =======
 
 ## Introduction
@@ -54,8 +57,9 @@ taylor_albums <- tuesdata$taylor_albums
 # write.csv(taylor_album_songs, "taylor_album_songs.csv", row.names = FALSE)
 # write.csv(taylor_all_songs, "taylor_all_songs.csv", row.names = FALSE)
 # write.csv(taylor_albums, "taylor_albums.csv", row.names = FALSE)
->>>>>>> e3542bd358543883b147a6664c5777a5ed2ce66e
 ```
+>>>>>>> e3542bd358543883b147a6664c5777a5ed2ce66e
+
 
 
 <<<<<<< HEAD
@@ -81,10 +85,10 @@ A brief description of the variables relevant to our project is given below:
 Start off by filtering for the columns that we want:
 ```{r}
 taylor_album_songs <- taylor_album_songs %>%
-    select(album_name, album_release, track_name, single_release, loudness, mode, speechiness, acousticness, instrumentalness, valence, tempo, explicit, lyrics)
+    select(album_name, album_release, track_name, single_release, loudness, mode, speechiness, acousticness, instrumentalness, valence, tempo)
 
 taylor_all_songs <- taylor_all_songs %>%
-    select(album_name, album_release, track_name, single_release, loudness, mode, speechiness, acousticness, instrumentalness, valence, tempo, explicit, lyrics)
+    select(album_name, album_release, track_name, single_release, loudness, mode, speechiness, acousticness, instrumentalness, valence, tempo)
 
 taylor_albums <- taylor_albums %>%
     select(!ep)
@@ -92,7 +96,7 @@ taylor_albums <- taylor_albums %>%
 
 Group by albums:
 ```{r}
-taylor_album_songs <- taylor_album_songs %>%
+taylor_album_songs <- taylor_album_songs %>% 
   group_by(album_name)
 
 taylor_all_songs <- taylor_all_songs %>%
@@ -133,3 +137,9 @@ write.csv(taylor_all_songs, "CSV files/taylor_all_songs_cleaned.csv", row.names 
 write.csv(taylor_albums, "CSV files/taylor_albums.csv_cleaned", row.names = FALSE)
 ```
 >>>>>>> e3542bd358543883b147a6664c5777a5ed2ce66e
+
+```{r reading-new-csvs}
+taylor_all_songs = read_csv("../CSV files/taylor_all_songs_cleaned.csv")
+str(taylor_all_songs)
+
+```
