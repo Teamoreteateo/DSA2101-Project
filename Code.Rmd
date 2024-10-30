@@ -153,7 +153,7 @@ Checking the table generated, Fearless and Red do not appear in Taylor Album Son
 Next, we will aggregate statistics for each of the musical attributes by taking their mean. Then, we will combine `r taylor_album_songs` and `r taylor_albums` tie the popularity metrics with each common album.
 
 ```{r aggregating-statistics}
-taylor_album_songs %>% group_by(album_name)%>% summarize(
+taylor_album_summary <- taylor_album_songs %>% group_by(album_name)%>% summarize(
   mean_loudness = mean(loudness),
   mean_mode = round(mean(mode)),
   mean_speechiness = mean(speechiness),
@@ -161,5 +161,18 @@ taylor_album_songs %>% group_by(album_name)%>% summarize(
   mean_instrumentalness = mean(instrumentalness),
   mean_valence = mean(valence),
   mean_tempo = mean(tempo)
-) %>% inner_join(taylor_albums, by=c("album_name"))
+) %>% inner_join(taylor_albums, by=c("album_name")) %>% relocate(album_release, .after=album_name)
+```
+
+Metacritic scores and User scores are representative of the popularity of the albums because they are averaged ratings of the albums from
+critics and the public respectively (Source: NEED SOURCE metacritic.com, another one). 
+
+Metacritic score ranges from 0 to 100 while User Score ranges from 0 to 10. We will agregate these into one statistic, "Popularity", weighted by their
+respective ranges. (Source: NEED SOURCE)
+
+Hence we use the following formula: Popularity = (metacritic_score+(user_score*10))/2
+
+```{r creating-Popularity}
+taylor_album_summary <- taylor_album_summary %>% mutate(Popularity = (metacritic_score+user_score*10)/2)
+taylor_album_summary[, c(1,2,12)]
 ```
