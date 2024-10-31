@@ -66,10 +66,10 @@ A brief description of the variables relevant to our project is given below:
 Start off by filtering for the columns that we want:
 ```{r}
 taylor_album_songs <- taylor_album_songs %>%
-    select(album_name, album_release, track_name, danceability, energy, loudness, mode, speechiness, acousticness, instrumentalness, valence, tempo, explicit)
+    select(album_name, album_release, track_name, liveness, danceability, energy, loudness, mode, speechiness, acousticness, instrumentalness, valence, tempo, explicit)
 
 taylor_all_songs <- taylor_all_songs %>%
-    select(album_name, album_release, track_name, danceability, energy, loudness, mode, speechiness, acousticness, instrumentalness, valence, tempo, explicit)
+    select(album_name, album_release, track_name, liveness, danceability, energy, loudness, mode, speechiness, acousticness, instrumentalness, valence, tempo, explicit)
 
 taylor_albums <- taylor_albums %>%
     select(!ep)
@@ -161,6 +161,7 @@ Next, we will aggregate statistics for each of the musical attributes by taking 
 taylor_album_summary <- taylor_album_songs %>% group_by(album_name)%>% summarize(
   mean_loudness = mean(loudness),
   mean_danceability = mean(danceability),
+  mean_liveness = mean(liveness)
   mean_energy = mean(energy),
   mean_mode = round(mean(mode)),
   mean_speechiness = mean(speechiness),
