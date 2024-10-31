@@ -195,7 +195,7 @@ ggplot(taylor_album_summary, aes(x=album_release, y=Popularity, color=album_name
 ```
 
 ```{r}
-plotting = taylor_album_summary %>% pivot_longer(cols =c(mean_energy, mean_acousticness, mean_instrumentalness, mean_valence), names_to="variable", values_to="value")
+plotting = taylor_album_summary %>% pivot_longer(cols =c(mean_liveness, mean_danceability, mean_energy, mean_acousticness, mean_instrumentalness, mean_valence), names_to="variable", values_to="value")
 ggplot(plotting, aes(x=album_release, y=value, color = variable)) +
   geom_point(size=3) +
   geom_smooth(method="lm") +
@@ -204,6 +204,8 @@ ggplot(plotting, aes(x=album_release, y=value, color = variable)) +
 
 Valence dropped, songs became sadder. Instrumentalness dropped, songs became more vocally driven.
 Acousticness increased sharply, songs involved lesser electronic sounds and sounded more raw.
-Energy of the tracks have also reduced, further emphasising the mellow trend of her music.
-It seems that Taylor Swift aims to be more intimate with her audience. Her popularity has
-increased over the years also.
+Energy of the tracks have also reduced, further emphasising the mellow trend of her music. Though, it appears
+that danceability has increased, meaning that the downbeats in her songs have become more pronounced,
+creating a danceable vibe.
+It seems that Taylor Swift aims to be more intimate with her audience while maintaining vibe and groove to make up for
+the lack of energy. Her popularity has increased over the years also, signalling the yearn for such music.
