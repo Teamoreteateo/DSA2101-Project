@@ -229,10 +229,10 @@ Start off by filtering for the columns that we want:
 
 ``` r
 taylor_album_songs <- taylor_album_songs %>%
-    select(album_name, album_release, track_name, loudness, mode, speechiness, acousticness, instrumentalness, valence, tempo, explicit)
+    select(album_name, album_release, track_name, liveness, danceability, energy, loudness, mode, speechiness, acousticness, instrumentalness, valence, tempo, explicit)
 
 taylor_all_songs <- taylor_all_songs %>%
-    select(album_name, album_release, track_name, loudness, mode, speechiness, acousticness, instrumentalness, valence, tempo, explicit)
+    select(album_name, album_release, track_name, liveness, danceability, energy, loudness, mode, speechiness, acousticness, instrumentalness, valence, tempo, explicit)
 
 taylor_albums <- taylor_albums %>%
     select(!ep)
@@ -258,24 +258,28 @@ taylor_album_songs_na_count <- sapply(taylor_album_songs, function(x) sum(is.na(
 print(taylor_album_songs_na_count)
 ```
 
-    ##       album_name    album_release       track_name         loudness 
+    ##       album_name    album_release       track_name         liveness 
     ##                0                0                0                3 
-    ##             mode      speechiness     acousticness instrumentalness 
+    ##     danceability           energy         loudness             mode 
     ##                3                3                3                3 
-    ##          valence            tempo         explicit 
-    ##                3                3                3
+    ##      speechiness     acousticness instrumentalness          valence 
+    ##                3                3                3                3 
+    ##            tempo         explicit 
+    ##                3                3
 
 ``` r
 taylor_all_songs_na_count <- sapply(taylor_all_songs, function(x) sum(is.na(x)))
 print(taylor_all_songs_na_count)
 ```
 
-    ##       album_name    album_release       track_name         loudness 
+    ##       album_name    album_release       track_name         liveness 
     ##               27               27                0               11 
-    ##             mode      speechiness     acousticness instrumentalness 
+    ##     danceability           energy         loudness             mode 
     ##               11               11               11               11 
-    ##          valence            tempo         explicit 
-    ##               11               11               11
+    ##      speechiness     acousticness instrumentalness          valence 
+    ##               11               11               11               11 
+    ##            tempo         explicit 
+    ##               11               11
 
 ``` r
 taylor_albums_na_count <- sapply(taylor_albums, function(x) sum(is.na(x)))
@@ -311,35 +315,35 @@ write.csv(taylor_albums, "CSV files/taylor_albums.csv_cleaned", row.names = FALS
 head(taylor_album_songs)
 ```
 
-    ## # A tibble: 6 × 11
+    ## # A tibble: 6 × 14
     ## # Groups:   album_name [1]
-    ##   album_name   album_release track_name  loudness  mode speechiness acousticness
-    ##   <chr>        <date>        <chr>          <dbl> <dbl>       <dbl>        <dbl>
-    ## 1 Taylor Swift 2006-10-24    Tim McGraw     -6.46     1      0.0251      0.575  
-    ## 2 Taylor Swift 2006-10-24    Picture To…    -2.10     1      0.0323      0.173  
-    ## 3 Taylor Swift 2006-10-24    Teardrops …    -6.94     1      0.0231      0.288  
-    ## 4 Taylor Swift 2006-10-24    A Place In…    -2.88     1      0.0324      0.051  
-    ## 5 Taylor Swift 2006-10-24    Cold As You    -5.77     1      0.0266      0.217  
-    ## 6 Taylor Swift 2006-10-24    The Outside    -4.06     1      0.0293      0.00491
-    ## # ℹ 4 more variables: instrumentalness <dbl>, valence <dbl>, tempo <dbl>,
-    ## #   explicit <lgl>
+    ##   album_name   album_release track_name    liveness danceability energy loudness
+    ##   <chr>        <date>        <chr>            <dbl>        <dbl>  <dbl>    <dbl>
+    ## 1 Taylor Swift 2006-10-24    Tim McGraw      0.121         0.58   0.491    -6.46
+    ## 2 Taylor Swift 2006-10-24    Picture To B…   0.0962        0.658  0.877    -2.10
+    ## 3 Taylor Swift 2006-10-24    Teardrops On…   0.119         0.621  0.417    -6.94
+    ## 4 Taylor Swift 2006-10-24    A Place In T…   0.32          0.576  0.777    -2.88
+    ## 5 Taylor Swift 2006-10-24    Cold As You     0.123         0.418  0.482    -5.77
+    ## 6 Taylor Swift 2006-10-24    The Outside     0.24          0.589  0.805    -4.06
+    ## # ℹ 7 more variables: mode <dbl>, speechiness <dbl>, acousticness <dbl>,
+    ## #   instrumentalness <dbl>, valence <dbl>, tempo <dbl>, explicit <lgl>
 
 ``` r
 head(taylor_all_songs)
 ```
 
-    ## # A tibble: 6 × 11
+    ## # A tibble: 6 × 14
     ## # Groups:   album_name [1]
-    ##   album_name   album_release track_name  loudness  mode speechiness acousticness
-    ##   <chr>        <date>        <chr>          <dbl> <dbl>       <dbl>        <dbl>
-    ## 1 Taylor Swift 2006-10-24    Tim McGraw     -6.46     1      0.0251      0.575  
-    ## 2 Taylor Swift 2006-10-24    Picture To…    -2.10     1      0.0323      0.173  
-    ## 3 Taylor Swift 2006-10-24    Teardrops …    -6.94     1      0.0231      0.288  
-    ## 4 Taylor Swift 2006-10-24    A Place In…    -2.88     1      0.0324      0.051  
-    ## 5 Taylor Swift 2006-10-24    Cold As You    -5.77     1      0.0266      0.217  
-    ## 6 Taylor Swift 2006-10-24    The Outside    -4.06     1      0.0293      0.00491
-    ## # ℹ 4 more variables: instrumentalness <dbl>, valence <dbl>, tempo <dbl>,
-    ## #   explicit <lgl>
+    ##   album_name   album_release track_name    liveness danceability energy loudness
+    ##   <chr>        <date>        <chr>            <dbl>        <dbl>  <dbl>    <dbl>
+    ## 1 Taylor Swift 2006-10-24    Tim McGraw      0.121         0.58   0.491    -6.46
+    ## 2 Taylor Swift 2006-10-24    Picture To B…   0.0962        0.658  0.877    -2.10
+    ## 3 Taylor Swift 2006-10-24    Teardrops On…   0.119         0.621  0.417    -6.94
+    ## 4 Taylor Swift 2006-10-24    A Place In T…   0.32          0.576  0.777    -2.88
+    ## 5 Taylor Swift 2006-10-24    Cold As You     0.123         0.418  0.482    -5.77
+    ## 6 Taylor Swift 2006-10-24    The Outside     0.24          0.589  0.805    -4.06
+    ## # ℹ 7 more variables: mode <dbl>, speechiness <dbl>, acousticness <dbl>,
+    ## #   instrumentalness <dbl>, valence <dbl>, tempo <dbl>, explicit <lgl>
 
 ``` r
 head(taylor_albums)
@@ -360,18 +364,19 @@ head(taylor_albums)
 names(taylor_album_songs)==names(taylor_all_songs)
 ```
 
-    ##  [1] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+    ##  [1] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
 
 ``` r
 checking_conflicts <- taylor_album_songs %>% anti_join(taylor_all_songs, by=names(taylor_all_songs))
 head(checking_conflicts)
 ```
 
-    ## # A tibble: 0 × 11
+    ## # A tibble: 0 × 14
     ## # Groups:   album_name [0]
-    ## # ℹ 11 variables: album_name <chr>, album_release <date>, track_name <chr>,
-    ## #   loudness <dbl>, mode <dbl>, speechiness <dbl>, acousticness <dbl>,
-    ## #   instrumentalness <dbl>, valence <dbl>, tempo <dbl>, explicit <lgl>
+    ## # ℹ 14 variables: album_name <chr>, album_release <date>, track_name <chr>,
+    ## #   liveness <dbl>, danceability <dbl>, energy <dbl>, loudness <dbl>,
+    ## #   mode <dbl>, speechiness <dbl>, acousticness <dbl>, instrumentalness <dbl>,
+    ## #   valence <dbl>, tempo <dbl>, explicit <lgl>
 
 All the column names match for both tables. A tibble of no elements was
 generated, thus confirming that all rows are present in either tables.
@@ -425,6 +430,9 @@ taking their mean. Then, we will combine `taylor_album_songs` and
 ``` r
 taylor_album_summary <- taylor_album_songs %>% group_by(album_name)%>% summarize(
   mean_loudness = mean(loudness),
+  mean_danceability = mean(danceability),
+  mean_liveness = mean(liveness),
+  mean_energy = mean(energy),
   mean_mode = round(mean(mode)),
   mean_speechiness = mean(speechiness),
   mean_acousticness = mean(acousticness),
@@ -452,15 +460,48 @@ taylor_album_summary[, c(1,2,12)]
 ```
 
     ## # A tibble: 10 × 3
-    ##    album_name                  album_release Popularity
+    ##    album_name                  album_release mean_tempo
     ##    <chr>                       <date>             <dbl>
-    ##  1 1989                        2014-10-27          79  
-    ##  2 Fearless (Taylor's Version) 2021-04-09          85.5
-    ##  3 Lover                       2019-08-23          81.5
-    ##  4 Midnights                   2022-10-21          84  
-    ##  5 Red (Taylor's Version)      2021-11-12          90.5
-    ##  6 Speak Now                   2010-10-25          81.5
-    ##  7 Taylor Swift                2006-10-24          76  
-    ##  8 evermore                    2020-12-11          87  
-    ##  9 folklore                    2020-07-24          89  
-    ## 10 reputation                  2017-11-10          77
+    ##  1 1989                        2014-10-27          131.
+    ##  2 Fearless (Taylor's Version) 2021-04-09          131.
+    ##  3 Lover                       2019-08-23          120.
+    ##  4 Midnights                   2022-10-21          120.
+    ##  5 Red (Taylor's Version)      2021-11-12          124.
+    ##  6 Speak Now                   2010-10-25          140.
+    ##  7 Taylor Swift                2006-10-24          126.
+    ##  8 evermore                    2020-12-11          121.
+    ##  9 folklore                    2020-07-24          120.
+    ## 10 reputation                  2017-11-10          128.
+
+Exploratory plots: May or may not use, just to select
+
+``` r
+points = lm(data=taylor_album_summary, album_release~Popularity)
+ggplot(taylor_album_summary, aes(x=album_release, y=Popularity, color=album_name)) +
+  geom_point(size=2) 
+```
+
+![](Code_files/figure-gfm/unnamed-chunk-11-1.png)<!-- -->
+
+``` r
+plotting = taylor_album_summary %>% pivot_longer(cols =c(mean_loudness, mean_liveness, mean_danceability, mean_energy, mean_acousticness, mean_instrumentalness, mean_valence), names_to="variable", values_to="value")
+ggplot(plotting, aes(x=album_release, y=value, color = variable)) +
+  geom_point(size=3) +
+  geom_smooth(method="lm") +
+  theme_classic()
+```
+
+    ## `geom_smooth()` using formula = 'y ~ x'
+
+![](Code_files/figure-gfm/unnamed-chunk-12-1.png)<!-- -->
+
+Valence dropped, songs became sadder. Instrumentalness dropped, songs
+became more vocally driven. Acousticness increased sharply, songs
+involved lesser electronic sounds and sounded more raw. Energy of the
+tracks have also reduced, further emphasising the mellow trend of her
+music. Though, it appears that danceability has increased, meaning that
+the downbeats in her songs have become more pronounced, creating a
+danceable vibe. It seems that Taylor Swift aims to be more intimate with
+her audience while maintaining vibe and groove to make up for the lack
+of energy. Her popularity has increased over the years also, signalling
+the yearn for such music.
