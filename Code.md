@@ -484,7 +484,7 @@ ggplot(taylor_album_summary, aes(x=album_release, y=Popularity, color=album_name
 ![](Code_files/figure-gfm/unnamed-chunk-11-1.png)<!-- -->
 
 ``` r
-plotting = taylor_album_summary %>% pivot_longer(cols =c(mean_loudness, mean_liveness, mean_danceability, mean_energy, mean_acousticness, mean_instrumentalness, mean_valence), names_to="variable", values_to="value")
+plotting = taylor_album_summary %>% pivot_longer(cols =c(mean_liveness, mean_danceability, mean_energy, mean_acousticness, mean_instrumentalness, mean_valence), names_to="variable", values_to="value")
 ggplot(plotting, aes(x=album_release, y=value, color = variable)) +
   geom_point(size=3) +
   geom_smooth(method="lm") +
@@ -494,6 +494,17 @@ ggplot(plotting, aes(x=album_release, y=value, color = variable)) +
     ## `geom_smooth()` using formula = 'y ~ x'
 
 ![](Code_files/figure-gfm/unnamed-chunk-12-1.png)<!-- -->
+
+``` r
+ggplot(taylor_album_summary, aes(x=album_release, y=mean_loudness)) +
+  geom_point(size=3) +
+  geom_smooth(method="lm") +
+  theme_classic()
+```
+
+    ## `geom_smooth()` using formula = 'y ~ x'
+
+![](Code_files/figure-gfm/loudness-plot-1.png)<!-- -->
 
 Valence dropped, songs became sadder. Instrumentalness dropped, songs
 became more vocally driven. Acousticness increased sharply, songs
