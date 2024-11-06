@@ -242,5 +242,5 @@ the lack of energy. Her popularity has increased over the years also, signalling
 
 
 
-# 6 ::: {#refs}
-::: Our data comes from the TidyTuesday project on GitHub. Link: https://github.com/rfordatascience/tidytuesday/blob/master/data/2023/2023-10-17
+# 6. References
+1. Our data comes from the TidyTuesday project on GitHub. Link: https://github.com/rfordatascience/tidytuesday/blob/master/data/2023/2023-10-17
