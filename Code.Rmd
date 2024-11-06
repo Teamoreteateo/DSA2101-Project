@@ -41,6 +41,13 @@ taylor_albums <- tuesdata$taylor_albums
 # Introduction
 In this project, we aim to analyse Taylor Swift's musical evolution through her Spotify data. 
 As one of the most popular music artists globally, we aim to understand patterns and relationships in the musical attributes of her songs and how these have defined her career.
+
+For our project, we aim to answer the following question:
+```bash
+How do musical and lyrical features evolve across Taylor Swift's albums, and what insights can we gain about the progression of her artistry over time?
+```
+
+# Data Cleaning & Summary
 The following table contains a brief description of the variables we have chosen to use for our project:
 ```{r}
 track_attributes <- data.frame(
@@ -73,26 +80,19 @@ track_attributes <- data.frame(
 kable(track_attributes, col.names = c("Variable", "Class", "Description"), align = "l")
 ```
 
-With the variables we have chosen above, we hope to answer this main question of our project:
-```bash
-   How do musical and lyrical features evolve across Taylor Swift's albums, and what insights can we gain about the progression of her artistry over time?
-```
-
-# Data Cleaning
-
-Start off by filtering for the columns that we want:
+We'll start off by filtering for the features listed above which we want to keep:
 ```{r}
 taylor_album_songs <- taylor_album_songs %>%
-    select(album_name, album_release, track_name, liveness, danceability, energy, loudness, mode, speechiness, acousticness, instrumentalness, valence, tempo, explicit)
+    select(album_name, album_release, track_name, danceability, energy, loudness, mode, speechiness, acousticness, instrumentalness, liveness, valence, tempo, explicit)
 
 taylor_all_songs <- taylor_all_songs %>%
-    select(album_name, album_release, track_name, liveness, danceability, energy, loudness, mode, speechiness, acousticness, instrumentalness, valence, tempo, explicit)
+    select(album_name, album_release, track_name, danceability, energy, loudness, mode, speechiness, acousticness, instrumentalness, liveness, valence, tempo, explicit)
 
 taylor_albums <- taylor_albums %>%
     select(!ep)
 ```
 
-Group by albums:
+Then, we group the data by their respective albums for aggregating album data:
 ```{r}
 taylor_album_songs <- taylor_album_songs %>%
   group_by(album_name)
@@ -104,7 +104,7 @@ taylor_albums <- taylor_albums %>%
   group_by(album_name)
 ```
 
-Checking for NA values in each file:
+We will check and remove NA values in the data, which are not needed for our visualisations:
 ```{r}
 taylor_album_songs_na_count <- sapply(taylor_album_songs, function(x) sum(is.na(x)))
 print(taylor_album_songs_na_count)
@@ -114,10 +114,7 @@ print(taylor_all_songs_na_count)
 
 taylor_albums_na_count <- sapply(taylor_albums, function(x) sum(is.na(x)))
 print(taylor_albums_na_count)
-```
 
-There are many occurences of NA data present. Hence, we will need to remove them:
-```{r}
 taylor_album_songs <- taylor_album_songs %>%
     na.omit()
 
@@ -128,7 +125,7 @@ taylor_albums <- taylor_albums %>%
     na.omit()
 ```
 
-Save cleaned data as new files:
+Finally, the cleaned data are saved as new files for us to reference later on:
 ```{r}
 write.csv(taylor_album_songs, "CSV files/taylor_album_songs_cleaned.csv", row.names = FALSE)
 write.csv(taylor_all_songs, "CSV files/taylor_all_songs_cleaned.csv", row.names = FALSE)
