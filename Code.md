@@ -1,7 +1,7 @@
 DSA2101 Group Project: Analysis of Taylor Swift Spotify Data
 ================
 
-# Group members
+## Group members
 
 ``` r
 students <- data.frame(
@@ -19,7 +19,7 @@ kable(students, col.names = c("Group Members", "Matriculation Number"))
 | Robin Ghosh          | A0271671A            |
 | Timothy Teo Shao Jun | A0272851B            |
 
-# Loading Data
+## Loading Data
 
 ``` r
 # Load the Taylor Swift datasets
@@ -49,7 +49,7 @@ taylor_albums <- tuesdata$taylor_albums
 
 =======
 
-# 1. Introduction
+## 1. Introduction
 
 In this project, we aim to analyse Taylor Swift’s musical evolution
 through her Spotify data. As one of the most popular music artists
@@ -62,7 +62,7 @@ For our project, we aim to answer the following question:
 How do musical and lyrical features evolve across Taylor Swift's albums, and what insights can we gain about the progression of her artistry over time?
 ```
 
-# 2. Data Cleaning & Summary
+## 2. Data Cleaning & Summary
 
 The following table contains a brief description of the variables we
 have chosen to use for our project:
@@ -366,7 +366,7 @@ taylor_album_summary[, c(1,2,12)]
     ##  9 folklore                    2020-07-24          120.
     ## 10 reputation                  2017-11-10          128.
 
-# 3. Visualisations
+## 3. Visualisations
 
 Exploratory plots: May or may not use, just to select
 
@@ -412,11 +412,11 @@ her audience while maintaining vibe and groove to make up for the lack
 of energy. Her popularity has increased over the years also, signalling
 the yearn for such music.
 
-# 4. Discussions
+## 4. Discussions
 
-# 5. Teamwork
+## 5. Teamwork
 
-# 6. References
+## 6. References
 
 1.  Our data comes from the TidyTuesday project on GitHub. Link:
     <https://github.com/rfordatascience/tidytuesday/blob/master/data/2023/2023-10-17>
