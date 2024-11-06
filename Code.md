@@ -45,7 +45,6 @@ taylor_albums <- tuesdata$taylor_albums
 # write.csv(taylor_album_songs, "taylor_album_songs.csv", row.names = FALSE)
 # write.csv(taylor_all_songs, "taylor_all_songs.csv", row.names = FALSE)
 # write.csv(taylor_albums, "taylor_albums.csv", row.names = FALSE)
-# >>>>>> e3542bd358543883b147a6664c5777a5ed2ce66e
 ```
 
 =======
@@ -57,34 +56,34 @@ through her Spotify data. As one of the most popular music artists
 globally, we aim to understand patterns and relationships in the musical
 attributes of her songs and how these have defined her career. The
 following table contains a brief description of the variables we have
-chose to use for our project:
+chosen to use for our project:
 
 ``` r
 track_attributes <- data.frame(
   Variable = c(
-    "album_name", "album_release", "track_name", "liveness", 
-    "danceability", "energy", "loudness", "mode", "speechiness", 
-    "acousticness", "instrumentalness", "valence", "tempo", "explicit"
+    "album_name", "album_release", "track_name", "danceability", "energy", 
+    "loudness", "mode", "speechiness", "acousticness", "instrumentalness", 
+    "liveness", "valence", "tempo", "explicit"
   ),
   Class = c(
-    "character", "double", "character", "double", "double", "double", "double", "integer",
-    "double", "double", "double", "double", "double", "logical"
+    "character", "double", "character","double", "double", "double", "integer",
+    "double", "double", "double",  "double", "double", "double", "logical"
   ),
   Description = c(
     "Name of the album the track belongs to.",
     "Release date of the album.",
     "Name of the individual track.",
-    "Measures the presence of an audience in the recording, with higher values indicating more 'live' sounds.",
-    "Measures how suitable a track is for dancing, considering tempo, rhythm, and beat regularity.",
+    "Measures how suitable a track is for dancing.",
     "Measures the intensity and activity of a track, with higher values indicating more energetic sounds.",
     "The overall volume of the track, measured in decibels (dB).",
     "Indicates the modality of the track: 1 for major, 0 for minor.",
     "Measures the presence of spoken words in a track, with higher values indicating more speech-like content.",
     "Represents the likelihood that the track is acoustic, with higher values indicating more acoustic qualities.",
     "Predicts whether a track is instrumental, with higher values suggesting a lack of vocals.",
+    "Measures the presence of an audience in the recording, with higher values indicating a stronger likelihood that the track is live",
     "Describes the musical positiveness conveyed, with higher values indicating more cheerful and happy tones.",
     "The speed of the track, measured in beats per minute (BPM).",
-    "Indicates whether the track contains explicit content: 1 for explicit, 0 for clean."
+    "Indicates whether the track contains explicit content: 1 for explicit, 0 otherwise."
   )
 )
 kable(track_attributes, col.names = c("Variable", "Class", "Description"), align = "l")
@@ -95,17 +94,24 @@ kable(track_attributes, col.names = c("Variable", "Class", "Description"), align
 | album_name | character | Name of the album the track belongs to. |
 | album_release | double | Release date of the album. |
 | track_name | character | Name of the individual track. |
-| liveness | double | Measures the presence of an audience in the recording, with higher values indicating more ‘live’ sounds. |
-| danceability | double | Measures how suitable a track is for dancing, considering tempo, rhythm, and beat regularity. |
+| danceability | double | Measures how suitable a track is for dancing. |
 | energy | double | Measures the intensity and activity of a track, with higher values indicating more energetic sounds. |
 | loudness | double | The overall volume of the track, measured in decibels (dB). |
 | mode | integer | Indicates the modality of the track: 1 for major, 0 for minor. |
 | speechiness | double | Measures the presence of spoken words in a track, with higher values indicating more speech-like content. |
 | acousticness | double | Represents the likelihood that the track is acoustic, with higher values indicating more acoustic qualities. |
 | instrumentalness | double | Predicts whether a track is instrumental, with higher values suggesting a lack of vocals. |
+| liveness | double | Measures the presence of an audience in the recording, with higher values indicating a stronger likelihood that the track is live |
 | valence | double | Describes the musical positiveness conveyed, with higher values indicating more cheerful and happy tones. |
 | tempo | double | The speed of the track, measured in beats per minute (BPM). |
-| explicit | logical | Indicates whether the track contains explicit content: 1 for explicit, 0 for clean. |
+| explicit | logical | Indicates whether the track contains explicit content: 1 for explicit, 0 otherwise. |
+
+With the variables we have chosen above, we hope to answer this main
+question of our project:
+
+``` bash
+   How do musical and lyrical features evolve across Taylor Swift's albums, and what insights can we gain about the progression of her artistry over time?
+```
 
 # Data Cleaning
 
