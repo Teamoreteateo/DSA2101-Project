@@ -1,14 +1,15 @@
 DSA2101 Group Project: Analysis of Taylor Swift Spotify Data
 ================
 
+# Group members
+
 ``` r
 students <- data.frame(
   Group_Members = c("Chua Yong Sheng Joel", "Lim Zeen Kiat", "Robin Ghosh", "Timothy Teo Shao Jun"),
   Matriculation_Number = c("A_", "A0273151M", "A0271671A", "A0272851B")
 )
 
-kable(students, col.names = c("Group Members", "Matriculation Number"), 
-      caption = "Student Information")
+kable(students, col.names = c("Group Members", "Matriculation Number"))
 ```
 
 | Group Members        | Matriculation Number |
@@ -18,7 +19,7 @@ kable(students, col.names = c("Group Members", "Matriculation Number"),
 | Robin Ghosh          | A0271671A            |
 | Timothy Teo Shao Jun | A0272851B            |
 
-Student Information
+# Loading Data
 
 ``` r
 # Load the Taylor Swift datasets
@@ -366,7 +367,7 @@ ggplot(taylor_album_summary, aes(x=album_release, y=Popularity, color=album_name
   geom_point(size=2) 
 ```
 
-![](Code_files/figure-gfm/unnamed-chunk-10-1.png)<!-- -->
+![](Code_files/figure-gfm/unnamed-chunk-11-1.png)<!-- -->
 
 ``` r
 plotting = taylor_album_summary %>% pivot_longer(cols =c(mean_liveness, mean_danceability, mean_energy, mean_acousticness, mean_instrumentalness, mean_valence), names_to="variable", values_to="value")
@@ -378,7 +379,7 @@ ggplot(plotting, aes(x=album_release, y=value, color = variable)) +
 
     ## `geom_smooth()` using formula = 'y ~ x'
 
-![](Code_files/figure-gfm/unnamed-chunk-11-1.png)<!-- -->
+![](Code_files/figure-gfm/unnamed-chunk-12-1.png)<!-- -->
 
 ``` r
 ggplot(taylor_album_summary, aes(x=album_release, y=mean_loudness)) +

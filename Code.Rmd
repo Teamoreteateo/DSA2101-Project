@@ -12,15 +12,18 @@ library(readr)
 library(knitr)
 ```
 
+# Group members
 ```{r}
 students <- data.frame(
   Group_Members = c("Chua Yong Sheng Joel", "Lim Zeen Kiat", "Robin Ghosh", "Timothy Teo Shao Jun"),
   Matriculation_Number = c("A_", "A0273151M", "A0271671A", "A0272851B")
 )
 
-kable(students, col.names = c("Group Members", "Matriculation Number"), 
-      caption = "Student Information")
+kable(students, col.names = c("Group Members", "Matriculation Number"))
+```
 
+# Loading Data
+```{r}
 # Load the Taylor Swift datasets
 tuesdata <- tidytuesdayR::tt_load(2023, week = 42)
 
