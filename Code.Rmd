@@ -39,13 +39,17 @@ taylor_albums <- tuesdata$taylor_albums
 =======
 
 ## 1. Introduction
-In this project, we aim to analyse Taylor Swift's musical evolution through her Spotify data. 
-As one of the most popular music artists globally, we aim to understand patterns and relationships in the musical attributes of her songs and how these have defined her career.
+
+Taylor Swift's music has had a significant impact on the global pop and country music scenes. For this project, we used the Taylor Swift Spotify data sourced from the TidyTuesday repository to analyse the musical and lyrical features of her music. 
+This dataset includes detailed audio attributes of her songs which we aim to use in this project. 
+By exploring the given data, we aim to discover the patterns that have emerged throughout Taylor Swift’s career and gain insights into how her music has evolved.
 
 For our project, we aim to answer the following question:
 ```bash
 How do musical and lyrical features evolve across Taylor Swift's albums, and what insights can we gain about the progression of her artistry over time?
 ```
+This analysis will allow us to identify trends in musical characteristics and examine how stylistic changes have corresponded with different stages of her career. 
+By doing so, we hope to provide a deeper understanding of how Taylor Swift has redefined her career and connect with a global audience.
 
 
 ## 2. Data Cleaning & Summary
