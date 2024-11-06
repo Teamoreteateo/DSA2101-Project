@@ -643,101 +643,120 @@ Spotify Data</h1>
 <p>Reminders: Define musical attributes (features of the songs) in
 intro</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>track_attributes <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>  <span class="at">Attribute =</span> <span class="fu">c</span>(</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>  <span class="at">Variable =</span> <span class="fu">c</span>(</span>
 <span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>    <span class="st">&quot;album_name&quot;</span>, <span class="st">&quot;album_release&quot;</span>, <span class="st">&quot;track_name&quot;</span>, <span class="st">&quot;liveness&quot;</span>, </span>
 <span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>    <span class="st">&quot;danceability&quot;</span>, <span class="st">&quot;energy&quot;</span>, <span class="st">&quot;loudness&quot;</span>, <span class="st">&quot;mode&quot;</span>, <span class="st">&quot;speechiness&quot;</span>, </span>
 <span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>    <span class="st">&quot;acousticness&quot;</span>, <span class="st">&quot;instrumentalness&quot;</span>, <span class="st">&quot;valence&quot;</span>, <span class="st">&quot;tempo&quot;</span>, <span class="st">&quot;explicit&quot;</span></span>
 <span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a>  ),</span>
-<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a>  <span class="at">Description =</span> <span class="fu">c</span>(</span>
-<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a>    <span class="st">&quot;Name of the album the track belongs to.&quot;</span>,</span>
-<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a>    <span class="st">&quot;Release date of the album.&quot;</span>,</span>
-<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a>    <span class="st">&quot;Name of the individual track.&quot;</span>,</span>
-<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a>    <span class="st">&quot;Measures the presence of an audience in the recording, with higher values indicating more &#39;live&#39; sounds.&quot;</span>,</span>
-<span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a>    <span class="st">&quot;Measures how suitable a track is for dancing, considering tempo, rhythm, and beat regularity.&quot;</span>,</span>
-<span id="cb2-13"><a href="#cb2-13" tabindex="-1"></a>    <span class="st">&quot;Measures the intensity and activity of a track, with higher values indicating more energetic sounds.&quot;</span>,</span>
-<span id="cb2-14"><a href="#cb2-14" tabindex="-1"></a>    <span class="st">&quot;The overall volume of the track, measured in decibels (dB).&quot;</span>,</span>
-<span id="cb2-15"><a href="#cb2-15" tabindex="-1"></a>    <span class="st">&quot;Indicates the modality of the track: 1 for major, 0 for minor.&quot;</span>,</span>
-<span id="cb2-16"><a href="#cb2-16" tabindex="-1"></a>    <span class="st">&quot;Measures the presence of spoken words in a track, with higher values indicating more speech-like content.&quot;</span>,</span>
-<span id="cb2-17"><a href="#cb2-17" tabindex="-1"></a>    <span class="st">&quot;Represents the likelihood that the track is acoustic, with higher values indicating more acoustic qualities.&quot;</span>,</span>
-<span id="cb2-18"><a href="#cb2-18" tabindex="-1"></a>    <span class="st">&quot;Predicts whether a track is instrumental, with higher values suggesting a lack of vocals.&quot;</span>,</span>
-<span id="cb2-19"><a href="#cb2-19" tabindex="-1"></a>    <span class="st">&quot;Describes the musical positiveness conveyed, with higher values indicating more cheerful and happy tones.&quot;</span>,</span>
-<span id="cb2-20"><a href="#cb2-20" tabindex="-1"></a>    <span class="st">&quot;The speed of the track, measured in beats per minute (BPM).&quot;</span>,</span>
-<span id="cb2-21"><a href="#cb2-21" tabindex="-1"></a>    <span class="st">&quot;Indicates whether the track contains explicit content: 1 for explicit, 0 for clean.&quot;</span></span>
-<span id="cb2-22"><a href="#cb2-22" tabindex="-1"></a>  )</span>
-<span id="cb2-23"><a href="#cb2-23" tabindex="-1"></a>)</span>
-<span id="cb2-24"><a href="#cb2-24" tabindex="-1"></a><span class="fu">kable</span>(track_attributes, <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&quot;Attribute&quot;</span>, <span class="st">&quot;Description&quot;</span>), <span class="at">align =</span> <span class="st">&quot;l&quot;</span>)</span></code></pre></div>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a>  <span class="at">Class =</span> <span class="fu">c</span>(</span>
+<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a>    <span class="st">&quot;character&quot;</span>, <span class="st">&quot;double&quot;</span>, <span class="st">&quot;character&quot;</span>, <span class="st">&quot;double&quot;</span>, <span class="st">&quot;double&quot;</span>, <span class="st">&quot;double&quot;</span>, <span class="st">&quot;double&quot;</span>, <span class="st">&quot;integer&quot;</span>,</span>
+<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a>    <span class="st">&quot;double&quot;</span>, <span class="st">&quot;double&quot;</span>, <span class="st">&quot;double&quot;</span>, <span class="st">&quot;double&quot;</span>, <span class="st">&quot;double&quot;</span>, <span class="st">&quot;logical&quot;</span></span>
+<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a>  ),</span>
+<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a>  <span class="at">Description =</span> <span class="fu">c</span>(</span>
+<span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a>    <span class="st">&quot;Name of the album the track belongs to.&quot;</span>,</span>
+<span id="cb2-13"><a href="#cb2-13" tabindex="-1"></a>    <span class="st">&quot;Release date of the album.&quot;</span>,</span>
+<span id="cb2-14"><a href="#cb2-14" tabindex="-1"></a>    <span class="st">&quot;Name of the individual track.&quot;</span>,</span>
+<span id="cb2-15"><a href="#cb2-15" tabindex="-1"></a>    <span class="st">&quot;Measures the presence of an audience in the recording, with higher values indicating more &#39;live&#39; sounds.&quot;</span>,</span>
+<span id="cb2-16"><a href="#cb2-16" tabindex="-1"></a>    <span class="st">&quot;Measures how suitable a track is for dancing, considering tempo, rhythm, and beat regularity.&quot;</span>,</span>
+<span id="cb2-17"><a href="#cb2-17" tabindex="-1"></a>    <span class="st">&quot;Measures the intensity and activity of a track, with higher values indicating more energetic sounds.&quot;</span>,</span>
+<span id="cb2-18"><a href="#cb2-18" tabindex="-1"></a>    <span class="st">&quot;The overall volume of the track, measured in decibels (dB).&quot;</span>,</span>
+<span id="cb2-19"><a href="#cb2-19" tabindex="-1"></a>    <span class="st">&quot;Indicates the modality of the track: 1 for major, 0 for minor.&quot;</span>,</span>
+<span id="cb2-20"><a href="#cb2-20" tabindex="-1"></a>    <span class="st">&quot;Measures the presence of spoken words in a track, with higher values indicating more speech-like content.&quot;</span>,</span>
+<span id="cb2-21"><a href="#cb2-21" tabindex="-1"></a>    <span class="st">&quot;Represents the likelihood that the track is acoustic, with higher values indicating more acoustic qualities.&quot;</span>,</span>
+<span id="cb2-22"><a href="#cb2-22" tabindex="-1"></a>    <span class="st">&quot;Predicts whether a track is instrumental, with higher values suggesting a lack of vocals.&quot;</span>,</span>
+<span id="cb2-23"><a href="#cb2-23" tabindex="-1"></a>    <span class="st">&quot;Describes the musical positiveness conveyed, with higher values indicating more cheerful and happy tones.&quot;</span>,</span>
+<span id="cb2-24"><a href="#cb2-24" tabindex="-1"></a>    <span class="st">&quot;The speed of the track, measured in beats per minute (BPM).&quot;</span>,</span>
+<span id="cb2-25"><a href="#cb2-25" tabindex="-1"></a>    <span class="st">&quot;Indicates whether the track contains explicit content: 1 for explicit, 0 for clean.&quot;</span></span>
+<span id="cb2-26"><a href="#cb2-26" tabindex="-1"></a>  )</span>
+<span id="cb2-27"><a href="#cb2-27" tabindex="-1"></a>)</span>
+<span id="cb2-28"><a href="#cb2-28" tabindex="-1"></a><span class="fu">kable</span>(track_attributes, <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&quot;Variable&quot;</span>, <span class="st">&quot;Class&quot;</span>, <span class="st">&quot;Description&quot;</span>), <span class="at">align =</span> <span class="st">&quot;l&quot;</span>)</span></code></pre></div>
 <table>
 <thead>
 <tr>
-<th align="left">Attribute</th>
+<th align="left">Variable</th>
+<th align="left">Class</th>
 <th align="left">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td align="left">album_name</td>
+<td align="left">character</td>
 <td align="left">Name of the album the track belongs to.</td>
 </tr>
 <tr>
 <td align="left">album_release</td>
+<td align="left">double</td>
 <td align="left">Release date of the album.</td>
 </tr>
 <tr>
 <td align="left">track_name</td>
+<td align="left">character</td>
 <td align="left">Name of the individual track.</td>
 </tr>
 <tr>
 <td align="left">liveness</td>
+<td align="left">double</td>
 <td align="left">Measures the presence of an audience in the recording,
 with higher values indicating more ‘live’ sounds.</td>
 </tr>
 <tr>
 <td align="left">danceability</td>
+<td align="left">double</td>
 <td align="left">Measures how suitable a track is for dancing,
 considering tempo, rhythm, and beat regularity.</td>
 </tr>
 <tr>
 <td align="left">energy</td>
+<td align="left">double</td>
 <td align="left">Measures the intensity and activity of a track, with
 higher values indicating more energetic sounds.</td>
 </tr>
 <tr>
 <td align="left">loudness</td>
+<td align="left">double</td>
 <td align="left">The overall volume of the track, measured in decibels
 (dB).</td>
 </tr>
 <tr>
 <td align="left">mode</td>
+<td align="left">integer</td>
 <td align="left">Indicates the modality of the track: 1 for major, 0 for
 minor.</td>
 </tr>
 <tr>
 <td align="left">speechiness</td>
+<td align="left">double</td>
 <td align="left">Measures the presence of spoken words in a track, with
 higher values indicating more speech-like content.</td>
 </tr>
 <tr>
 <td align="left">acousticness</td>
+<td align="left">double</td>
 <td align="left">Represents the likelihood that the track is acoustic,
 with higher values indicating more acoustic qualities.</td>
 </tr>
 <tr>
 <td align="left">instrumentalness</td>
+<td align="left">double</td>
 <td align="left">Predicts whether a track is instrumental, with higher
 values suggesting a lack of vocals.</td>
 </tr>
 <tr>
 <td align="left">valence</td>
+<td align="left">double</td>
 <td align="left">Describes the musical positiveness conveyed, with
 higher values indicating more cheerful and happy tones.</td>
 </tr>
 <tr>
 <td align="left">tempo</td>
+<td align="left">double</td>
 <td align="left">The speed of the track, measured in beats per minute
 (BPM).</td>
 </tr>
 <tr>
 <td align="left">explicit</td>
+<td align="left">logical</td>
 <td align="left">Indicates whether the track contains explicit content:
 1 for explicit, 0 for clean.</td>
 </tr>
