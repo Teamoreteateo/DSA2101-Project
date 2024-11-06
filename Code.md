@@ -6,7 +6,7 @@ DSA2101 Group Project
 ``` r
 students <- data.frame(
   Group_Members = c("Chua Yong Sheng Joel", "Lim Zeen Kiat", "Robin Ghosh", "Timothy Teo Shao Jun"),
-  Matriculation_Number = c("A_", "A_", "A0271671A", "A0272851B")
+  Matriculation_Number = c("A_", "A0273151M", "A0271671A", "A0272851B")
 )
 
 kable(students, col.names = c("Group Members", "Matriculation Number"), 
@@ -16,7 +16,7 @@ kable(students, col.names = c("Group Members", "Matriculation Number"),
 | Group Members        | Matriculation Number |
 |:---------------------|:---------------------|
 | Chua Yong Sheng Joel | A\_                  |
-| Lim Zeen Kiat        | A\_                  |
+| Lim Zeen Kiat        | A0273151M            |
 | Robin Ghosh          | A0271671A            |
 | Timothy Teo Shao Jun | A0272851B            |
 
@@ -27,54 +27,6 @@ Student Information
 ## Introduction
 
 Reminders: Define musical attributes (features of the songs) in intro
-
-``` r
-track_attributes <- data.frame(
-  Variable = c(
-    "album_name", "album_release", "track_name", "liveness", 
-    "danceability", "energy", "loudness", "mode", "speechiness", 
-    "acousticness", "instrumentalness", "valence", "tempo", "explicit"
-  ),
-  Class = c(
-    "character", "double", "character", "double", "double", "double", "double", "integer",
-    "double", "double", "double", "double", "double", "logical"
-  ),
-  Description = c(
-    "Name of the album the track belongs to.",
-    "Release date of the album.",
-    "Name of the individual track.",
-    "Measures the presence of an audience in the recording, with higher values indicating more 'live' sounds.",
-    "Measures how suitable a track is for dancing, considering tempo, rhythm, and beat regularity.",
-    "Measures the intensity and activity of a track, with higher values indicating more energetic sounds.",
-    "The overall volume of the track, measured in decibels (dB).",
-    "Indicates the modality of the track: 1 for major, 0 for minor.",
-    "Measures the presence of spoken words in a track, with higher values indicating more speech-like content.",
-    "Represents the likelihood that the track is acoustic, with higher values indicating more acoustic qualities.",
-    "Predicts whether a track is instrumental, with higher values suggesting a lack of vocals.",
-    "Describes the musical positiveness conveyed, with higher values indicating more cheerful and happy tones.",
-    "The speed of the track, measured in beats per minute (BPM).",
-    "Indicates whether the track contains explicit content: 1 for explicit, 0 for clean."
-  )
-)
-kable(track_attributes, col.names = c("Variable", "Class", "Description"), align = "l")
-```
-
-| Variable | Class | Description |
-|:---|:---|:---|
-| album_name | character | Name of the album the track belongs to. |
-| album_release | double | Release date of the album. |
-| track_name | character | Name of the individual track. |
-| liveness | double | Measures the presence of an audience in the recording, with higher values indicating more ‘live’ sounds. |
-| danceability | double | Measures how suitable a track is for dancing, considering tempo, rhythm, and beat regularity. |
-| energy | double | Measures the intensity and activity of a track, with higher values indicating more energetic sounds. |
-| loudness | double | The overall volume of the track, measured in decibels (dB). |
-| mode | integer | Indicates the modality of the track: 1 for major, 0 for minor. |
-| speechiness | double | Measures the presence of spoken words in a track, with higher values indicating more speech-like content. |
-| acousticness | double | Represents the likelihood that the track is acoustic, with higher values indicating more acoustic qualities. |
-| instrumentalness | double | Predicts whether a track is instrumental, with higher values suggesting a lack of vocals. |
-| valence | double | Describes the musical positiveness conveyed, with higher values indicating more cheerful and happy tones. |
-| tempo | double | The speed of the track, measured in beats per minute (BPM). |
-| explicit | logical | Indicates whether the track contains explicit content: 1 for explicit, 0 for clean. |
 
 ## Loading Data
 
@@ -268,7 +220,55 @@ summary(taylor_albums)
     ##  NA's   :2
 
 A brief description of the variables relevant to our project is given
-below: (To start on)
+below:
+
+``` r
+track_attributes <- data.frame(
+  Variable = c(
+    "album_name", "album_release", "track_name", "liveness", 
+    "danceability", "energy", "loudness", "mode", "speechiness", 
+    "acousticness", "instrumentalness", "valence", "tempo", "explicit"
+  ),
+  Class = c(
+    "character", "double", "character", "double", "double", "double", "double", "integer",
+    "double", "double", "double", "double", "double", "logical"
+  ),
+  Description = c(
+    "Name of the album the track belongs to.",
+    "Release date of the album.",
+    "Name of the individual track.",
+    "Measures the presence of an audience in the recording, with higher values indicating more 'live' sounds.",
+    "Measures how suitable a track is for dancing, considering tempo, rhythm, and beat regularity.",
+    "Measures the intensity and activity of a track, with higher values indicating more energetic sounds.",
+    "The overall volume of the track, measured in decibels (dB).",
+    "Indicates the modality of the track: 1 for major, 0 for minor.",
+    "Measures the presence of spoken words in a track, with higher values indicating more speech-like content.",
+    "Represents the likelihood that the track is acoustic, with higher values indicating more acoustic qualities.",
+    "Predicts whether a track is instrumental, with higher values suggesting a lack of vocals.",
+    "Describes the musical positiveness conveyed, with higher values indicating more cheerful and happy tones.",
+    "The speed of the track, measured in beats per minute (BPM).",
+    "Indicates whether the track contains explicit content: 1 for explicit, 0 for clean."
+  )
+)
+kable(track_attributes, col.names = c("Variable", "Class", "Description"), align = "l")
+```
+
+| Variable | Class | Description |
+|:---|:---|:---|
+| album_name | character | Name of the album the track belongs to. |
+| album_release | double | Release date of the album. |
+| track_name | character | Name of the individual track. |
+| liveness | double | Measures the presence of an audience in the recording, with higher values indicating more ‘live’ sounds. |
+| danceability | double | Measures how suitable a track is for dancing, considering tempo, rhythm, and beat regularity. |
+| energy | double | Measures the intensity and activity of a track, with higher values indicating more energetic sounds. |
+| loudness | double | The overall volume of the track, measured in decibels (dB). |
+| mode | integer | Indicates the modality of the track: 1 for major, 0 for minor. |
+| speechiness | double | Measures the presence of spoken words in a track, with higher values indicating more speech-like content. |
+| acousticness | double | Represents the likelihood that the track is acoustic, with higher values indicating more acoustic qualities. |
+| instrumentalness | double | Predicts whether a track is instrumental, with higher values suggesting a lack of vocals. |
+| valence | double | Describes the musical positiveness conveyed, with higher values indicating more cheerful and happy tones. |
+| tempo | double | The speed of the track, measured in beats per minute (BPM). |
+| explicit | logical | Indicates whether the track contains explicit content: 1 for explicit, 0 for clean. |
 
 ## Data Cleaning
 

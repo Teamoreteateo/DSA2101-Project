@@ -606,7 +606,7 @@ padding-top: 0px;
 Spotify Data</h1>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>students <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
 <span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>  <span class="at">Group_Members =</span> <span class="fu">c</span>(<span class="st">&quot;Chua Yong Sheng Joel&quot;</span>, <span class="st">&quot;Lim Zeen Kiat&quot;</span>, <span class="st">&quot;Robin Ghosh&quot;</span>, <span class="st">&quot;Timothy Teo Shao Jun&quot;</span>),</span>
-<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>  <span class="at">Matriculation_Number =</span> <span class="fu">c</span>(<span class="st">&quot;A_&quot;</span>, <span class="st">&quot;A_&quot;</span>, <span class="st">&quot;A0271671A&quot;</span>, <span class="st">&quot;A0272851B&quot;</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>  <span class="at">Matriculation_Number =</span> <span class="fu">c</span>(<span class="st">&quot;A_&quot;</span>, <span class="st">&quot;A0273151M&quot;</span>, <span class="st">&quot;A0271671A&quot;</span>, <span class="st">&quot;A0272851B&quot;</span>)</span>
 <span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a>)</span>
 <span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a></span>
 <span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a><span class="fu">kable</span>(students, <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&quot;Group Members&quot;</span>, <span class="st">&quot;Matriculation Number&quot;</span>), </span>
@@ -625,7 +625,7 @@ Spotify Data</h1>
 </tr>
 <tr>
 <td align="left">Lim Zeen Kiat</td>
-<td align="left">A_</td>
+<td align="left">A0273151M</td>
 </tr>
 <tr>
 <td align="left">Robin Ghosh</td>
@@ -642,34 +642,206 @@ Spotify Data</h1>
 <h2 id="introduction">Introduction</h2>
 <p>Reminders: Define musical attributes (features of the songs) in
 intro</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>track_attributes <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>  <span class="at">Variable =</span> <span class="fu">c</span>(</span>
-<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>    <span class="st">&quot;album_name&quot;</span>, <span class="st">&quot;album_release&quot;</span>, <span class="st">&quot;track_name&quot;</span>, <span class="st">&quot;liveness&quot;</span>, </span>
-<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>    <span class="st">&quot;danceability&quot;</span>, <span class="st">&quot;energy&quot;</span>, <span class="st">&quot;loudness&quot;</span>, <span class="st">&quot;mode&quot;</span>, <span class="st">&quot;speechiness&quot;</span>, </span>
-<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>    <span class="st">&quot;acousticness&quot;</span>, <span class="st">&quot;instrumentalness&quot;</span>, <span class="st">&quot;valence&quot;</span>, <span class="st">&quot;tempo&quot;</span>, <span class="st">&quot;explicit&quot;</span></span>
-<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a>  ),</span>
-<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a>  <span class="at">Class =</span> <span class="fu">c</span>(</span>
-<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a>    <span class="st">&quot;character&quot;</span>, <span class="st">&quot;double&quot;</span>, <span class="st">&quot;character&quot;</span>, <span class="st">&quot;double&quot;</span>, <span class="st">&quot;double&quot;</span>, <span class="st">&quot;double&quot;</span>, <span class="st">&quot;double&quot;</span>, <span class="st">&quot;integer&quot;</span>,</span>
-<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a>    <span class="st">&quot;double&quot;</span>, <span class="st">&quot;double&quot;</span>, <span class="st">&quot;double&quot;</span>, <span class="st">&quot;double&quot;</span>, <span class="st">&quot;double&quot;</span>, <span class="st">&quot;logical&quot;</span></span>
-<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a>  ),</span>
-<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a>  <span class="at">Description =</span> <span class="fu">c</span>(</span>
-<span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a>    <span class="st">&quot;Name of the album the track belongs to.&quot;</span>,</span>
-<span id="cb2-13"><a href="#cb2-13" tabindex="-1"></a>    <span class="st">&quot;Release date of the album.&quot;</span>,</span>
-<span id="cb2-14"><a href="#cb2-14" tabindex="-1"></a>    <span class="st">&quot;Name of the individual track.&quot;</span>,</span>
-<span id="cb2-15"><a href="#cb2-15" tabindex="-1"></a>    <span class="st">&quot;Measures the presence of an audience in the recording, with higher values indicating more &#39;live&#39; sounds.&quot;</span>,</span>
-<span id="cb2-16"><a href="#cb2-16" tabindex="-1"></a>    <span class="st">&quot;Measures how suitable a track is for dancing, considering tempo, rhythm, and beat regularity.&quot;</span>,</span>
-<span id="cb2-17"><a href="#cb2-17" tabindex="-1"></a>    <span class="st">&quot;Measures the intensity and activity of a track, with higher values indicating more energetic sounds.&quot;</span>,</span>
-<span id="cb2-18"><a href="#cb2-18" tabindex="-1"></a>    <span class="st">&quot;The overall volume of the track, measured in decibels (dB).&quot;</span>,</span>
-<span id="cb2-19"><a href="#cb2-19" tabindex="-1"></a>    <span class="st">&quot;Indicates the modality of the track: 1 for major, 0 for minor.&quot;</span>,</span>
-<span id="cb2-20"><a href="#cb2-20" tabindex="-1"></a>    <span class="st">&quot;Measures the presence of spoken words in a track, with higher values indicating more speech-like content.&quot;</span>,</span>
-<span id="cb2-21"><a href="#cb2-21" tabindex="-1"></a>    <span class="st">&quot;Represents the likelihood that the track is acoustic, with higher values indicating more acoustic qualities.&quot;</span>,</span>
-<span id="cb2-22"><a href="#cb2-22" tabindex="-1"></a>    <span class="st">&quot;Predicts whether a track is instrumental, with higher values suggesting a lack of vocals.&quot;</span>,</span>
-<span id="cb2-23"><a href="#cb2-23" tabindex="-1"></a>    <span class="st">&quot;Describes the musical positiveness conveyed, with higher values indicating more cheerful and happy tones.&quot;</span>,</span>
-<span id="cb2-24"><a href="#cb2-24" tabindex="-1"></a>    <span class="st">&quot;The speed of the track, measured in beats per minute (BPM).&quot;</span>,</span>
-<span id="cb2-25"><a href="#cb2-25" tabindex="-1"></a>    <span class="st">&quot;Indicates whether the track contains explicit content: 1 for explicit, 0 for clean.&quot;</span></span>
-<span id="cb2-26"><a href="#cb2-26" tabindex="-1"></a>  )</span>
-<span id="cb2-27"><a href="#cb2-27" tabindex="-1"></a>)</span>
-<span id="cb2-28"><a href="#cb2-28" tabindex="-1"></a><span class="fu">kable</span>(track_attributes, <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&quot;Variable&quot;</span>, <span class="st">&quot;Class&quot;</span>, <span class="st">&quot;Description&quot;</span>), <span class="at">align =</span> <span class="st">&quot;l&quot;</span>)</span></code></pre></div>
+<h2 id="loading-data">Loading Data</h2>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="co"># Load the Tidy Tuesday datasets for Taylor Swift from Week 42 of 2023</span></span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>tuesdata <span class="ot">&lt;-</span> tidytuesdayR<span class="sc">::</span><span class="fu">tt_load</span>(<span class="dv">2023</span>, <span class="at">week =</span> <span class="dv">42</span>)</span></code></pre></div>
+<pre><code>## ---- Compiling #TidyTuesday Information for 2023-10-17 ----
+## --- There are 3 files available ---
+## 
+## 
+## ── Downloading files ───────────────────────────────────────────────────────────
+## 
+##   1 of 3: &quot;taylor_album_songs.csv&quot;
+##   2 of 3: &quot;taylor_all_songs.csv&quot;
+##   3 of 3: &quot;taylor_albums.csv&quot;</code></pre>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="co"># Extract specific datasets</span></span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>taylor_album_songs <span class="ot">&lt;-</span> tuesdata<span class="sc">$</span>taylor_album_songs</span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>taylor_all_songs <span class="ot">&lt;-</span> tuesdata<span class="sc">$</span>taylor_all_songs</span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a>taylor_albums <span class="ot">&lt;-</span> tuesdata<span class="sc">$</span>taylor_albums</span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a><span class="co"># Save each dataset to CSV files</span></span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a><span class="co"># write.csv(taylor_album_songs, &quot;taylor_album_songs.csv&quot;, row.names = FALSE)</span></span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a><span class="co"># write.csv(taylor_all_songs, &quot;taylor_all_songs.csv&quot;, row.names = FALSE)</span></span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a><span class="co"># write.csv(taylor_albums, &quot;taylor_albums.csv&quot;, row.names = FALSE)</span></span>
+<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a><span class="co"># &gt;&gt;&gt;&gt;&gt;&gt; e3542bd358543883b147a6664c5777a5ed2ce66e</span></span></code></pre></div>
+<h2 id="description-of-our-data">Description of our Data</h2>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="fu">summary</span>(taylor_album_songs)</span></code></pre></div>
+<pre><code>##   album_name            ep          album_release         track_number  
+##  Length:194         Mode :logical   Min.   :2006-10-24   Min.   : 1.00  
+##  Class :character   FALSE:194       1st Qu.:2017-11-10   1st Qu.: 5.00  
+##  Mode  :character                   Median :2020-07-24   Median :10.00  
+##                                     Mean   :2018-06-21   Mean   :10.71  
+##                                     3rd Qu.:2021-11-12   3rd Qu.:15.00  
+##                                     Max.   :2022-10-21   Max.   :30.00  
+##                                                                         
+##   track_name           artist           featuring         bonus_track    
+##  Length:194         Length:194         Length:194         Mode :logical  
+##  Class :character   Class :character   Class :character   FALSE:171      
+##  Mode  :character   Mode  :character   Mode  :character   TRUE :23       
+##                                                                          
+##                                                                          
+##                                                                          
+##                                                                          
+##  promotional_release  single_release       track_release         danceability  
+##  Min.   :2010-10-04   Min.   :2006-06-19   Min.   :2006-06-19   Min.   :0.292  
+##  1st Qu.:2011-11-02   1st Qu.:2011-06-25   1st Qu.:2017-09-07   1st Qu.:0.511  
+##  Median :2016-06-26   Median :2017-09-23   Median :2020-07-24   Median :0.594  
+##  Mean   :2016-08-03   Mean   :2015-12-30   Mean   :2018-06-28   Mean   :0.584  
+##  3rd Qu.:2021-02-12   3rd Qu.:2020-03-12   3rd Qu.:2021-11-12   3rd Qu.:0.652  
+##  Max.   :2022-10-25   Max.   :2022-11-29   Max.   :2022-10-21   Max.   :0.897  
+##  NA&#39;s   :176          NA&#39;s   :158                               NA&#39;s   :3      
+##      energy            key            loudness            mode      
+##  Min.   :0.1310   Min.   : 0.000   Min.   :-15.434   Min.   :0.000  
+##  1st Qu.:0.4465   1st Qu.: 2.000   1st Qu.: -9.326   1st Qu.:1.000  
+##  Median :0.5800   Median : 5.000   Median : -6.937   Median :1.000  
+##  Mean   :0.5745   Mean   : 4.686   Mean   : -7.518   Mean   :0.911  
+##  3rd Qu.:0.7170   3rd Qu.: 7.000   3rd Qu.: -5.606   3rd Qu.:1.000  
+##  Max.   :0.9500   Max.   :11.000   Max.   : -2.098   Max.   :1.000  
+##  NA&#39;s   :3        NA&#39;s   :3        NA&#39;s   :3         NA&#39;s   :3      
+##   speechiness       acousticness      instrumentalness       liveness      
+##  Min.   :0.02310   Min.   :0.000191   Min.   :0.0000000   Min.   :0.03570  
+##  1st Qu.:0.03080   1st Qu.:0.034600   1st Qu.:0.0000000   1st Qu.:0.09295  
+##  Median :0.03960   Median :0.162000   Median :0.0000014   Median :0.11500  
+##  Mean   :0.05831   Mean   :0.321225   Mean   :0.0039358   Mean   :0.14081  
+##  3rd Qu.:0.05740   3rd Qu.:0.662000   3rd Qu.:0.0000399   3rd Qu.:0.15050  
+##  Max.   :0.51900   Max.   :0.971000   Max.   :0.3480000   Max.   :0.59400  
+##  NA&#39;s   :3         NA&#39;s   :3          NA&#39;s   :3           NA&#39;s   :3        
+##     valence           tempo        time_signature   duration_ms    
+##  Min.   :0.0382   Min.   : 68.53   Min.   :1.000   Min.   :148781  
+##  1st Qu.:0.2535   1st Qu.: 99.98   1st Qu.:4.000   1st Qu.:209326  
+##  Median :0.4040   Median :121.96   Median :4.000   Median :232107  
+##  Mean   :0.4009   Mean   :125.99   Mean   :3.979   Mean   :237079  
+##  3rd Qu.:0.5345   3rd Qu.:150.03   3rd Qu.:4.000   3rd Qu.:254448  
+##  Max.   :0.9420   Max.   :208.92   Max.   :5.000   Max.   :613027  
+##  NA&#39;s   :3        NA&#39;s   :3        NA&#39;s   :3       NA&#39;s   :3       
+##   explicit         key_name          mode_name           key_mode        
+##  Mode :logical   Length:194         Length:194         Length:194        
+##  FALSE:172       Class :character   Class :character   Class :character  
+##  TRUE :19        Mode  :character   Mode  :character   Mode  :character  
+##  NA&#39;s :3                                                                 
+##                                                                          
+##                                                                          
+##                                                                          
+##   lyrics       
+##  Mode:logical  
+##  NA&#39;s:194      
+##                
+##                
+##                
+##                
+## </code></pre>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="fu">summary</span>(taylor_all_songs)</span></code></pre></div>
+<pre><code>##   album_name            ep          album_release         track_number  
+##  Length:274         Mode :logical   Min.   :2006-10-24   Min.   : 1.00  
+##  Class :character   FALSE:235       1st Qu.:2010-10-25   1st Qu.: 5.00  
+##  Mode  :character   TRUE :12        Median :2019-08-23   Median :10.00  
+##                     NA&#39;s :27        Mean   :2016-09-22   Mean   :10.37  
+##                                     3rd Qu.:2021-04-09   3rd Qu.:15.00  
+##                                     Max.   :2022-10-21   Max.   :30.00  
+##                                     NA&#39;s   :27           NA&#39;s   :27     
+##   track_name           artist           featuring         bonus_track    
+##  Length:274         Length:274         Length:274         Mode :logical  
+##  Class :character   Class :character   Class :character   FALSE:212      
+##  Mode  :character   Mode  :character   Mode  :character   TRUE :35       
+##                                                           NA&#39;s :27       
+##                                                                          
+##                                                                          
+##                                                                          
+##  promotional_release  single_release       track_release       
+##  Min.   :2008-06-23   Min.   :2006-06-19   Min.   :2006-06-19  
+##  1st Qu.:2010-10-09   1st Qu.:2011-04-19   1st Qu.:2012-01-18  
+##  Median :2014-10-17   Median :2015-02-09   Median :2019-08-23  
+##  Mean   :2015-04-04   Mean   :2015-03-29   Mean   :2016-09-29  
+##  3rd Qu.:2020-04-03   3rd Qu.:2019-08-16   3rd Qu.:2021-04-09  
+##  Max.   :2022-10-25   Max.   :2022-11-29   Max.   :2022-10-21  
+##  NA&#39;s   :234          NA&#39;s   :213                              
+##   danceability        energy            key            loudness      
+##  Min.   :0.2920   Min.   :0.1180   Min.   : 0.000   Min.   :-15.910  
+##  1st Qu.:0.5135   1st Qu.:0.4560   1st Qu.: 2.000   1st Qu.: -9.001  
+##  Median :0.5980   Median :0.5930   Median : 5.000   Median : -6.918  
+##  Mean   :0.5866   Mean   :0.5765   Mean   : 4.692   Mean   : -7.376  
+##  3rd Qu.:0.6535   3rd Qu.:0.7205   3rd Qu.: 7.000   3rd Qu.: -5.398  
+##  Max.   :0.8970   Max.   :0.9500   Max.   :11.000   Max.   : -2.098  
+##  NA&#39;s   :11       NA&#39;s   :11       NA&#39;s   :11       NA&#39;s   :11       
+##       mode         speechiness       acousticness      instrumentalness  
+##  Min.   :0.0000   Min.   :0.02310   Min.   :0.000191   Min.   :0.000000  
+##  1st Qu.:1.0000   1st Qu.:0.02990   1st Qu.:0.034600   1st Qu.:0.000000  
+##  Median :1.0000   Median :0.03630   Median :0.157000   Median :0.000002  
+##  Mean   :0.9087   Mean   :0.05328   Mean   :0.299749   Mean   :0.003664  
+##  3rd Qu.:1.0000   3rd Qu.:0.05490   3rd Qu.:0.581000   3rd Qu.:0.000044  
+##  Max.   :1.0000   Max.   :0.51900   Max.   :0.971000   Max.   :0.348000  
+##  NA&#39;s   :11       NA&#39;s   :11        NA&#39;s   :11         NA&#39;s   :11        
+##     liveness          valence           tempo        time_signature 
+##  Min.   :0.03570   Min.   :0.0382   Min.   : 57.96   Min.   :1.000  
+##  1st Qu.:0.09325   1st Qu.:0.2510   1st Qu.: 99.99   1st Qu.:4.000  
+##  Median :0.11400   Median :0.3990   Median :122.88   Median :4.000  
+##  Mean   :0.14052   Mean   :0.4046   Mean   :125.15   Mean   :3.966  
+##  3rd Qu.:0.15050   3rd Qu.:0.5385   3rd Qu.:146.04   3rd Qu.:4.000  
+##  Max.   :0.59400   Max.   :0.9420   Max.   :208.92   Max.   :5.000  
+##  NA&#39;s   :11        NA&#39;s   :11       NA&#39;s   :11       NA&#39;s   :11     
+##   duration_ms      explicit         key_name          mode_name        
+##  Min.   :148781   Mode :logical   Length:274         Length:274        
+##  1st Qu.:210898   FALSE:241       Class :character   Class :character  
+##  Median :234516   TRUE :22        Mode  :character   Mode  :character  
+##  Mean   :237384   NA&#39;s :11                                             
+##  3rd Qu.:254554                                                        
+##  Max.   :613027                                                        
+##  NA&#39;s   :11                                                            
+##    key_mode          lyrics       
+##  Length:274         Mode:logical  
+##  Class :character   NA&#39;s:274      
+##  Mode  :character                 
+##                                   
+##                                   
+##                                   
+## </code></pre>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="fu">summary</span>(taylor_albums)</span></code></pre></div>
+<pre><code>##   album_name            ep          album_release        metacritic_score
+##  Length:14          Mode :logical   Min.   :2006-10-24   Min.   :67.00   
+##  Class :character   FALSE:12        1st Qu.:2009-05-08   1st Qu.:75.25   
+##  Mode  :character   TRUE :2         Median :2016-05-04   Median :78.00   
+##                                     Mean   :2015-05-21   Mean   :79.25   
+##                                     3rd Qu.:2020-11-06   3rd Qu.:85.00   
+##                                     Max.   :2022-10-21   Max.   :91.00   
+##                                                          NA&#39;s   :2       
+##    user_score   
+##  Min.   :8.200  
+##  1st Qu.:8.375  
+##  Median :8.500  
+##  Mean   :8.583  
+##  3rd Qu.:8.900  
+##  Max.   :9.000  
+##  NA&#39;s   :2</code></pre>
+<p>A brief description of the variables relevant to our project is given
+below:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a>track_attributes <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a>  <span class="at">Variable =</span> <span class="fu">c</span>(</span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a>    <span class="st">&quot;album_name&quot;</span>, <span class="st">&quot;album_release&quot;</span>, <span class="st">&quot;track_name&quot;</span>, <span class="st">&quot;liveness&quot;</span>, </span>
+<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a>    <span class="st">&quot;danceability&quot;</span>, <span class="st">&quot;energy&quot;</span>, <span class="st">&quot;loudness&quot;</span>, <span class="st">&quot;mode&quot;</span>, <span class="st">&quot;speechiness&quot;</span>, </span>
+<span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a>    <span class="st">&quot;acousticness&quot;</span>, <span class="st">&quot;instrumentalness&quot;</span>, <span class="st">&quot;valence&quot;</span>, <span class="st">&quot;tempo&quot;</span>, <span class="st">&quot;explicit&quot;</span></span>
+<span id="cb11-6"><a href="#cb11-6" tabindex="-1"></a>  ),</span>
+<span id="cb11-7"><a href="#cb11-7" tabindex="-1"></a>  <span class="at">Class =</span> <span class="fu">c</span>(</span>
+<span id="cb11-8"><a href="#cb11-8" tabindex="-1"></a>    <span class="st">&quot;character&quot;</span>, <span class="st">&quot;double&quot;</span>, <span class="st">&quot;character&quot;</span>, <span class="st">&quot;double&quot;</span>, <span class="st">&quot;double&quot;</span>, <span class="st">&quot;double&quot;</span>, <span class="st">&quot;double&quot;</span>, <span class="st">&quot;integer&quot;</span>,</span>
+<span id="cb11-9"><a href="#cb11-9" tabindex="-1"></a>    <span class="st">&quot;double&quot;</span>, <span class="st">&quot;double&quot;</span>, <span class="st">&quot;double&quot;</span>, <span class="st">&quot;double&quot;</span>, <span class="st">&quot;double&quot;</span>, <span class="st">&quot;logical&quot;</span></span>
+<span id="cb11-10"><a href="#cb11-10" tabindex="-1"></a>  ),</span>
+<span id="cb11-11"><a href="#cb11-11" tabindex="-1"></a>  <span class="at">Description =</span> <span class="fu">c</span>(</span>
+<span id="cb11-12"><a href="#cb11-12" tabindex="-1"></a>    <span class="st">&quot;Name of the album the track belongs to.&quot;</span>,</span>
+<span id="cb11-13"><a href="#cb11-13" tabindex="-1"></a>    <span class="st">&quot;Release date of the album.&quot;</span>,</span>
+<span id="cb11-14"><a href="#cb11-14" tabindex="-1"></a>    <span class="st">&quot;Name of the individual track.&quot;</span>,</span>
+<span id="cb11-15"><a href="#cb11-15" tabindex="-1"></a>    <span class="st">&quot;Measures the presence of an audience in the recording, with higher values indicating more &#39;live&#39; sounds.&quot;</span>,</span>
+<span id="cb11-16"><a href="#cb11-16" tabindex="-1"></a>    <span class="st">&quot;Measures how suitable a track is for dancing, considering tempo, rhythm, and beat regularity.&quot;</span>,</span>
+<span id="cb11-17"><a href="#cb11-17" tabindex="-1"></a>    <span class="st">&quot;Measures the intensity and activity of a track, with higher values indicating more energetic sounds.&quot;</span>,</span>
+<span id="cb11-18"><a href="#cb11-18" tabindex="-1"></a>    <span class="st">&quot;The overall volume of the track, measured in decibels (dB).&quot;</span>,</span>
+<span id="cb11-19"><a href="#cb11-19" tabindex="-1"></a>    <span class="st">&quot;Indicates the modality of the track: 1 for major, 0 for minor.&quot;</span>,</span>
+<span id="cb11-20"><a href="#cb11-20" tabindex="-1"></a>    <span class="st">&quot;Measures the presence of spoken words in a track, with higher values indicating more speech-like content.&quot;</span>,</span>
+<span id="cb11-21"><a href="#cb11-21" tabindex="-1"></a>    <span class="st">&quot;Represents the likelihood that the track is acoustic, with higher values indicating more acoustic qualities.&quot;</span>,</span>
+<span id="cb11-22"><a href="#cb11-22" tabindex="-1"></a>    <span class="st">&quot;Predicts whether a track is instrumental, with higher values suggesting a lack of vocals.&quot;</span>,</span>
+<span id="cb11-23"><a href="#cb11-23" tabindex="-1"></a>    <span class="st">&quot;Describes the musical positiveness conveyed, with higher values indicating more cheerful and happy tones.&quot;</span>,</span>
+<span id="cb11-24"><a href="#cb11-24" tabindex="-1"></a>    <span class="st">&quot;The speed of the track, measured in beats per minute (BPM).&quot;</span>,</span>
+<span id="cb11-25"><a href="#cb11-25" tabindex="-1"></a>    <span class="st">&quot;Indicates whether the track contains explicit content: 1 for explicit, 0 for clean.&quot;</span></span>
+<span id="cb11-26"><a href="#cb11-26" tabindex="-1"></a>  )</span>
+<span id="cb11-27"><a href="#cb11-27" tabindex="-1"></a>)</span>
+<span id="cb11-28"><a href="#cb11-28" tabindex="-1"></a><span class="fu">kable</span>(track_attributes, <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&quot;Variable&quot;</span>, <span class="st">&quot;Class&quot;</span>, <span class="st">&quot;Description&quot;</span>), <span class="at">align =</span> <span class="st">&quot;l&quot;</span>)</span></code></pre></div>
 <table>
 <thead>
 <tr>
@@ -762,178 +934,6 @@ higher values indicating more cheerful and happy tones.</td>
 </tr>
 </tbody>
 </table>
-<h2 id="loading-data">Loading Data</h2>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="co"># Load the Tidy Tuesday datasets for Taylor Swift from Week 42 of 2023</span></span>
-<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>tuesdata <span class="ot">&lt;-</span> tidytuesdayR<span class="sc">::</span><span class="fu">tt_load</span>(<span class="dv">2023</span>, <span class="at">week =</span> <span class="dv">42</span>)</span></code></pre></div>
-<pre><code>## ---- Compiling #TidyTuesday Information for 2023-10-17 ----
-## --- There are 3 files available ---
-## 
-## 
-## ── Downloading files ───────────────────────────────────────────────────────────
-## 
-##   1 of 3: &quot;taylor_album_songs.csv&quot;
-##   2 of 3: &quot;taylor_all_songs.csv&quot;
-##   3 of 3: &quot;taylor_albums.csv&quot;</code></pre>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="co"># Extract specific datasets</span></span>
-<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>taylor_album_songs <span class="ot">&lt;-</span> tuesdata<span class="sc">$</span>taylor_album_songs</span>
-<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>taylor_all_songs <span class="ot">&lt;-</span> tuesdata<span class="sc">$</span>taylor_all_songs</span>
-<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>taylor_albums <span class="ot">&lt;-</span> tuesdata<span class="sc">$</span>taylor_albums</span>
-<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a></span>
-<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a><span class="co"># Save each dataset to CSV files</span></span>
-<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a><span class="co"># write.csv(taylor_album_songs, &quot;taylor_album_songs.csv&quot;, row.names = FALSE)</span></span>
-<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a><span class="co"># write.csv(taylor_all_songs, &quot;taylor_all_songs.csv&quot;, row.names = FALSE)</span></span>
-<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a><span class="co"># write.csv(taylor_albums, &quot;taylor_albums.csv&quot;, row.names = FALSE)</span></span>
-<span id="cb5-10"><a href="#cb5-10" tabindex="-1"></a><span class="co"># &gt;&gt;&gt;&gt;&gt;&gt; e3542bd358543883b147a6664c5777a5ed2ce66e</span></span></code></pre></div>
-<h2 id="description-of-our-data">Description of our Data</h2>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="fu">summary</span>(taylor_album_songs)</span></code></pre></div>
-<pre><code>##   album_name            ep          album_release         track_number  
-##  Length:194         Mode :logical   Min.   :2006-10-24   Min.   : 1.00  
-##  Class :character   FALSE:194       1st Qu.:2017-11-10   1st Qu.: 5.00  
-##  Mode  :character                   Median :2020-07-24   Median :10.00  
-##                                     Mean   :2018-06-21   Mean   :10.71  
-##                                     3rd Qu.:2021-11-12   3rd Qu.:15.00  
-##                                     Max.   :2022-10-21   Max.   :30.00  
-##                                                                         
-##   track_name           artist           featuring         bonus_track    
-##  Length:194         Length:194         Length:194         Mode :logical  
-##  Class :character   Class :character   Class :character   FALSE:171      
-##  Mode  :character   Mode  :character   Mode  :character   TRUE :23       
-##                                                                          
-##                                                                          
-##                                                                          
-##                                                                          
-##  promotional_release  single_release       track_release         danceability  
-##  Min.   :2010-10-04   Min.   :2006-06-19   Min.   :2006-06-19   Min.   :0.292  
-##  1st Qu.:2011-11-02   1st Qu.:2011-06-25   1st Qu.:2017-09-07   1st Qu.:0.511  
-##  Median :2016-06-26   Median :2017-09-23   Median :2020-07-24   Median :0.594  
-##  Mean   :2016-08-03   Mean   :2015-12-30   Mean   :2018-06-28   Mean   :0.584  
-##  3rd Qu.:2021-02-12   3rd Qu.:2020-03-12   3rd Qu.:2021-11-12   3rd Qu.:0.652  
-##  Max.   :2022-10-25   Max.   :2022-11-29   Max.   :2022-10-21   Max.   :0.897  
-##  NA&#39;s   :176          NA&#39;s   :158                               NA&#39;s   :3      
-##      energy            key            loudness            mode      
-##  Min.   :0.1310   Min.   : 0.000   Min.   :-15.434   Min.   :0.000  
-##  1st Qu.:0.4465   1st Qu.: 2.000   1st Qu.: -9.326   1st Qu.:1.000  
-##  Median :0.5800   Median : 5.000   Median : -6.937   Median :1.000  
-##  Mean   :0.5745   Mean   : 4.686   Mean   : -7.518   Mean   :0.911  
-##  3rd Qu.:0.7170   3rd Qu.: 7.000   3rd Qu.: -5.606   3rd Qu.:1.000  
-##  Max.   :0.9500   Max.   :11.000   Max.   : -2.098   Max.   :1.000  
-##  NA&#39;s   :3        NA&#39;s   :3        NA&#39;s   :3         NA&#39;s   :3      
-##   speechiness       acousticness      instrumentalness       liveness      
-##  Min.   :0.02310   Min.   :0.000191   Min.   :0.0000000   Min.   :0.03570  
-##  1st Qu.:0.03080   1st Qu.:0.034600   1st Qu.:0.0000000   1st Qu.:0.09295  
-##  Median :0.03960   Median :0.162000   Median :0.0000014   Median :0.11500  
-##  Mean   :0.05831   Mean   :0.321225   Mean   :0.0039358   Mean   :0.14081  
-##  3rd Qu.:0.05740   3rd Qu.:0.662000   3rd Qu.:0.0000399   3rd Qu.:0.15050  
-##  Max.   :0.51900   Max.   :0.971000   Max.   :0.3480000   Max.   :0.59400  
-##  NA&#39;s   :3         NA&#39;s   :3          NA&#39;s   :3           NA&#39;s   :3        
-##     valence           tempo        time_signature   duration_ms    
-##  Min.   :0.0382   Min.   : 68.53   Min.   :1.000   Min.   :148781  
-##  1st Qu.:0.2535   1st Qu.: 99.98   1st Qu.:4.000   1st Qu.:209326  
-##  Median :0.4040   Median :121.96   Median :4.000   Median :232107  
-##  Mean   :0.4009   Mean   :125.99   Mean   :3.979   Mean   :237079  
-##  3rd Qu.:0.5345   3rd Qu.:150.03   3rd Qu.:4.000   3rd Qu.:254448  
-##  Max.   :0.9420   Max.   :208.92   Max.   :5.000   Max.   :613027  
-##  NA&#39;s   :3        NA&#39;s   :3        NA&#39;s   :3       NA&#39;s   :3       
-##   explicit         key_name          mode_name           key_mode        
-##  Mode :logical   Length:194         Length:194         Length:194        
-##  FALSE:172       Class :character   Class :character   Class :character  
-##  TRUE :19        Mode  :character   Mode  :character   Mode  :character  
-##  NA&#39;s :3                                                                 
-##                                                                          
-##                                                                          
-##                                                                          
-##   lyrics       
-##  Mode:logical  
-##  NA&#39;s:194      
-##                
-##                
-##                
-##                
-## </code></pre>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="fu">summary</span>(taylor_all_songs)</span></code></pre></div>
-<pre><code>##   album_name            ep          album_release         track_number  
-##  Length:274         Mode :logical   Min.   :2006-10-24   Min.   : 1.00  
-##  Class :character   FALSE:235       1st Qu.:2010-10-25   1st Qu.: 5.00  
-##  Mode  :character   TRUE :12        Median :2019-08-23   Median :10.00  
-##                     NA&#39;s :27        Mean   :2016-09-22   Mean   :10.37  
-##                                     3rd Qu.:2021-04-09   3rd Qu.:15.00  
-##                                     Max.   :2022-10-21   Max.   :30.00  
-##                                     NA&#39;s   :27           NA&#39;s   :27     
-##   track_name           artist           featuring         bonus_track    
-##  Length:274         Length:274         Length:274         Mode :logical  
-##  Class :character   Class :character   Class :character   FALSE:212      
-##  Mode  :character   Mode  :character   Mode  :character   TRUE :35       
-##                                                           NA&#39;s :27       
-##                                                                          
-##                                                                          
-##                                                                          
-##  promotional_release  single_release       track_release       
-##  Min.   :2008-06-23   Min.   :2006-06-19   Min.   :2006-06-19  
-##  1st Qu.:2010-10-09   1st Qu.:2011-04-19   1st Qu.:2012-01-18  
-##  Median :2014-10-17   Median :2015-02-09   Median :2019-08-23  
-##  Mean   :2015-04-04   Mean   :2015-03-29   Mean   :2016-09-29  
-##  3rd Qu.:2020-04-03   3rd Qu.:2019-08-16   3rd Qu.:2021-04-09  
-##  Max.   :2022-10-25   Max.   :2022-11-29   Max.   :2022-10-21  
-##  NA&#39;s   :234          NA&#39;s   :213                              
-##   danceability        energy            key            loudness      
-##  Min.   :0.2920   Min.   :0.1180   Min.   : 0.000   Min.   :-15.910  
-##  1st Qu.:0.5135   1st Qu.:0.4560   1st Qu.: 2.000   1st Qu.: -9.001  
-##  Median :0.5980   Median :0.5930   Median : 5.000   Median : -6.918  
-##  Mean   :0.5866   Mean   :0.5765   Mean   : 4.692   Mean   : -7.376  
-##  3rd Qu.:0.6535   3rd Qu.:0.7205   3rd Qu.: 7.000   3rd Qu.: -5.398  
-##  Max.   :0.8970   Max.   :0.9500   Max.   :11.000   Max.   : -2.098  
-##  NA&#39;s   :11       NA&#39;s   :11       NA&#39;s   :11       NA&#39;s   :11       
-##       mode         speechiness       acousticness      instrumentalness  
-##  Min.   :0.0000   Min.   :0.02310   Min.   :0.000191   Min.   :0.000000  
-##  1st Qu.:1.0000   1st Qu.:0.02990   1st Qu.:0.034600   1st Qu.:0.000000  
-##  Median :1.0000   Median :0.03630   Median :0.157000   Median :0.000002  
-##  Mean   :0.9087   Mean   :0.05328   Mean   :0.299749   Mean   :0.003664  
-##  3rd Qu.:1.0000   3rd Qu.:0.05490   3rd Qu.:0.581000   3rd Qu.:0.000044  
-##  Max.   :1.0000   Max.   :0.51900   Max.   :0.971000   Max.   :0.348000  
-##  NA&#39;s   :11       NA&#39;s   :11        NA&#39;s   :11         NA&#39;s   :11        
-##     liveness          valence           tempo        time_signature 
-##  Min.   :0.03570   Min.   :0.0382   Min.   : 57.96   Min.   :1.000  
-##  1st Qu.:0.09325   1st Qu.:0.2510   1st Qu.: 99.99   1st Qu.:4.000  
-##  Median :0.11400   Median :0.3990   Median :122.88   Median :4.000  
-##  Mean   :0.14052   Mean   :0.4046   Mean   :125.15   Mean   :3.966  
-##  3rd Qu.:0.15050   3rd Qu.:0.5385   3rd Qu.:146.04   3rd Qu.:4.000  
-##  Max.   :0.59400   Max.   :0.9420   Max.   :208.92   Max.   :5.000  
-##  NA&#39;s   :11        NA&#39;s   :11       NA&#39;s   :11       NA&#39;s   :11     
-##   duration_ms      explicit         key_name          mode_name        
-##  Min.   :148781   Mode :logical   Length:274         Length:274        
-##  1st Qu.:210898   FALSE:241       Class :character   Class :character  
-##  Median :234516   TRUE :22        Mode  :character   Mode  :character  
-##  Mean   :237384   NA&#39;s :11                                             
-##  3rd Qu.:254554                                                        
-##  Max.   :613027                                                        
-##  NA&#39;s   :11                                                            
-##    key_mode          lyrics       
-##  Length:274         Mode:logical  
-##  Class :character   NA&#39;s:274      
-##  Mode  :character                 
-##                                   
-##                                   
-##                                   
-## </code></pre>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="fu">summary</span>(taylor_albums)</span></code></pre></div>
-<pre><code>##   album_name            ep          album_release        metacritic_score
-##  Length:14          Mode :logical   Min.   :2006-10-24   Min.   :67.00   
-##  Class :character   FALSE:12        1st Qu.:2009-05-08   1st Qu.:75.25   
-##  Mode  :character   TRUE :2         Median :2016-05-04   Median :78.00   
-##                                     Mean   :2015-05-21   Mean   :79.25   
-##                                     3rd Qu.:2020-11-06   3rd Qu.:85.00   
-##                                     Max.   :2022-10-21   Max.   :91.00   
-##                                                          NA&#39;s   :2       
-##    user_score   
-##  Min.   :8.200  
-##  1st Qu.:8.375  
-##  Median :8.500  
-##  Mean   :8.583  
-##  3rd Qu.:8.900  
-##  Max.   :9.000  
-##  NA&#39;s   :2</code></pre>
-<p>A brief description of the variables relevant to our project is given
-below: (To start on)</p>
 <h2 id="data-cleaning">Data Cleaning</h2>
 <p>Start off by filtering for the columns that we want:</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a>taylor_album_songs <span class="ot">&lt;-</span> taylor_album_songs <span class="sc">%&gt;%</span></span>
