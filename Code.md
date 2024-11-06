@@ -26,7 +26,7 @@ Student Information
 
 ## Introduction
 
-Reminders: Define musical attributes (features of the songs) in intro
+TBC
 
 ## Loading Data
 

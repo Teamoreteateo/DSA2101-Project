@@ -27,7 +27,7 @@ kable(students, col.names = c("Group Members", "Matriculation Number"),
 =======
 
 ## Introduction
-Reminders: Define musical attributes (features of the songs) in intro
+TBC
 
 
 
