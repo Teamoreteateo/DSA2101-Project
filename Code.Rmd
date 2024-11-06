@@ -1,5 +1,5 @@
 ---
-title: "DSA2101 Group Project"
+title: "DSA2101 Group Project: Analysis of Taylor Swift Spotify Data"
 output: github_document
 ---
 
@@ -12,8 +12,6 @@ library(readr)
 library(knitr)
 ```
 
-# Analysis of Taylor Swift Spotify Data
-
 ```{r}
 students <- data.frame(
   Group_Members = c("Chua Yong Sheng Joel", "Lim Zeen Kiat", "Robin Ghosh", "Timothy Teo Shao Jun"),
@@ -22,42 +20,26 @@ students <- data.frame(
 
 kable(students, col.names = c("Group Members", "Matriculation Number"), 
       caption = "Student Information")
-```
 
-=======
-
-## Introduction
-TBC
-
-
-
-
-## Loading Data
-```{r}
-# Load the Tidy Tuesday datasets for Taylor Swift from Week 42 of 2023
+# Load the Taylor Swift datasets
 tuesdata <- tidytuesdayR::tt_load(2023, week = 42)
 
-# Extract specific datasets
 taylor_album_songs <- tuesdata$taylor_album_songs
 taylor_all_songs <- tuesdata$taylor_all_songs
 taylor_albums <- tuesdata$taylor_albums
 
-# Save each dataset to CSV files
+# Save each dataset to new CSV files
 # write.csv(taylor_album_songs, "taylor_album_songs.csv", row.names = FALSE)
 # write.csv(taylor_all_songs, "taylor_all_songs.csv", row.names = FALSE)
 # write.csv(taylor_albums, "taylor_albums.csv", row.names = FALSE)
 # >>>>>> e3542bd358543883b147a6664c5777a5ed2ce66e
 ```
+=======
 
-
-## Description of our Data
-```{r}
-summary(taylor_album_songs)
-summary(taylor_all_songs)
-summary(taylor_albums)
-```
-
-A brief description of the variables relevant to our project is given below:
+# Introduction
+In this project, we aim to analyse Taylor Swift's musical evolution through her Spotify data. 
+As one of the most popular music artists globally, we aim to understand patterns and relationships in the musical attributes of her songs and how these have defined her career.
+The following table contains a brief description of the variables we have chose to use for our project:
 ```{r}
 track_attributes <- data.frame(
   Variable = c(
@@ -89,8 +71,7 @@ track_attributes <- data.frame(
 kable(track_attributes, col.names = c("Variable", "Class", "Description"), align = "l")
 ```
 
-
-## Data Cleaning
+# Data Cleaning
 
 Start off by filtering for the columns that we want:
 ```{r}
@@ -214,7 +195,7 @@ taylor_album_summary <- taylor_album_summary %>% mutate(Popularity = (metacritic
 taylor_album_summary[, c(1,2,12)]
 ```
 
-
+# 3. Visualisations
 Exploratory plots: May or may not use, just to select
 
 ```{r}
@@ -245,3 +226,6 @@ that danceability has increased, meaning that the downbeats in her songs have be
 creating a danceable vibe.
 It seems that Taylor Swift aims to be more intimate with her audience while maintaining vibe and groove to make up for
 the lack of energy. Her popularity has increased over the years also, signalling the yearn for such music.
+
+# ::: {#refs}
+::: 
