@@ -49,7 +49,7 @@ taylor_albums <- tuesdata$taylor_albums
 
 =======
 
-# Introduction
+# 1. Introduction
 
 In this project, we aim to analyse Taylor Swift’s musical evolution
 through her Spotify data. As one of the most popular music artists
@@ -62,7 +62,7 @@ For our project, we aim to answer the following question:
 How do musical and lyrical features evolve across Taylor Swift's albums, and what insights can we gain about the progression of her artistry over time?
 ```
 
-# Data Cleaning & Summary
+# 2. Data Cleaning & Summary
 
 The following table contains a brief description of the variables we
 have chosen to use for our project:
@@ -412,6 +412,11 @@ her audience while maintaining vibe and groove to make up for the lack
 of energy. Her popularity has increased over the years also, signalling
 the yearn for such music.
 
-# :::
+# 4. Discussions
 
-:::
+# 5. Teamwork
+
+# 6 :::
+
+::: Our data comes from the TidyTuesday project on GitHub. Link:
+<https://github.com/rfordatascience/tidytuesday/blob/master/data/2023/2023-10-17>
