@@ -345,14 +345,14 @@ taylor_album_summary <- taylor_album_songs %>% group_by(album_name)%>% summarize
 ) %>% inner_join(taylor_albums, by=c("album_name")) %>% relocate(album_release, .after=album_name)
 ```
 
-Metacritic scores and User scores are representative of the popularity
-of the albums because they are averaged ratings of the albums from
-critics and the public respectively (Source: NEED SOURCE metacritic.com,
-another one).
+Overall Metacritic scores and User scores are representative of the
+popularity of the albums because they are the “weighted average” of the
+albums’ individual scores from critics and the public respectively
+(Metacritic, 2023).
 
-Metacritic score ranges from 0 to 100 while User Score ranges from 0 to
-10. We will aggregate these into one statistic, “Popularity”, weighted
-by their respective ranges. (Source: NEED SOURCE)
+Metacritic score ranges from 0 to 100 (Metacritic, 2023), while User
+Score ranges from 0 to 10. We will aggregate these into one statistic,
+“Popularity”, weighted by their respective ranges.
 
 Hence we use the following formula: Popularity =
 (metacritic_score+(user_score\*10))/2
@@ -430,3 +430,6 @@ the yearn for such music.
 
 1.  Our data comes from the TidyTuesday project on GitHub. Link:
     <https://github.com/rfordatascience/tidytuesday/blob/master/data/2023/2023-10-17>
+2.  Metacritic. (2023). How do you compute METASCORES? Retrieved
+    November 7, 2024, from
+    <https://metacritichelp.zendesk.com/hc/en-us/articles/14478499933079-How-do-you-compute-METASCORES>

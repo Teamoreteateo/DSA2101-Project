@@ -1003,13 +1003,13 @@ the popularity metrics with each common album.</p>
 <span id="cb28-10"><a href="#cb28-10" tabindex="-1"></a>  <span class="at">mean_valence =</span> <span class="fu">mean</span>(valence),</span>
 <span id="cb28-11"><a href="#cb28-11" tabindex="-1"></a>  <span class="at">mean_tempo =</span> <span class="fu">mean</span>(tempo)</span>
 <span id="cb28-12"><a href="#cb28-12" tabindex="-1"></a>) <span class="sc">%&gt;%</span> <span class="fu">inner_join</span>(taylor_albums, <span class="at">by=</span><span class="fu">c</span>(<span class="st">&quot;album_name&quot;</span>)) <span class="sc">%&gt;%</span> <span class="fu">relocate</span>(album_release, <span class="at">.after=</span>album_name)</span></code></pre></div>
-<p>Metacritic scores and User scores are representative of the
-popularity of the albums because they are averaged ratings of the albums
-from critics and the public respectively (Source: NEED SOURCE
-metacritic.com, another one).</p>
-<p>Metacritic score ranges from 0 to 100 while User Score ranges from 0
-to 10. We will aggregate these into one statistic, “Popularity”,
-weighted by their respective ranges. (Source: NEED SOURCE)</p>
+<p>Overall Metacritic scores and User scores are representative of the
+popularity of the albums because they are the “weighted average” of the
+albums’ individual scores from critics and the public respectively
+(Metacritic, 2023).</p>
+<p>Metacritic score ranges from 0 to 100 (Metacritic, 2023), while User
+Score ranges from 0 to 10. We will aggregate these into one statistic,
+“Popularity”, weighted by their respective ranges.</p>
 <p>Hence we use the following formula: Popularity =
 (metacritic_score+(user_score*10))/2</p>
 <div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" tabindex="-1"></a>taylor_album_summary <span class="ot">&lt;-</span> taylor_album_summary <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">Popularity =</span> (metacritic_score<span class="sc">+</span>user_score<span class="sc">*</span><span class="dv">10</span>)<span class="sc">/</span><span class="dv">2</span>)</span>
@@ -1061,6 +1061,8 @@ the yearn for such music.</p>
 <h2 id="id_6-references">6. References</h2>
 <ol style="list-style-type: decimal">
 <li>Our data comes from the TidyTuesday project on GitHub. Link: <a href="https://github.com/rfordatascience/tidytuesday/blob/master/data/2023/2023-10-17">https://github.com/rfordatascience/tidytuesday/blob/master/data/2023/2023-10-17</a></li>
+<li>Metacritic. (2023). How do you compute METASCORES? Retrieved
+November 7, 2024, from <a href="https://metacritichelp.zendesk.com/hc/en-us/articles/14478499933079-How-do-you-compute-METASCORES">https://metacritichelp.zendesk.com/hc/en-us/articles/14478499933079-How-do-you-compute-METASCORES</a></li>
 </ol>
 
 </body>
