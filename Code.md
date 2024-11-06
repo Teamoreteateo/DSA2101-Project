@@ -26,8 +26,51 @@ Student Information
 
 ## Introduction
 
-(To start on) Reminders: Define musical attributes (features of the
-songs) in intro
+Reminders: Define musical attributes (features of the songs) in intro
+
+``` r
+track_attributes <- data.frame(
+  Attribute = c(
+    "album_name", "album_release", "track_name", "liveness", 
+    "danceability", "energy", "loudness", "mode", "speechiness", 
+    "acousticness", "instrumentalness", "valence", "tempo", "explicit"
+  ),
+  Description = c(
+    "Name of the album the track belongs to.",
+    "Release date of the album.",
+    "Name of the individual track.",
+    "Measures the presence of an audience in the recording, with higher values indicating more 'live' sounds.",
+    "Measures how suitable a track is for dancing, considering tempo, rhythm, and beat regularity.",
+    "Measures the intensity and activity of a track, with higher values indicating more energetic sounds.",
+    "The overall volume of the track, measured in decibels (dB).",
+    "Indicates the modality of the track: 1 for major, 0 for minor.",
+    "Measures the presence of spoken words in a track, with higher values indicating more speech-like content.",
+    "Represents the likelihood that the track is acoustic, with higher values indicating more acoustic qualities.",
+    "Predicts whether a track is instrumental, with higher values suggesting a lack of vocals.",
+    "Describes the musical positiveness conveyed, with higher values indicating more cheerful and happy tones.",
+    "The speed of the track, measured in beats per minute (BPM).",
+    "Indicates whether the track contains explicit content: 1 for explicit, 0 for clean."
+  )
+)
+kable(track_attributes, col.names = c("Attribute", "Description"), align = "l")
+```
+
+| Attribute | Description |
+|:---|:---|
+| album_name | Name of the album the track belongs to. |
+| album_release | Release date of the album. |
+| track_name | Name of the individual track. |
+| liveness | Measures the presence of an audience in the recording, with higher values indicating more ‘live’ sounds. |
+| danceability | Measures how suitable a track is for dancing, considering tempo, rhythm, and beat regularity. |
+| energy | Measures the intensity and activity of a track, with higher values indicating more energetic sounds. |
+| loudness | The overall volume of the track, measured in decibels (dB). |
+| mode | Indicates the modality of the track: 1 for major, 0 for minor. |
+| speechiness | Measures the presence of spoken words in a track, with higher values indicating more speech-like content. |
+| acousticness | Represents the likelihood that the track is acoustic, with higher values indicating more acoustic qualities. |
+| instrumentalness | Predicts whether a track is instrumental, with higher values suggesting a lack of vocals. |
+| valence | Describes the musical positiveness conveyed, with higher values indicating more cheerful and happy tones. |
+| tempo | The speed of the track, measured in beats per minute (BPM). |
+| explicit | Indicates whether the track contains explicit content: 1 for explicit, 0 for clean. |
 
 ## Loading Data
 
@@ -481,7 +524,7 @@ ggplot(taylor_album_summary, aes(x=album_release, y=Popularity, color=album_name
   geom_point(size=2) 
 ```
 
-![](Code_files/figure-gfm/unnamed-chunk-11-1.png)<!-- -->
+![](Code_files/figure-gfm/unnamed-chunk-12-1.png)<!-- -->
 
 ``` r
 plotting = taylor_album_summary %>% pivot_longer(cols =c(mean_liveness, mean_danceability, mean_energy, mean_acousticness, mean_instrumentalness, mean_valence), names_to="variable", values_to="value")
@@ -493,7 +536,7 @@ ggplot(plotting, aes(x=album_release, y=value, color = variable)) +
 
     ## `geom_smooth()` using formula = 'y ~ x'
 
-![](Code_files/figure-gfm/unnamed-chunk-12-1.png)<!-- -->
+![](Code_files/figure-gfm/unnamed-chunk-13-1.png)<!-- -->
 
 ``` r
 ggplot(taylor_album_summary, aes(x=album_release, y=mean_loudness)) +

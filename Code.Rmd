@@ -27,9 +27,34 @@ kable(students, col.names = c("Group Members", "Matriculation Number"),
 =======
 
 ## Introduction
-
-(To start on)
 Reminders: Define musical attributes (features of the songs) in intro
+```{r}
+track_attributes <- data.frame(
+  Attribute = c(
+    "album_name", "album_release", "track_name", "liveness", 
+    "danceability", "energy", "loudness", "mode", "speechiness", 
+    "acousticness", "instrumentalness", "valence", "tempo", "explicit"
+  ),
+  Description = c(
+    "Name of the album the track belongs to.",
+    "Release date of the album.",
+    "Name of the individual track.",
+    "Measures the presence of an audience in the recording, with higher values indicating more 'live' sounds.",
+    "Measures how suitable a track is for dancing, considering tempo, rhythm, and beat regularity.",
+    "Measures the intensity and activity of a track, with higher values indicating more energetic sounds.",
+    "The overall volume of the track, measured in decibels (dB).",
+    "Indicates the modality of the track: 1 for major, 0 for minor.",
+    "Measures the presence of spoken words in a track, with higher values indicating more speech-like content.",
+    "Represents the likelihood that the track is acoustic, with higher values indicating more acoustic qualities.",
+    "Predicts whether a track is instrumental, with higher values suggesting a lack of vocals.",
+    "Describes the musical positiveness conveyed, with higher values indicating more cheerful and happy tones.",
+    "The speed of the track, measured in beats per minute (BPM).",
+    "Indicates whether the track contains explicit content: 1 for explicit, 0 for clean."
+  )
+)
+kable(track_attributes, col.names = c("Attribute", "Description"), align = "l")
+```
+
 
 
 ## Loading Data
