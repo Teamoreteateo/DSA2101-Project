@@ -416,7 +416,7 @@ the yearn for such music.
 
 # 5. Teamwork
 
-# 6 :::
+# 6. References
 
-::: Our data comes from the TidyTuesday project on GitHub. Link:
-<https://github.com/rfordatascience/tidytuesday/blob/master/data/2023/2023-10-17>
+1.  Our data comes from the TidyTuesday project on GitHub. Link:
+    <https://github.com/rfordatascience/tidytuesday/blob/master/data/2023/2023-10-17>
