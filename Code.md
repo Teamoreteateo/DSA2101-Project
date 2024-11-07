@@ -52,7 +52,7 @@ taylor_albums <- tuesdata$taylor_albums
 ## 1. Introduction
 
 Taylor Swift’s music has had a significant impact on the global pop and
-country music scenes. For this project, we used the Taylor Swift Spotify
+country music scenes. In this project, we used the Taylor Swift Spotify
 data sourced from the TidyTuesday repository to analyse the musical and
 lyrical features of her music. This dataset includes detailed audio
 attributes of her songs which we aim to use in this project. By
@@ -74,6 +74,8 @@ with a global audience.
 
 ## 2. Data Cleaning & Summary
 
+### Summary of relevant statistics
+
 The following table contains a brief description of the variables we
 have chosen to use for our project:
 
@@ -85,8 +87,8 @@ track_attributes <- data.frame(
     "liveness", "valence", "tempo", "explicit"
   ),
   Class = c(
-    "character", "double", "character","double", "double", "double", "integer",
-    "double", "double", "double",  "double", "double", "double", "logical"
+    "character", "double", "character", "double", "double", "double", "integer",
+    "double", "double", "double", "double", "double", "double", "logical"
   ),
   Description = c(
     "Name of the album the track belongs to.",
@@ -95,7 +97,7 @@ track_attributes <- data.frame(
     "Measures how suitable a track is for dancing.",
     "Measures the intensity and activity of a track, with higher values indicating more energetic sounds.",
     "The overall volume of the track, measured in decibels (dB).",
-    "Indicates the modality of the track: 1 for major, 0 for minor.",
+    "This is also a categorical variable. It indicates the modality of the track: 1 for major, 0 for minor.",
     "Measures the presence of spoken words in a track, with higher values indicating more speech-like content.",
     "Represents the likelihood that the track is acoustic, with higher values indicating more acoustic qualities.",
     "Predicts whether a track is instrumental, with higher values suggesting a lack of vocals.",
@@ -116,7 +118,7 @@ kable(track_attributes, col.names = c("Variable", "Class", "Description"), align
 | danceability | double | Measures how suitable a track is for dancing. |
 | energy | double | Measures the intensity and activity of a track, with higher values indicating more energetic sounds. |
 | loudness | double | The overall volume of the track, measured in decibels (dB). |
-| mode | integer | Indicates the modality of the track: 1 for major, 0 for minor. |
+| mode | integer | This is also a categorical variable. It indicates the modality of the track: 1 for major, 0 for minor. |
 | speechiness | double | Measures the presence of spoken words in a track, with higher values indicating more speech-like content. |
 | acousticness | double | Represents the likelihood that the track is acoustic, with higher values indicating more acoustic qualities. |
 | instrumentalness | double | Predicts whether a track is instrumental, with higher values suggesting a lack of vocals. |
@@ -124,6 +126,8 @@ kable(track_attributes, col.names = c("Variable", "Class", "Description"), align
 | valence | double | Describes the musical positiveness conveyed, with higher values indicating more cheerful and happy tones. |
 | tempo | double | The speed of the track, measured in beats per minute (BPM). |
 | explicit | logical | Indicates whether the track contains explicit content: 1 for explicit, 0 otherwise. |
+
+### Data cleaning
 
 We’ll start off by filtering for the features listed above which we want
 to keep:
@@ -211,6 +215,8 @@ write.csv(taylor_album_songs, "CSV files/taylor_album_songs_cleaned.csv", row.na
 write.csv(taylor_all_songs, "CSV files/taylor_all_songs_cleaned.csv", row.names = FALSE)
 write.csv(taylor_albums, "CSV files/taylor_albums.csv_cleaned", row.names = FALSE)
 ```
+
+### Data engineering
 
 ``` r
 head(taylor_album_songs)
@@ -345,14 +351,16 @@ taylor_album_summary <- taylor_album_songs %>% group_by(album_name)%>% summarize
 ) %>% inner_join(taylor_albums, by=c("album_name")) %>% relocate(album_release, .after=album_name)
 ```
 
-Overall Metacritic scores and User scores are representative of the
+Overall Metacritic scores and user scores are representative of the
 popularity of the albums because they are the “weighted average” of the
 albums’ individual scores from critics and the public respectively
 (Metacritic, 2023).
 
-Metacritic score ranges from 0 to 100 (Metacritic, 2023), while User
-Score ranges from 0 to 10. We will aggregate these into one statistic,
-“Popularity”, weighted by their respective ranges.
+While the Metacritic score ranges from 0 to 100 (Metacritic, 2023), the
+user score has a different range of 0 to 10 which we noticed when
+exploring the “user reviews” section (Metacritic, n.d.). We will
+aggregate these into one statistic, “Popularity”, weighted by their
+respective ranges.
 
 Hence we use the following formula: Popularity =
 (metacritic_score+(user_score\*10))/2
@@ -377,6 +385,10 @@ taylor_album_summary[, c(1,2,12)]
     ## 10 reputation                  2017-11-10          128.
 
 ## 3. Visualisations
+
+### a. What are the most significant features?
+
+### b. Have the features we selected influenced Taylor Swift’s popularity?
 
 Exploratory plots: May or may not use, just to select
 
@@ -422,14 +434,24 @@ her audience while maintaining vibe and groove to make up for the lack
 of energy. Her popularity has increased over the years also, signalling
 the yearn for such music.
 
+### c. Which feature(s) has/have the greatest impact on Taylor Swift’s songs?
+
 ## 4. Discussions
+
+### a.
+
+### b.
+
+### c.
 
 ## 5. Teamwork
 
 ## 6. References
 
-1.  Our data comes from the TidyTuesday project on GitHub. Link:
-    <https://github.com/rfordatascience/tidytuesday/blob/master/data/2023/2023-10-17>
-2.  Metacritic. (2023). How do you compute METASCORES? Retrieved
-    November 7, 2024, from
-    <https://metacritichelp.zendesk.com/hc/en-us/articles/14478499933079-How-do-you-compute-METASCORES>
+Harmon, J. (2023, October 16). Taylor Swift. GitHub.
+<https://github.com/rfordatascience/tidytuesday/blob/master/data/2023/2023-10-17/readme.md>
+Metacritic. (2023). How do you compute METASCORES? Retrieved November 7,
+2024, from
+<https://metacritichelp.zendesk.com/hc/en-us/articles/14478499933079-How-do-you-compute-METASCORES>
+Metacritic. (n.d.). Taylor Swift by Taylor Swift.
+<https://www.metacritic.com/music/taylor-swift/taylor-swift/user-reviews>

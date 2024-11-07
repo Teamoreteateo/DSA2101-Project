@@ -659,7 +659,7 @@ Group Project: Analysis of Taylor Swift Spotify Data</h1>
 <p>=======</p>
 <h2 id="id_1-introduction">1. Introduction</h2>
 <p>Taylor Swift’s music has had a significant impact on the global pop
-and country music scenes. For this project, we used the Taylor Swift
+and country music scenes. In this project, we used the Taylor Swift
 Spotify data sourced from the TidyTuesday repository to analyse the
 musical and lyrical features of her music. This dataset includes
 detailed audio attributes of her songs which we aim to use in this
@@ -674,6 +674,8 @@ different stages of her career. By doing so, we hope to provide a deeper
 understanding of how Taylor Swift has redefined her career and connect
 with a global audience.</p>
 <h2 id="id_2-data-cleaning--summary">2. Data Cleaning &amp; Summary</h2>
+<h3 id="summary-of-relevant-statistics">Summary of relevant
+statistics</h3>
 <p>The following table contains a brief description of the variables we
 have chosen to use for our project:</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>track_attributes <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
@@ -683,8 +685,8 @@ have chosen to use for our project:</p>
 <span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a>    <span class="st">&quot;liveness&quot;</span>, <span class="st">&quot;valence&quot;</span>, <span class="st">&quot;tempo&quot;</span>, <span class="st">&quot;explicit&quot;</span></span>
 <span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a>  ),</span>
 <span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a>  <span class="at">Class =</span> <span class="fu">c</span>(</span>
-<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a>    <span class="st">&quot;character&quot;</span>, <span class="st">&quot;double&quot;</span>, <span class="st">&quot;character&quot;</span>,<span class="st">&quot;double&quot;</span>, <span class="st">&quot;double&quot;</span>, <span class="st">&quot;double&quot;</span>, <span class="st">&quot;integer&quot;</span>,</span>
-<span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a>    <span class="st">&quot;double&quot;</span>, <span class="st">&quot;double&quot;</span>, <span class="st">&quot;double&quot;</span>,  <span class="st">&quot;double&quot;</span>, <span class="st">&quot;double&quot;</span>, <span class="st">&quot;double&quot;</span>, <span class="st">&quot;logical&quot;</span></span>
+<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a>    <span class="st">&quot;character&quot;</span>, <span class="st">&quot;double&quot;</span>, <span class="st">&quot;character&quot;</span>, <span class="st">&quot;double&quot;</span>, <span class="st">&quot;double&quot;</span>, <span class="st">&quot;double&quot;</span>, <span class="st">&quot;integer&quot;</span>,</span>
+<span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a>    <span class="st">&quot;double&quot;</span>, <span class="st">&quot;double&quot;</span>, <span class="st">&quot;double&quot;</span>, <span class="st">&quot;double&quot;</span>, <span class="st">&quot;double&quot;</span>, <span class="st">&quot;double&quot;</span>, <span class="st">&quot;logical&quot;</span></span>
 <span id="cb6-10"><a href="#cb6-10" tabindex="-1"></a>  ),</span>
 <span id="cb6-11"><a href="#cb6-11" tabindex="-1"></a>  <span class="at">Description =</span> <span class="fu">c</span>(</span>
 <span id="cb6-12"><a href="#cb6-12" tabindex="-1"></a>    <span class="st">&quot;Name of the album the track belongs to.&quot;</span>,</span>
@@ -693,7 +695,7 @@ have chosen to use for our project:</p>
 <span id="cb6-15"><a href="#cb6-15" tabindex="-1"></a>    <span class="st">&quot;Measures how suitable a track is for dancing.&quot;</span>,</span>
 <span id="cb6-16"><a href="#cb6-16" tabindex="-1"></a>    <span class="st">&quot;Measures the intensity and activity of a track, with higher values indicating more energetic sounds.&quot;</span>,</span>
 <span id="cb6-17"><a href="#cb6-17" tabindex="-1"></a>    <span class="st">&quot;The overall volume of the track, measured in decibels (dB).&quot;</span>,</span>
-<span id="cb6-18"><a href="#cb6-18" tabindex="-1"></a>    <span class="st">&quot;Indicates the modality of the track: 1 for major, 0 for minor.&quot;</span>,</span>
+<span id="cb6-18"><a href="#cb6-18" tabindex="-1"></a>    <span class="st">&quot;This is also a categorical variable. It indicates the modality of the track: 1 for major, 0 for minor.&quot;</span>,</span>
 <span id="cb6-19"><a href="#cb6-19" tabindex="-1"></a>    <span class="st">&quot;Measures the presence of spoken words in a track, with higher values indicating more speech-like content.&quot;</span>,</span>
 <span id="cb6-20"><a href="#cb6-20" tabindex="-1"></a>    <span class="st">&quot;Represents the likelihood that the track is acoustic, with higher values indicating more acoustic qualities.&quot;</span>,</span>
 <span id="cb6-21"><a href="#cb6-21" tabindex="-1"></a>    <span class="st">&quot;Predicts whether a track is instrumental, with higher values suggesting a lack of vocals.&quot;</span>,</span>
@@ -748,8 +750,8 @@ higher values indicating more energetic sounds.</td>
 <tr>
 <td align="left">mode</td>
 <td align="left">integer</td>
-<td align="left">Indicates the modality of the track: 1 for major, 0 for
-minor.</td>
+<td align="left">This is also a categorical variable. It indicates the
+modality of the track: 1 for major, 0 for minor.</td>
 </tr>
 <tr>
 <td align="left">speechiness</td>
@@ -796,6 +798,7 @@ higher values indicating more cheerful and happy tones.</td>
 </tr>
 </tbody>
 </table>
+<h3 id="data-cleaning">Data cleaning</h3>
 <p>We’ll start off by filtering for the features listed above which we
 want to keep:</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>taylor_album_songs <span class="ot">&lt;-</span> taylor_album_songs <span class="sc">%&gt;%</span></span>
@@ -855,6 +858,7 @@ later on:</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a><span class="fu">write.csv</span>(taylor_album_songs, <span class="st">&quot;CSV files/taylor_album_songs_cleaned.csv&quot;</span>, <span class="at">row.names =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb16-2"><a href="#cb16-2" tabindex="-1"></a><span class="fu">write.csv</span>(taylor_all_songs, <span class="st">&quot;CSV files/taylor_all_songs_cleaned.csv&quot;</span>, <span class="at">row.names =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb16-3"><a href="#cb16-3" tabindex="-1"></a><span class="fu">write.csv</span>(taylor_albums, <span class="st">&quot;CSV files/taylor_albums.csv_cleaned&quot;</span>, <span class="at">row.names =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<h3 id="data-engineering">Data engineering</h3>
 <div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a><span class="fu">head</span>(taylor_album_songs)</span></code></pre></div>
 <pre><code>## # A tibble: 6 × 14
 ## # Groups:   album_name [1]
@@ -1003,13 +1007,15 @@ the popularity metrics with each common album.</p>
 <span id="cb28-10"><a href="#cb28-10" tabindex="-1"></a>  <span class="at">mean_valence =</span> <span class="fu">mean</span>(valence),</span>
 <span id="cb28-11"><a href="#cb28-11" tabindex="-1"></a>  <span class="at">mean_tempo =</span> <span class="fu">mean</span>(tempo)</span>
 <span id="cb28-12"><a href="#cb28-12" tabindex="-1"></a>) <span class="sc">%&gt;%</span> <span class="fu">inner_join</span>(taylor_albums, <span class="at">by=</span><span class="fu">c</span>(<span class="st">&quot;album_name&quot;</span>)) <span class="sc">%&gt;%</span> <span class="fu">relocate</span>(album_release, <span class="at">.after=</span>album_name)</span></code></pre></div>
-<p>Overall Metacritic scores and User scores are representative of the
+<p>Overall Metacritic scores and user scores are representative of the
 popularity of the albums because they are the “weighted average” of the
 albums’ individual scores from critics and the public respectively
 (Metacritic, 2023).</p>
-<p>Metacritic score ranges from 0 to 100 (Metacritic, 2023), while User
-Score ranges from 0 to 10. We will aggregate these into one statistic,
-“Popularity”, weighted by their respective ranges.</p>
+<p>While the Metacritic score ranges from 0 to 100 (Metacritic, 2023),
+the user score has a different range of 0 to 10 which we noticed when
+exploring the “user reviews” section (Metacritic, n.d.). We will
+aggregate these into one statistic, “Popularity”, weighted by their
+respective ranges.</p>
 <p>Hence we use the following formula: Popularity =
 (metacritic_score+(user_score*10))/2</p>
 <div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" tabindex="-1"></a>taylor_album_summary <span class="ot">&lt;-</span> taylor_album_summary <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">Popularity =</span> (metacritic_score<span class="sc">+</span>user_score<span class="sc">*</span><span class="dv">10</span>)<span class="sc">/</span><span class="dv">2</span>)</span>
@@ -1028,6 +1034,10 @@ Score ranges from 0 to 10. We will aggregate these into one statistic,
 ##  9 folklore                    2020-07-24          120.
 ## 10 reputation                  2017-11-10          128.</code></pre>
 <h2 id="id_3-visualisations">3. Visualisations</h2>
+<h3 id="a-what-are-the-most-significant-features">a. What are the most
+significant features?</h3>
+<h3 id="b-have-the-features-we-selected-influenced-taylor-swifts-popularity">b.
+Have the features we selected influenced Taylor Swift’s popularity?</h3>
 <p>Exploratory plots: May or may not use, just to select</p>
 <div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" tabindex="-1"></a>points <span class="ot">=</span> <span class="fu">lm</span>(<span class="at">data=</span>taylor_album_summary, album_release<span class="sc">~</span>Popularity)</span>
 <span id="cb31-2"><a href="#cb31-2" tabindex="-1"></a><span class="fu">ggplot</span>(taylor_album_summary, <span class="fu">aes</span>(<span class="at">x=</span>album_release, <span class="at">y=</span>Popularity, <span class="at">color=</span>album_name)) <span class="sc">+</span></span>
@@ -1056,14 +1066,18 @@ danceable vibe. It seems that Taylor Swift aims to be more intimate with
 her audience while maintaining vibe and groove to make up for the lack
 of energy. Her popularity has increased over the years also, signalling
 the yearn for such music.</p>
+<h3 id="c-which-features-hashave-the-greatest-impact-on-taylor-swifts-songs">c. Which
+feature(s) has/have the greatest impact on Taylor Swift’s songs?</h3>
 <h2 id="id_4-discussions">4. Discussions</h2>
+<h3 id="a">a.</h3>
+<h3 id="b">b.</h3>
+<h3 id="c">c.</h3>
 <h2 id="id_5-teamwork">5. Teamwork</h2>
 <h2 id="id_6-references">6. References</h2>
-<ol style="list-style-type: decimal">
-<li>Our data comes from the TidyTuesday project on GitHub. Link: <a href="https://github.com/rfordatascience/tidytuesday/blob/master/data/2023/2023-10-17">https://github.com/rfordatascience/tidytuesday/blob/master/data/2023/2023-10-17</a></li>
-<li>Metacritic. (2023). How do you compute METASCORES? Retrieved
-November 7, 2024, from <a href="https://metacritichelp.zendesk.com/hc/en-us/articles/14478499933079-How-do-you-compute-METASCORES">https://metacritichelp.zendesk.com/hc/en-us/articles/14478499933079-How-do-you-compute-METASCORES</a></li>
-</ol>
+<p>Harmon, J. (2023, October 16). Taylor Swift. GitHub. <a href="https://github.com/rfordatascience/tidytuesday/blob/master/data/2023/2023-10-17/readme.md">https://github.com/rfordatascience/tidytuesday/blob/master/data/2023/2023-10-17/readme.md</a>
+Metacritic. (2023). How do you compute METASCORES? Retrieved November 7,
+2024, from <a href="https://metacritichelp.zendesk.com/hc/en-us/articles/14478499933079-How-do-you-compute-METASCORES">https://metacritichelp.zendesk.com/hc/en-us/articles/14478499933079-How-do-you-compute-METASCORES</a>
+Metacritic. (n.d.). Taylor Swift by Taylor Swift. <a href="https://www.metacritic.com/music/taylor-swift/taylor-swift/user-reviews">https://www.metacritic.com/music/taylor-swift/taylor-swift/user-reviews</a></p>
 
 </body>
 </html>
