@@ -446,7 +446,7 @@ the yearn for such music.
 
 ## 5. Teamwork
 
-## 6. ::: {References}
+## 6. :::
 
 ::: Harmon, J. (2023, October 16). Taylor Swift. GitHub.
 <https://github.com/rfordatascience/tidytuesday/blob/master/data/2023/2023-10-17/readme.md>
