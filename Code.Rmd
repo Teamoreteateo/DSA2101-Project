@@ -133,6 +133,38 @@ taylor_albums <- taylor_albums %>%
     na.omit()
 ```
 
+To ensure that the visualisation representations are balanced, we will check the range of the various song features to see whether there is a need to scale the features:
+```{r}
+# Checking range of values (for all the songs) of numerical variables in taylor_all_songs
+ranges_taylor_all_songs <- taylor_all_songs %>%
+  ungroup() %>%
+  select(liveness:tempo) %>%
+  summarise(across(liveness:tempo, ~paste(min(.), "to", max(.))))
+glimpse(ranges_taylor_all_songs)
+
+# Checking range of values of numerical variables in taylor_album_songs
+ranges_taylor_album_songs <- taylor_album_songs %>%
+  select(liveness:tempo) %>%
+  summarise(across(liveness:tempo, ~paste(min(.), "to", max(.))))
+glimpse(ranges_taylor_album_songs)
+```
+
+Loudness is measured in decibels, which has a logarithmic scale. To enable a clearer visual representation, we will first convert the values of loudness to a linear scale, before scaling the values between 0 and 1.
+```{r}
+# Scaling loudness for taylor_all_songs
+taylor_all_songs <- taylor_all_songs %>%
+  ungroup() %>%
+  mutate(intensity = 10^(loudness/10)) %>%
+  mutate(normalised_intensity = (intensity - min(intensity)) / (max(intensity) - min(intensity)))
+glimpse(taylor_all_songs)
+
+# Scaling loudness for taylor_album_songs
+taylor_album_songs <- taylor_album_songs %>%
+  mutate(intensity = 10^(loudness/10)) %>%
+  mutate(normalised_intensity = (intensity - min(intensity)) / (max(intensity) - min(intensity)))
+glimpse(taylor_album_songs)
+```
+
 Finally, the cleaned data are saved as new files for us to reference later on:
 ```{r}
 write.csv(taylor_album_songs, "CSV files/taylor_album_songs_cleaned.csv", row.names = FALSE)
