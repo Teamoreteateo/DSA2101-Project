@@ -150,18 +150,19 @@ glimpse(ranges_taylor_album_songs)
 ```
 
 Loudness is measured in decibels, which has a logarithmic scale. To enable a clearer visual representation, we will first convert the values of loudness to a linear scale, before scaling the values between 0 and 1.
+{can put to the power of the exponent instead}
 ```{r}
 # Scaling loudness for taylor_all_songs
 taylor_all_songs <- taylor_all_songs %>%
   ungroup() %>%
-  mutate(intensity = 10^(loudness/10)) %>%
-  mutate(normalised_intensity = (intensity - min(intensity)) / (max(intensity) - min(intensity)))
+  mutate(loudness = exp(loudness)) #%>%
+  #mutate(normalised_intensity = (intensity - min(intensity)) / (max(intensity) - min(intensity)))
 glimpse(taylor_all_songs)
 
 # Scaling loudness for taylor_album_songs
 taylor_album_songs <- taylor_album_songs %>%
-  mutate(intensity = 10^(loudness/10)) %>%
-  mutate(normalised_intensity = (intensity - min(intensity)) / (max(intensity) - min(intensity)))
+  mutate(intensity = exp(loudness)) #%>%
+  #mutate(normalised_intensity = (intensity - min(intensity)) / (max(intensity) - min(intensity)))
 glimpse(taylor_album_songs)
 ```
 
@@ -243,6 +244,10 @@ taylor_album_summary[, c(1,2,12)]
 
 ## 3. Visualisations
 ### a. What are the most significant features?
+
+```{r boxplot}
+
+```
 
 ### b. Have the features we selected influenced Taylor Swift's popularity?
 Exploratory plots: May or may not use, just to select
