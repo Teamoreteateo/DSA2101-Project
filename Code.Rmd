@@ -150,7 +150,6 @@ glimpse(ranges_taylor_album_songs)
 ```
 
 Loudness is measured in decibels, which has a logarithmic scale. To enable a clearer visual representation, we will first convert the values of loudness to a linear scale, before scaling the values between 0 and 1.
-{can put to the power of the exponent instead}
 ```{r}
 # Scaling loudness for taylor_all_songs
 taylor_all_songs <- taylor_all_songs %>%
@@ -246,7 +245,7 @@ taylor_album_summary[, c(1,2,12)]
 ### a. What are the most significant features?
 
 ```{r boxplot}
-
+taylor_long = taylor_album_songs %>% pivot_longer()
 ```
 
 ### b. Have the features we selected influenced Taylor Swift's popularity?
