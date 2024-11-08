@@ -245,7 +245,12 @@ taylor_album_summary[, c(1,2,12)]
 ### a. What are the most significant features?
 
 ```{r boxplot}
-taylor_long = taylor_album_songs %>% pivot_longer()
+library(ggthemes)
+taylor_long = taylor_album_songs %>% select(-mode) %>% pivot_longer(danceability:valence, values_to = "values", names_to = "labels") %>%
+  mutate(labels = as.factor(labels))
+ggplot(taylor_long, aes(x=labels, y=values, fill = labels)) +
+  geom_boxplot(show.legend = F) +
+  theme_fivethirtyeight()
 ```
 
 ### b. Have the features we selected influenced Taylor Swift's popularity?
