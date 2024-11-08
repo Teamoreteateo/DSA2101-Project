@@ -246,13 +246,28 @@ taylor_album_summary[, c(1,2,12)]
 
 ```{r boxplot}
 library(ggthemes)
+x_labels = c("Acousticness", "Danceability", "Energy", "Instrumentalness", "Liveness", "Loudness", "Speechiness", "Valence")
 taylor_long = taylor_album_songs %>% select(-mode) %>% pivot_longer(danceability:valence, values_to = "values", names_to = "labels") %>%
   mutate(labels = as.factor(labels))
-ggplot(taylor_long, aes(x=labels, y=values, fill = labels)) +
-  geom_boxplot(show.legend = F) +
-  theme_fivethirtyeight()
+ggplot(taylor_long, aes(y=labels, x=values, fill = labels)) +
+  geom_boxplot(show.legend = F, alpha=0.55, outlier.fill = "lightblue", width = 0.4) +
+  theme_economist() +
+  labs(y= "", x = "Magnitude (From 0 to 1)", title = "The spread of each feature across all of Taylor Swift's album songs") +
+  scale_y_discrete(labels = x_labels) +
+  theme(
+    axis.text.x = element_text(size = 10), 
+    axis.text.y = element_text(size = 15),
+    axis.title.x = element_text(vjust=-1, size=16),
+    aspect.ratio = 0.6
+  )
 ```
 
+```{r violin}
+ggplot(taylor_long, aes(x=labels, y=values, fill = labels)) +
+  geom_violin(bw=0.05, alpha=0.7, color = FALSE,
+ trim=FALSE) +
+ theme_fivethirtyeight()
+```
 ### b. Have the features we selected influenced Taylor Swift's popularity?
 Exploratory plots: May or may not use, just to select
 
