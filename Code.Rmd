@@ -155,13 +155,13 @@ Loudness is measured in decibels, which has a logarithmic scale. To enable a cle
 # Scaling loudness for taylor_all_songs
 taylor_all_songs <- taylor_all_songs %>%
   ungroup() %>%
-  mutate(loudness = exp(loudness)) #%>%
+  mutate(loudness = 10^(loudness/10)) #%>%
   #mutate(normalised_intensity = (intensity - min(intensity)) / (max(intensity) - min(intensity)))
 glimpse(taylor_all_songs)
 
 # Scaling loudness for taylor_album_songs
 taylor_album_songs <- taylor_album_songs %>%
-  mutate(intensity = exp(loudness)) #%>%
+  mutate(loudness = 10^(loudness/10)) #%>%
   #mutate(normalised_intensity = (intensity - min(intensity)) / (max(intensity) - min(intensity)))
 glimpse(taylor_album_songs)
 ```
