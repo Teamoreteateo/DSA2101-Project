@@ -265,29 +265,28 @@ ggplot(taylor_long, aes(y=labels, x=values, fill = labels)) +
 
 ### b. Have the features we selected influenced Taylor Swift's popularity?
 
-```{r lineplot-dual-axes}
+```{r lineplot-dual-axes, fig.width=10, fig.height=4}
 ggplot(taylor_long %>% filter(labels %in% c("acousticness","valence","energy", "danceability")), aes(x=album_release, y=values, color=labels)) +
   geom_smooth(method = "loess",
               se = FALSE,
               formula = 'y ~ x',
               span = 0.8,
-              size=1.4) +
+              size=1.2) +
   stat_smooth(se=FALSE, geom="area",
               method = 'loess', alpha=.1,
               span = 0.8,aes(fill=labels)) +
 
   geom_line(data = taylor_albums_cleaned,
             aes(x = as.Date(album_release), 
-                y = Popularity / 100,
+                y = Popularity/100,
                 color = "Popularity"),
-            size = 3, linetype = "twodash") +
+            size = 2, linetype = "solid", lineend="round") +
   
   scale_y_continuous(
-    name = "Feature Values",
-    sec.axis = sec_axis(~ . / 100,
-                        name = "Popularity/100 (scaled)")
+    name = "Feature Values (0 - 1)",
+    sec.axis = sec_axis(~ .*100,
+                        name = "Popularity (%)")
   ) +
-  
   labs(title = "Musical Attributes and Popularity Across Taylor Swift Albums",
        x = "Album Release Date", y = "Feature Values") +
   
@@ -295,7 +294,14 @@ ggplot(taylor_long %>% filter(labels %in% c("acousticness","valence","energy", "
   scale_fill_manual(values = c("acousticness" = "blue", "valence" = "red", "energy" = "green", "danceability" = "purple"), guide = "none") +
   
   theme_minimal() +
-  theme(legend.position = "top")    
+  theme(legend.position = "top",
+  axis.line.y.right = element_line(colour = "Black"),
+  axis.ticks.y.right = element_line(color="red"),
+  axis.ticks.length.y.right=unit(.25, "cm"),
+  axis.line.y.left = element_line(color="brown"),
+  axis.ticks.y.left = element_line(color="red"),
+  axis.ticks.length.y.left=unit(.25, "cm"),
+  aspect.ratio=0.7)    
 ```
 
 ### c. Which feature(s) has/have the greatest impact on Taylor Swift's songs?
