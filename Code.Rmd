@@ -271,7 +271,7 @@ ggplot(taylor_long %>% filter(labels %in% c("acousticness","valence","energy", "
               se = FALSE,
               formula = 'y ~ x',
               span = 0.8,
-              size=2) +
+              size=1.4) +
   stat_smooth(se=FALSE, geom="area",
               method = 'loess', alpha=.1,
               span = 0.8,aes(fill=labels)) +
@@ -281,7 +281,7 @@ ggplot(taylor_long %>% filter(labels %in% c("acousticness","valence","energy", "
             aes(x = as.Date(album_release), 
                 y = Popularity / 100,
                 color = "Popularity"),
-            size = 1.2, linetype = "dashed") +
+            size = 3, linetype = "twodash" ) +
   
   # Set primary and secondary y-axes
   scale_y_continuous(
@@ -299,7 +299,7 @@ ggplot(taylor_long %>% filter(labels %in% c("acousticness","valence","energy", "
   scale_fill_manual(values = c("acousticness" = "blue", "valence" = "red", "energy" = "green", "danceability" = "purple")) +
   
   theme_minimal() +
-  theme(legend.position = "top")           
+  theme(legend.position = "top")    
 
 ```
 
