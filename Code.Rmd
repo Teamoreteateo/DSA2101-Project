@@ -282,7 +282,7 @@ ggplot(taylor_album_summary, aes(x=album_release, y=Popularity, color=album_name
 plotting = taylor_album_summary %>% pivot_longer(cols =c(mean_liveness, mean_danceability, mean_energy, mean_acousticness, mean_instrumentalness, mean_valence), names_to="variable", values_to="value")
 ggplot(plotting, aes(x=album_release, y=value, color = variable)) +
   geom_point(size=3) +
-  geom_smooth(method="lm") +
+  geom_smooth(method="lm", se=F) +
   theme_classic()
 ```
 
