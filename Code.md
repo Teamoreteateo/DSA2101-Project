@@ -255,57 +255,53 @@ of loudness to a linear scale, before scaling the values between 0 and
 # Scaling loudness for taylor_all_songs
 taylor_all_songs <- taylor_all_songs %>%
   ungroup() %>%
-  mutate(intensity = 10^(loudness/10)) %>%
-  mutate(normalised_intensity = (intensity - min(intensity)) / (max(intensity) - min(intensity)))
+  mutate(loudness = 10^(loudness/10)) #%>%
+  #mutate(normalised_intensity = (intensity - min(intensity)) / (max(intensity) - min(intensity)))
 glimpse(taylor_all_songs)
 ```
 
     ## Rows: 238
-    ## Columns: 16
-    ## $ album_name           <chr> "Taylor Swift", "Taylor Swift", "Taylor Swift", "…
-    ## $ album_release        <date> 2006-10-24, 2006-10-24, 2006-10-24, 2006-10-24, …
-    ## $ track_name           <chr> "Tim McGraw", "Picture To Burn", "Teardrops On My…
-    ## $ danceability         <dbl> 0.580, 0.658, 0.621, 0.576, 0.418, 0.589, 0.479, …
-    ## $ energy               <dbl> 0.491, 0.877, 0.417, 0.777, 0.482, 0.805, 0.578, …
-    ## $ loudness             <dbl> -6.462, -2.098, -6.941, -2.881, -5.769, -4.055, -…
-    ## $ mode                 <dbl> 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1…
-    ## $ speechiness          <dbl> 0.0251, 0.0323, 0.0231, 0.0324, 0.0266, 0.0293, 0…
-    ## $ acousticness         <dbl> 0.57500, 0.17300, 0.28800, 0.05100, 0.21700, 0.00…
-    ## $ instrumentalness     <dbl> 0.00e+00, 0.00e+00, 0.00e+00, 0.00e+00, 0.00e+00,…
-    ## $ liveness             <dbl> 0.1210, 0.0962, 0.1190, 0.3200, 0.1230, 0.2400, 0…
-    ## $ valence              <dbl> 0.425, 0.821, 0.289, 0.428, 0.261, 0.591, 0.192, …
-    ## $ tempo                <dbl> 76.009, 105.586, 99.953, 115.028, 175.558, 112.98…
-    ## $ explicit             <lgl> FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, …
-    ## $ intensity            <dbl> 0.2258396, 0.6168790, 0.2022553, 0.5151100, 0.264…
-    ## $ normalised_intensity <dbl> 0.3386048, 1.0000000, 0.2987150, 0.8278702, 0.404…
+    ## Columns: 14
+    ## $ album_name       <chr> "Taylor Swift", "Taylor Swift", "Taylor Swift", "Tayl…
+    ## $ album_release    <date> 2006-10-24, 2006-10-24, 2006-10-24, 2006-10-24, 2006…
+    ## $ track_name       <chr> "Tim McGraw", "Picture To Burn", "Teardrops On My Gui…
+    ## $ danceability     <dbl> 0.580, 0.658, 0.621, 0.576, 0.418, 0.589, 0.479, 0.59…
+    ## $ energy           <dbl> 0.491, 0.877, 0.417, 0.777, 0.482, 0.805, 0.578, 0.62…
+    ## $ loudness         <dbl> 0.2258396, 0.6168790, 0.2022553, 0.5151100, 0.2649110…
+    ## $ mode             <dbl> 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1,…
+    ## $ speechiness      <dbl> 0.0251, 0.0323, 0.0231, 0.0324, 0.0266, 0.0293, 0.029…
+    ## $ acousticness     <dbl> 0.57500, 0.17300, 0.28800, 0.05100, 0.21700, 0.00491,…
+    ## $ instrumentalness <dbl> 0.00e+00, 0.00e+00, 0.00e+00, 0.00e+00, 0.00e+00, 0.0…
+    ## $ liveness         <dbl> 0.1210, 0.0962, 0.1190, 0.3200, 0.1230, 0.2400, 0.084…
+    ## $ valence          <dbl> 0.425, 0.821, 0.289, 0.428, 0.261, 0.591, 0.192, 0.50…
+    ## $ tempo            <dbl> 76.009, 105.586, 99.953, 115.028, 175.558, 112.982, 1…
+    ## $ explicit         <lgl> FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALS…
 
 ``` r
 # Scaling loudness for taylor_album_songs
 taylor_album_songs <- taylor_album_songs %>%
-  mutate(intensity = 10^(loudness/10)) %>%
-  mutate(normalised_intensity = (intensity - min(intensity)) / (max(intensity) - min(intensity)))
+  mutate(loudness = 10^(loudness/10)) #%>%
+  #mutate(normalised_intensity = (intensity - min(intensity)) / (max(intensity) - min(intensity)))
 glimpse(taylor_album_songs)
 ```
 
     ## Rows: 191
-    ## Columns: 16
+    ## Columns: 14
     ## Groups: album_name [10]
-    ## $ album_name           <chr> "Taylor Swift", "Taylor Swift", "Taylor Swift", "…
-    ## $ album_release        <date> 2006-10-24, 2006-10-24, 2006-10-24, 2006-10-24, …
-    ## $ track_name           <chr> "Tim McGraw", "Picture To Burn", "Teardrops On My…
-    ## $ danceability         <dbl> 0.580, 0.658, 0.621, 0.576, 0.418, 0.589, 0.479, …
-    ## $ energy               <dbl> 0.491, 0.877, 0.417, 0.777, 0.482, 0.805, 0.578, …
-    ## $ loudness             <dbl> -6.462, -2.098, -6.941, -2.881, -5.769, -4.055, -…
-    ## $ mode                 <dbl> 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1…
-    ## $ speechiness          <dbl> 0.0251, 0.0323, 0.0231, 0.0324, 0.0266, 0.0293, 0…
-    ## $ acousticness         <dbl> 0.57500, 0.17300, 0.28800, 0.05100, 0.21700, 0.00…
-    ## $ instrumentalness     <dbl> 0.00e+00, 0.00e+00, 0.00e+00, 0.00e+00, 0.00e+00,…
-    ## $ liveness             <dbl> 0.1210, 0.0962, 0.1190, 0.3200, 0.1230, 0.2400, 0…
-    ## $ valence              <dbl> 0.425, 0.821, 0.289, 0.428, 0.261, 0.591, 0.192, …
-    ## $ tempo                <dbl> 76.009, 105.586, 99.953, 115.028, 175.558, 112.98…
-    ## $ explicit             <lgl> FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, …
-    ## $ intensity            <dbl> 0.2258396, 0.6168790, 0.2022553, 0.5151100, 0.264…
-    ## $ normalised_intensity <dbl> 0.0568810, 1.0000000, 0.0000000, 0.7545509, 0.151…
+    ## $ album_name       <chr> "Taylor Swift", "Taylor Swift", "Taylor Swift", "Tayl…
+    ## $ album_release    <date> 2006-10-24, 2006-10-24, 2006-10-24, 2006-10-24, 2006…
+    ## $ track_name       <chr> "Tim McGraw", "Picture To Burn", "Teardrops On My Gui…
+    ## $ danceability     <dbl> 0.580, 0.658, 0.621, 0.576, 0.418, 0.589, 0.479, 0.59…
+    ## $ energy           <dbl> 0.491, 0.877, 0.417, 0.777, 0.482, 0.805, 0.578, 0.62…
+    ## $ loudness         <dbl> 0.2258396, 0.6168790, 0.2022553, 0.5151100, 0.2649110…
+    ## $ mode             <dbl> 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1,…
+    ## $ speechiness      <dbl> 0.0251, 0.0323, 0.0231, 0.0324, 0.0266, 0.0293, 0.029…
+    ## $ acousticness     <dbl> 0.57500, 0.17300, 0.28800, 0.05100, 0.21700, 0.00491,…
+    ## $ instrumentalness <dbl> 0.00e+00, 0.00e+00, 0.00e+00, 0.00e+00, 0.00e+00, 0.0…
+    ## $ liveness         <dbl> 0.1210, 0.0962, 0.1190, 0.3200, 0.1230, 0.2400, 0.084…
+    ## $ valence          <dbl> 0.425, 0.821, 0.289, 0.428, 0.261, 0.591, 0.192, 0.50…
+    ## $ tempo            <dbl> 76.009, 105.586, 99.953, 115.028, 175.558, 112.982, 1…
+    ## $ explicit         <lgl> FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALS…
 
 Finally, the cleaned data are saved as new files for us to reference
 later on:
@@ -322,36 +318,36 @@ write.csv(taylor_albums, "CSV files/taylor_albums.csv_cleaned", row.names = FALS
 head(taylor_album_songs)
 ```
 
-    ## # A tibble: 6 × 16
+    ## # A tibble: 6 × 14
     ## # Groups:   album_name [1]
     ##   album_name   album_release track_name       danceability energy loudness  mode
     ##   <chr>        <date>        <chr>                   <dbl>  <dbl>    <dbl> <dbl>
-    ## 1 Taylor Swift 2006-10-24    Tim McGraw              0.58   0.491    -6.46     1
-    ## 2 Taylor Swift 2006-10-24    Picture To Burn         0.658  0.877    -2.10     1
-    ## 3 Taylor Swift 2006-10-24    Teardrops On My…        0.621  0.417    -6.94     1
-    ## 4 Taylor Swift 2006-10-24    A Place In This…        0.576  0.777    -2.88     1
-    ## 5 Taylor Swift 2006-10-24    Cold As You             0.418  0.482    -5.77     1
-    ## 6 Taylor Swift 2006-10-24    The Outside             0.589  0.805    -4.06     1
-    ## # ℹ 9 more variables: speechiness <dbl>, acousticness <dbl>,
+    ## 1 Taylor Swift 2006-10-24    Tim McGraw              0.58   0.491    0.226     1
+    ## 2 Taylor Swift 2006-10-24    Picture To Burn         0.658  0.877    0.617     1
+    ## 3 Taylor Swift 2006-10-24    Teardrops On My…        0.621  0.417    0.202     1
+    ## 4 Taylor Swift 2006-10-24    A Place In This…        0.576  0.777    0.515     1
+    ## 5 Taylor Swift 2006-10-24    Cold As You             0.418  0.482    0.265     1
+    ## 6 Taylor Swift 2006-10-24    The Outside             0.589  0.805    0.393     1
+    ## # ℹ 7 more variables: speechiness <dbl>, acousticness <dbl>,
     ## #   instrumentalness <dbl>, liveness <dbl>, valence <dbl>, tempo <dbl>,
-    ## #   explicit <lgl>, intensity <dbl>, normalised_intensity <dbl>
+    ## #   explicit <lgl>
 
 ``` r
 head(taylor_all_songs)
 ```
 
-    ## # A tibble: 6 × 16
+    ## # A tibble: 6 × 14
     ##   album_name   album_release track_name       danceability energy loudness  mode
     ##   <chr>        <date>        <chr>                   <dbl>  <dbl>    <dbl> <dbl>
-    ## 1 Taylor Swift 2006-10-24    Tim McGraw              0.58   0.491    -6.46     1
-    ## 2 Taylor Swift 2006-10-24    Picture To Burn         0.658  0.877    -2.10     1
-    ## 3 Taylor Swift 2006-10-24    Teardrops On My…        0.621  0.417    -6.94     1
-    ## 4 Taylor Swift 2006-10-24    A Place In This…        0.576  0.777    -2.88     1
-    ## 5 Taylor Swift 2006-10-24    Cold As You             0.418  0.482    -5.77     1
-    ## 6 Taylor Swift 2006-10-24    The Outside             0.589  0.805    -4.06     1
-    ## # ℹ 9 more variables: speechiness <dbl>, acousticness <dbl>,
+    ## 1 Taylor Swift 2006-10-24    Tim McGraw              0.58   0.491    0.226     1
+    ## 2 Taylor Swift 2006-10-24    Picture To Burn         0.658  0.877    0.617     1
+    ## 3 Taylor Swift 2006-10-24    Teardrops On My…        0.621  0.417    0.202     1
+    ## 4 Taylor Swift 2006-10-24    A Place In This…        0.576  0.777    0.515     1
+    ## 5 Taylor Swift 2006-10-24    Cold As You             0.418  0.482    0.265     1
+    ## 6 Taylor Swift 2006-10-24    The Outside             0.589  0.805    0.393     1
+    ## # ℹ 7 more variables: speechiness <dbl>, acousticness <dbl>,
     ## #   instrumentalness <dbl>, liveness <dbl>, valence <dbl>, tempo <dbl>,
-    ## #   explicit <lgl>, intensity <dbl>, normalised_intensity <dbl>
+    ## #   explicit <lgl>
 
 ``` r
 head(taylor_albums)
@@ -372,27 +368,19 @@ head(taylor_albums)
 names(taylor_album_songs)==names(taylor_all_songs)
 ```
 
-    ##  [1] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
-    ## [16] TRUE
+    ##  [1] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
 
 ``` r
 checking_conflicts <- taylor_album_songs %>% anti_join(taylor_all_songs, by=names(taylor_all_songs))
 head(checking_conflicts)
 ```
 
-    ## # A tibble: 6 × 16
-    ## # Groups:   album_name [1]
-    ##   album_name   album_release track_name       danceability energy loudness  mode
-    ##   <chr>        <date>        <chr>                   <dbl>  <dbl>    <dbl> <dbl>
-    ## 1 Taylor Swift 2006-10-24    Tim McGraw              0.58   0.491    -6.46     1
-    ## 2 Taylor Swift 2006-10-24    Teardrops On My…        0.621  0.417    -6.94     1
-    ## 3 Taylor Swift 2006-10-24    A Place In This…        0.576  0.777    -2.88     1
-    ## 4 Taylor Swift 2006-10-24    Cold As You             0.418  0.482    -5.77     1
-    ## 5 Taylor Swift 2006-10-24    The Outside             0.589  0.805    -4.06     1
-    ## 6 Taylor Swift 2006-10-24    Tied Together W…        0.479  0.578    -4.96     1
-    ## # ℹ 9 more variables: speechiness <dbl>, acousticness <dbl>,
-    ## #   instrumentalness <dbl>, liveness <dbl>, valence <dbl>, tempo <dbl>,
-    ## #   explicit <lgl>, intensity <dbl>, normalised_intensity <dbl>
+    ## # A tibble: 0 × 14
+    ## # Groups:   album_name [0]
+    ## # ℹ 14 variables: album_name <chr>, album_release <date>, track_name <chr>,
+    ## #   danceability <dbl>, energy <dbl>, loudness <dbl>, mode <dbl>,
+    ## #   speechiness <dbl>, acousticness <dbl>, instrumentalness <dbl>,
+    ## #   liveness <dbl>, valence <dbl>, tempo <dbl>, explicit <lgl>
 
 All the column names match for both tables. A tibble of no elements was
 generated, thus confirming that all rows are present in either tables.
@@ -495,9 +483,36 @@ taylor_album_summary[, c(1,2,12)]
 
 ### a. What are the most significant features?
 
-### b. Have the features we selected influenced Taylor Swift’s popularity?
+``` r
+library(ggthemes)
+x_labels = c("Acousticness", "Danceability", "Energy", "Instrumentalness", "Liveness", "Loudness", "Speechiness", "Valence")
+taylor_long = taylor_album_songs %>% select(-mode) %>% pivot_longer(danceability:valence, values_to = "values", names_to = "labels") %>%
+  mutate(labels = as.factor(labels))
+ggplot(taylor_long, aes(y=labels, x=values, fill = labels)) +
+  geom_boxplot(show.legend = F, alpha=0.55, outlier.fill = "lightblue", width = 0.4) +
+  theme_economist() +
+  labs(y= "", x = "Magnitude (From 0 to 1)", title = "The spread of each feature across all of Taylor Swift's album songs") +
+  scale_y_discrete(labels = x_labels) +
+  theme(
+    axis.text.x = element_text(size = 10), 
+    axis.text.y = element_text(size = 15),
+    axis.title.x = element_text(vjust=-1, size=16),
+    aspect.ratio = 0.6
+  )
+```
 
-Exploratory plots: May or may not use, just to select
+![](Code_files/figure-gfm/boxplot-1.png)<!-- -->
+
+``` r
+ggplot(taylor_long, aes(x=labels, y=values, fill = labels)) +
+  geom_violin(bw=0.05, alpha=0.7, color = FALSE,
+ trim=FALSE) +
+ theme_fivethirtyeight()
+```
+
+![](Code_files/figure-gfm/violin-1.png)<!-- --> \### b. Have the
+features we selected influenced Taylor Swift’s popularity? Exploratory
+plots: May or may not use, just to select
 
 ``` r
 points = lm(data=taylor_album_summary, album_release~Popularity)
