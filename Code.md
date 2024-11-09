@@ -510,9 +510,11 @@ ggplot(taylor_long, aes(x=labels, y=values, fill = labels)) +
  theme_fivethirtyeight()
 ```
 
-![](Code_files/figure-gfm/violin-1.png)<!-- --> \### b. Have the
-features we selected influenced Taylor Swift’s popularity? Exploratory
-plots: May or may not use, just to select
+![](Code_files/figure-gfm/violin-1.png)<!-- -->
+
+### b. Have the features we selected influenced Taylor Swift’s popularity?
+
+Exploratory plots: May or may not use, just to select
 
 ``` r
 points = lm(data=taylor_album_summary, album_release~Popularity)
