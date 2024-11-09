@@ -16,7 +16,7 @@ library(knitr)
 ```{r}
 students <- data.frame(
   Group_Members = c("Chua Yong Sheng Joel", "Lim Zeen Kiat", "Robin Ghosh", "Timothy Teo Shao Jun"),
-  Matriculation_Number = c("A_", "A0273151M", "A0271671A", "A0272851B")
+  Matriculation_Number = c("A0282307H", "A0273151M", "A0271671A", "A0272851B")
 )
 
 kable(students, col.names = c("Group Members", "Matriculation Number"))
@@ -268,6 +268,7 @@ ggplot(taylor_long, aes(x=labels, y=values, fill = labels)) +
  trim=FALSE) +
  theme_fivethirtyeight()
 ```
+
 ### b. Have the features we selected influenced Taylor Swift's popularity?
 Exploratory plots: May or may not use, just to select
 
