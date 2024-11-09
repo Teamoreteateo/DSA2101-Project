@@ -251,7 +251,8 @@ x_labels = c("Acousticness", "Danceability", "Energy", "Instrumentalness", "Live
 taylor_long = taylor_album_songs %>% select(-mode) %>% pivot_longer(danceability:valence, values_to = "values", names_to = "labels") %>%
   mutate(labels = as.factor(labels))
 ggplot(taylor_long, aes(y=labels, x=values, fill = labels)) +
-  geom_boxplot(show.legend = F, alpha=0.55, outlier.fill = "lightblue", width = 0.4) +
+  geom_violin(show.legend = F, alpha=0.5, bw=0.08, color = F) +
+  geom_boxplot(show.legend = F, alpha=0.6, fill = "lightblue", outlier.fill = "lightblue", width = 0.4) +
   theme_economist() +
   labs(y= "", x = "Magnitude (From 0 to 1)", title = "Boxplot of musical features for Swift's songs") +
   scale_y_discrete(labels = x_labels) +
@@ -264,6 +265,26 @@ ggplot(taylor_long, aes(y=labels, x=values, fill = labels)) +
   )
 ```
 
+
+```{r reviolin}
+
+library(ggthemes)
+x_labels = c("Acousticness", "Danceability", "Energy", "Instrumentalness", "Liveness", "Loudness", "Speechiness", "Valence")
+taylor_long = taylor_album_songs %>% select(-mode) %>% pivot_longer(danceability:valence, values_to = "values", names_to = "labels") %>%
+  mutate(labels = as.factor(labels))
+ggplot(taylor_long, aes(y=labels, x=values, fill = labels)) +
+  geom_violin(show.legend = F, alpha=0.55, bw=0.05) +
+  theme_economist() +
+  labs(y= "", x = "Magnitude (From 0 to 1)", title = "Violin plot of musical features for Swift's songs") +
+  scale_y_discrete(labels = x_labels) +
+  theme(
+    axis.text.x = element_text(size = 6), 
+    axis.text.y = element_text(size = 8),
+    axis.title.x = element_text(vjust=-1, size=10),
+    plot.title = element_text(size=16),
+    aspect.ratio = 0.4
+  )
+```
 ### b. How have the features we selected influenced Taylor Swift's popularity?
 
 ```{r lineplot-dual-axes, fig.width=10, fig.height=4}
