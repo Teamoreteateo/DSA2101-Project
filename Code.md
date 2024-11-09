@@ -524,36 +524,31 @@ ggplot(taylor_long %>% filter(labels %in% c("acousticness","valence","energy", "
               se = FALSE,
               formula = 'y ~ x',
               span = 0.8,
-              size=2) +
+              size=1.4) +
   stat_smooth(se=FALSE, geom="area",
               method = 'loess', alpha=.1,
               span = 0.8,aes(fill=labels)) +
 
-  # Plotting the scaled Popularity line
   geom_line(data = taylor_albums_cleaned,
             aes(x = as.Date(album_release), 
-                y = Popularity / max(Popularity, na.rm = TRUE) * max(taylor_albums_cleaned$Popularity, na.rm = TRUE),
+                y = Popularity / 100,
                 color = "Popularity"),
-            size = 1.2, linetype = "dashed") +
+            size = 3, linetype = "twodash") +
   
-  # Set primary and secondary y-axes
   scale_y_continuous(
     name = "Feature Values",
-    sec.axis = sec_axis(~ . / max(taylor_albums_cleaned$Popularity, na.rm = TRUE) *
-                          max(taylor_albums_cleaned$Popularity, na.rm = TRUE),
-                        name = "Popularity (scaled)")
+    sec.axis = sec_axis(~ . / 100,
+                        name = "Popularity/100 (scaled)")
   ) +
   
-  # Labels and theme adjustments
   labs(title = "Musical Attributes and Popularity Across Taylor Swift Albums",
        x = "Album Release Date", y = "Feature Values") +
   
-  # Color adjustments for legend and aesthetic appeal
   scale_color_manual(values = c("acousticness" = "blue", "valence" = "red", "energy" = "green", "danceability" = "purple", "Popularity" = "black")) +
-  scale_fill_manual(values = c("acousticness" = "blue", "valence" = "red", "energy" = "green", "danceability" = "purple")) +
+  scale_fill_manual(values = c("acousticness" = "blue", "valence" = "red", "energy" = "green", "danceability" = "purple"), guide = "none") +
   
   theme_minimal() +
-  theme(legend.position = "top")           
+  theme(legend.position = "top")    
 ```
 
     ## Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
@@ -561,9 +556,6 @@ ggplot(taylor_long %>% filter(labels %in% c("acousticness","valence","energy", "
     ## This warning is displayed once every 8 hours.
     ## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
     ## generated.
-
-    ## Warning: Use of `taylor_albums_cleaned$Popularity` is discouraged.
-    ## ℹ Use `Popularity` instead.
 
     ## `geom_smooth()` using formula = 'y ~ x'
 
