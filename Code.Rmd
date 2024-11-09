@@ -328,7 +328,55 @@ ggplot(taylor_long %>% filter(labels %in% c("acousticness","valence","energy", "
 ```
 
 ### c. Which feature(s) has/have the greatest impact on Taylor Swift's songs?
+```{r proportion-plot}
+#Finding her most popular album
+most_popular_album <- taylor_albums_cleaned %>%
+  arrange(desc(Popularity)) %>%
+  head(1) %>%
+  pull(album_name)
 
+#Filtering the songs from her most popular album
+most_popular_album_songs <- taylor_album_songs %>%
+  filter(album_name==most_popular_album) %>%
+  select(album_name,track_name,danceability,acousticness,energy,valence)
+
+#Normalize the numerical features to scale them between 0 and 1 
+scaled_songs <- most_popular_album_songs %>%
+  mutate(across(danceability:valence, ~ (.-min(.)) / (max(.) - min(.)), .names = "scaled_{.col}"))
+
+#Reshape the data into long format for plotting
+scaled_songs_long <- scaled_songs %>%
+  pivot_longer(cols = starts_with("scaled_"), 
+               names_to = "feature", 
+               values_to = "value") %>%
+  mutate(feature = gsub("scaled_", "", feature)) %>%
+  group_by(track_name) %>%
+  mutate(total_value = sum(value),
+         normalized_value = value / total_value) %>%
+  ungroup()
+
+#Check the mean value of each feature
+feature_mean <- scaled_songs_long %>%
+  select(feature, normalized_value) %>%
+  group_by(feature) %>%
+  summarize(mean = mean(normalized_value)) %>%
+  arrange(mean) %>%
+  pull(feature)
+
+#Sort the feature column by mean value
+scaled_songs_long <- scaled_songs_long %>%
+  mutate(feature = factor(feature, levels = feature_mean))
+
+# Create the plot
+ggplot(scaled_songs_long, aes(x = normalized_value, y = track_name, fill = feature)) +
+  geom_bar(stat = "identity", position = "stack") +
+  theme_minimal() +
+  labs(title = paste("Proportion of Significant Features of Songs in the Most Popular Album: ", most_popular_album),
+       x = "Proportion of Normalised Features", y = "Songs",
+       fill = "Feature") +
+  theme(axis.text.y = element_blank(),plot.title = element_text(size = 11)) +
+  scale_fill_brewer(palette = "Set3")
+```
 
 
 ## 4. Discussions
