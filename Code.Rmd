@@ -253,17 +253,18 @@ taylor_long = taylor_album_songs %>% select(-mode) %>% pivot_longer(danceability
 ggplot(taylor_long, aes(y=labels, x=values, fill = labels)) +
   geom_boxplot(show.legend = F, alpha=0.55, outlier.fill = "lightblue", width = 0.4) +
   theme_economist() +
-  labs(y= "", x = "Magnitude (From 0 to 1)", title = "The spread of each feature across all of Taylor Swift's album songs") +
+  labs(y= "", x = "Magnitude (From 0 to 1)", title = "Boxplot of musical features for Swift's songs") +
   scale_y_discrete(labels = x_labels) +
   theme(
-    axis.text.x = element_text(size = 10), 
-    axis.text.y = element_text(size = 15),
-    axis.title.x = element_text(vjust=-1, size=16),
-    aspect.ratio = 0.6
+    axis.text.x = element_text(size = 6), 
+    axis.text.y = element_text(size = 8),
+    axis.title.x = element_text(vjust=-1, size=10),
+    plot.title = element_text(size=16),
+    aspect.ratio = 0.4
   )
 ```
 
-### b. Have the features we selected influenced Taylor Swift's popularity?
+### b. How have the features we selected influenced Taylor Swift's popularity?
 
 ```{r lineplot-dual-axes, fig.width=10, fig.height=4}
 ggplot(taylor_long %>% filter(labels %in% c("acousticness","valence","energy", "danceability")), aes(x=album_release, y=values, color=labels)) +
@@ -301,7 +302,7 @@ ggplot(taylor_long %>% filter(labels %in% c("acousticness","valence","energy", "
   axis.line.y.left = element_line(color="brown"),
   axis.ticks.y.left = element_line(color="red"),
   axis.ticks.length.y.left=unit(.25, "cm"),
-  aspect.ratio=0.7)    
+  aspect.ratio=0.4)    
 ```
 
 ### c. Which feature(s) has/have the greatest impact on Taylor Swift's songs?
