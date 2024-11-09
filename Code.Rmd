@@ -279,15 +279,14 @@ ggplot(taylor_long %>% filter(labels %in% c("acousticness","valence","energy", "
   # Plotting the scaled Popularity line
   geom_line(data = taylor_albums_cleaned,
             aes(x = as.Date(album_release), 
-                y = Popularity / max(Popularity, na.rm = TRUE) * max(taylor_albums_cleaned$Popularity, na.rm = TRUE),
+                y = Popularity / 100,
                 color = "Popularity"),
             size = 1.2, linetype = "dashed") +
   
   # Set primary and secondary y-axes
   scale_y_continuous(
     name = "Feature Values",
-    sec.axis = sec_axis(~ . / max(taylor_albums_cleaned$Popularity, na.rm = TRUE) *
-                          max(taylor_albums_cleaned$Popularity, na.rm = TRUE),
+    sec.axis = sec_axis(~ . / 100,
                         name = "Popularity (scaled)")
   ) +
   
