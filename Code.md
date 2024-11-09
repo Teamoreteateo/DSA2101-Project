@@ -308,7 +308,7 @@ later on:
 ``` r
 write.csv(taylor_album_songs, "CSV files/taylor_album_songs_cleaned.csv", row.names = FALSE)
 write.csv(taylor_all_songs, "CSV files/taylor_all_songs_cleaned.csv", row.names = FALSE)
-write.csv(taylor_albums, "CSV files/taylor_albums.csv_cleaned", row.names = FALSE)
+write.csv(taylor_albums, "CSV files/taylor_albums_cleaned.csv", row.names = FALSE)
 ```
 
 ### Data engineering
@@ -460,23 +460,37 @@ Hence we use the following formula: Popularity =
 (metacritic_score+(user_score\*10))/2
 
 ``` r
-taylor_album_summary <- taylor_album_summary %>% mutate(Popularity = (metacritic_score+user_score*10)/2)
-taylor_album_summary[, c(1,2,12)]
+taylor_albums_cleaned <- read.csv("CSV files/taylor_albums_cleaned.csv")
+taylor_albums_cleaned <- taylor_albums_cleaned %>% mutate(Popularity = (metacritic_score+user_score*10)/2)
+taylor_albums_cleaned
 ```
 
-    ## # A tibble: 10 × 3
-    ##    album_name                  album_release mean_tempo
-    ##    <chr>                       <date>             <dbl>
-    ##  1 1989                        2014-10-27          131.
-    ##  2 Fearless (Taylor's Version) 2021-04-09          131.
-    ##  3 Lover                       2019-08-23          120.
-    ##  4 Midnights                   2022-10-21          120.
-    ##  5 Red (Taylor's Version)      2021-11-12          124.
-    ##  6 Speak Now                   2010-10-25          140.
-    ##  7 Taylor Swift                2006-10-24          126.
-    ##  8 evermore                    2020-12-11          121.
-    ##  9 folklore                    2020-07-24          120.
-    ## 10 reputation                  2017-11-10          128.
+    ##                     album_name album_release metacritic_score user_score
+    ## 1                 Taylor Swift    2006-10-24               67        8.5
+    ## 2                     Fearless    2008-11-11               73        8.4
+    ## 3                    Speak Now    2010-10-25               77        8.6
+    ## 4                          Red    2012-10-22               77        8.5
+    ## 5                         1989    2014-10-27               76        8.2
+    ## 6                   reputation    2017-11-10               71        8.3
+    ## 7                        Lover    2019-08-23               79        8.4
+    ## 8                     folklore    2020-07-24               88        9.0
+    ## 9                     evermore    2020-12-11               85        8.9
+    ## 10 Fearless (Taylor's Version)    2021-04-09               82        8.9
+    ## 11      Red (Taylor's Version)    2021-11-12               91        9.0
+    ## 12                   Midnights    2022-10-21               85        8.3
+    ##    Popularity
+    ## 1        76.0
+    ## 2        78.5
+    ## 3        81.5
+    ## 4        81.0
+    ## 5        79.0
+    ## 6        77.0
+    ## 7        81.5
+    ## 8        89.0
+    ## 9        87.0
+    ## 10       85.5
+    ## 11       90.5
+    ## 12       84.0
 
 ## 3. Visualisations
 
@@ -503,6 +517,57 @@ ggplot(taylor_long, aes(y=labels, x=values, fill = labels)) +
 ![](Code_files/figure-gfm/boxplot-1.png)<!-- -->
 
 ### b. Have the features we selected influenced Taylor Swift’s popularity?
+
+``` r
+ggplot(taylor_long %>% filter(labels %in% c("acousticness","valence","energy", "danceability")), aes(x=album_release, y=values, color=labels)) +
+  geom_smooth(method = "loess",
+              se = FALSE,
+              formula = 'y ~ x',
+              span = 0.8,
+              size=2) +
+  stat_smooth(se=FALSE, geom="area",
+              method = 'loess', alpha=.1,
+              span = 0.8,aes(fill=labels)) +
+
+  # Plotting the scaled Popularity line
+  geom_line(data = taylor_albums_cleaned,
+            aes(x = as.Date(album_release), 
+                y = Popularity / max(Popularity, na.rm = TRUE) * max(taylor_albums_cleaned$Popularity, na.rm = TRUE),
+                color = "Popularity"),
+            size = 1.2, linetype = "dashed") +
+  
+  # Set primary and secondary y-axes
+  scale_y_continuous(
+    name = "Feature Values",
+    sec.axis = sec_axis(~ . / max(taylor_albums_cleaned$Popularity, na.rm = TRUE) *
+                          max(taylor_albums_cleaned$Popularity, na.rm = TRUE),
+                        name = "Popularity (scaled)")
+  ) +
+  
+  # Labels and theme adjustments
+  labs(title = "Musical Attributes and Popularity Across Taylor Swift Albums",
+       x = "Album Release Date", y = "Feature Values") +
+  
+  # Color adjustments for legend and aesthetic appeal
+  scale_color_manual(values = c("acousticness" = "blue", "valence" = "red", "energy" = "green", "danceability" = "purple", "Popularity" = "black")) +
+  scale_fill_manual(values = c("acousticness" = "blue", "valence" = "red", "energy" = "green", "danceability" = "purple")) +
+  
+  theme_minimal() +
+  theme(legend.position = "top")           
+```
+
+    ## Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
+    ## ℹ Please use `linewidth` instead.
+    ## This warning is displayed once every 8 hours.
+    ## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+    ## generated.
+
+    ## Warning: Use of `taylor_albums_cleaned$Popularity` is discouraged.
+    ## ℹ Use `Popularity` instead.
+
+    ## `geom_smooth()` using formula = 'y ~ x'
+
+![](Code_files/figure-gfm/lineplot-dual-axes-1.png)<!-- -->
 
 ### c. Which feature(s) has/have the greatest impact on Taylor Swift’s songs?
 
