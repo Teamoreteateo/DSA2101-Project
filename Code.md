@@ -6,7 +6,7 @@ DSA2101 Group Project: Analysis of Taylor Swift Spotify Data
 ``` r
 students <- data.frame(
   Group_Members = c("Chua Yong Sheng Joel", "Lim Zeen Kiat", "Robin Ghosh", "Timothy Teo Shao Jun"),
-  Matriculation_Number = c("A_", "A0273151M", "A0271671A", "A0272851B")
+  Matriculation_Number = c("A0282307H", "A0273151M", "A0271671A", "A0272851B")
 )
 
 kable(students, col.names = c("Group Members", "Matriculation Number"))
@@ -14,7 +14,7 @@ kable(students, col.names = c("Group Members", "Matriculation Number"))
 
 | Group Members        | Matriculation Number |
 |:---------------------|:---------------------|
-| Chua Yong Sheng Joel | A\_                  |
+| Chua Yong Sheng Joel | A0282307H            |
 | Lim Zeen Kiat        | A0273151M            |
 | Robin Ghosh          | A0271671A            |
 | Timothy Teo Shao Jun | A0272851B            |
@@ -55,10 +55,9 @@ Taylor Swift’s music has had a significant impact on the global pop and
 country music scenes. In this project, we used the Taylor Swift Spotify
 data sourced from the TidyTuesday repository to analyse the musical and
 lyrical features of her music. This dataset includes detailed audio
-attributes of her songs which we aim to use in this project. By
-exploring the given data, we aim to discover the patterns that have
-emerged throughout Taylor Swift’s career and gain insights into how her
-music has evolved.
+attributes of her songs which we aim to use. By exploring the given
+data, we aim to discover the patterns that have emerged throughout
+Taylor Swift’s career and gain insights into how her music has evolved.
 
 For our project, we aim to answer the following question:
 
@@ -503,60 +502,7 @@ ggplot(taylor_long, aes(y=labels, x=values, fill = labels)) +
 
 ![](Code_files/figure-gfm/boxplot-1.png)<!-- -->
 
-``` r
-ggplot(taylor_long, aes(x=labels, y=values, fill = labels)) +
-  geom_violin(bw=0.05, alpha=0.7, color = FALSE,
- trim=FALSE) +
- theme_fivethirtyeight()
-```
-
-![](Code_files/figure-gfm/violin-1.png)<!-- -->
-
 ### b. Have the features we selected influenced Taylor Swift’s popularity?
-
-Exploratory plots: May or may not use, just to select
-
-``` r
-points = lm(data=taylor_album_summary, album_release~Popularity)
-ggplot(taylor_album_summary, aes(x=album_release, y=Popularity, color=album_name)) +
-  geom_point(size=2) 
-```
-
-![](Code_files/figure-gfm/unnamed-chunk-12-1.png)<!-- -->
-
-``` r
-plotting = taylor_album_summary %>% pivot_longer(cols =c(mean_liveness, mean_danceability, mean_energy, mean_acousticness, mean_instrumentalness, mean_valence), names_to="variable", values_to="value")
-ggplot(plotting, aes(x=album_release, y=value, color = variable)) +
-  geom_point(size=3) +
-  geom_smooth(method="lm") +
-  theme_classic()
-```
-
-    ## `geom_smooth()` using formula = 'y ~ x'
-
-![](Code_files/figure-gfm/unnamed-chunk-13-1.png)<!-- -->
-
-``` r
-ggplot(taylor_album_summary, aes(x=album_release, y=mean_loudness)) +
-  geom_point(size=3) +
-  geom_smooth(method="lm") +
-  theme_classic()
-```
-
-    ## `geom_smooth()` using formula = 'y ~ x'
-
-![](Code_files/figure-gfm/loudness-plot-1.png)<!-- -->
-
-Valence dropped, songs became sadder. Instrumentalness dropped, songs
-became more vocally driven. Acousticness increased sharply, songs
-involved lesser electronic sounds and sounded more raw. Energy of the
-tracks have also reduced, further emphasising the mellow trend of her
-music. Though, it appears that danceability has increased, meaning that
-the downbeats in her songs have become more pronounced, creating a
-danceable vibe. It seems that Taylor Swift aims to be more intimate with
-her audience while maintaining vibe and groove to make up for the lack
-of energy. Her popularity has increased over the years also, signalling
-the yearn for such music.
 
 ### c. Which feature(s) has/have the greatest impact on Taylor Swift’s songs?
 
