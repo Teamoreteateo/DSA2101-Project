@@ -264,11 +264,12 @@ x_labels = c("Acousticness", "Danceability", "Energy", "Instrumentalness", "Live
 taylor_long = taylor_album_songs %>% select(-mode) %>% pivot_longer(danceability:valence, values_to = "values", names_to = "labels") %>%
   mutate(labels = as.factor(labels))
 ggplot(taylor_long, aes(y=labels, x=values, fill = labels)) +
-  geom_violin(show.legend = F, alpha=0.5, bw=0.08, color = F) +
+  geom_violin(show.legend = F, alpha=0.8, bw=0.1, color = F) +
   geom_boxplot(show.legend = F, alpha=0.6, fill = "lightblue", outlier.fill = "lightblue", width = 0.4) +
   theme_economist() +
   labs(y= "", x = "Magnitude (From 0 to 1)", title = "Boxplot of musical features for Swift's songs") +
   scale_y_discrete(labels = x_labels) +
+  scale_fill_colorblind()+
   theme(
     axis.text.x = element_text(size = 6), 
     axis.text.y = element_text(size = 8),
@@ -330,7 +331,7 @@ ggplot(taylor_long %>% filter(labels %in% c("acousticness","valence","energy", "
   
   scale_color_manual(values = c("acousticness" = "blue", "valence" = "red", "energy" = "green", "danceability" = "purple", "Popularity" = "black")) +
   scale_fill_manual(values = c("acousticness" = "blue", "valence" = "red", "energy" = "green", "danceability" = "purple"), guide = "none") +
-  
+  scale_fill_colorblind()+
   theme_minimal() +
   theme(legend.position = "top",
   axis.line.y.right = element_line(colour = "Black"),
