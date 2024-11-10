@@ -496,27 +496,69 @@ taylor_albums_cleaned
 
 ### a. What are the most significant features?
 
+This visualisation focuses on the distribution of musical feature values
+for Taylor Swift’s songs using a violin and box plot. These plots allow
+us to visually assess each feature’s distribution and spread, helping us
+pinpoint those with a higher variance, as they likely contribute more
+significantly to her musical style. By focusing on features that show
+the widest range (i.e. most diverse expressions) across her songs, we
+can identify the more significant attributes that make her music unique.
+We will use these features in the next visualisation to examine their
+possible relationship with Swift’s popularity.
+
 ``` r
 library(ggthemes)
 x_labels = c("Acousticness", "Danceability", "Energy", "Instrumentalness", "Liveness", "Loudness", "Speechiness", "Valence")
 taylor_long = taylor_album_songs %>% select(-mode) %>% pivot_longer(danceability:valence, values_to = "values", names_to = "labels") %>%
   mutate(labels = as.factor(labels))
 ggplot(taylor_long, aes(y=labels, x=values, fill = labels)) +
-  geom_boxplot(show.legend = F, alpha=0.55, outlier.fill = "lightblue", width = 0.4) +
+  geom_violin(show.legend = F, alpha=0.5, bw=0.08, color = F) +
+  geom_boxplot(show.legend = F, alpha=0.6, fill = "lightblue", outlier.fill = "lightblue", width = 0.4) +
   theme_economist() +
-  labs(y= "", x = "Magnitude (From 0 to 1)", title = "The spread of each feature across all of Taylor Swift's album songs") +
+  labs(y= "", x = "Magnitude (From 0 to 1)", title = "Boxplot of musical features for Swift's songs") +
   scale_y_discrete(labels = x_labels) +
   theme(
-    axis.text.x = element_text(size = 10), 
-    axis.text.y = element_text(size = 15),
-    axis.title.x = element_text(vjust=-1, size=16),
-    aspect.ratio = 0.6
+    axis.text.x = element_text(size = 6), 
+    axis.text.y = element_text(size = 8),
+    axis.title.x = element_text(vjust=-1, size=10),
+    plot.title = element_text(size=16),
+    aspect.ratio = 0.4,
+    plot.background = element_rect(fill = "#fae7d7")
   )
 ```
 
 ![](Code_files/figure-gfm/boxplot-1.png)<!-- -->
 
-### b. Have the features we selected influenced Taylor Swift’s popularity?
+``` r
+library(ggthemes)
+x_labels = c("Acousticness", "Danceability", "Energy", "Instrumentalness", "Liveness", "Loudness", "Speechiness", "Valence")
+taylor_long = taylor_album_songs %>% select(-mode) %>% pivot_longer(danceability:valence, values_to = "values", names_to = "labels") %>%
+  mutate(labels = as.factor(labels))
+ggplot(taylor_long, aes(y=labels, x=values, fill = labels)) +
+  geom_violin(show.legend = F, alpha=0.55, bw=0.05) +
+  theme_economist() +
+  labs(y= "", x = "Magnitude (From 0 to 1)", title = "Violin plot of musical features for Swift's songs") +
+  scale_y_discrete(labels = x_labels) +
+  theme(
+    axis.text.x = element_text(size = 6), 
+    axis.text.y = element_text(size = 8),
+    axis.title.x = element_text(vjust=-1, size=10),
+    plot.title = element_text(size=16),
+    aspect.ratio = 0.4
+  )
+```
+
+![](Code_files/figure-gfm/reviolin-1.png)<!-- -->
+
+### b. How have the features we selected influenced Taylor Swift’s popularity?
+
+We plan to investigate how the selected features with the most
+variability (from part (a)) might impact Taylor Swift’s popularity
+across her career. By plotting these features along with a line
+representing her album popularity over time, we will be able to observe
+patterns and potential correlations, thus revealing how changes in
+certain musical characteristics might cause a shift in listener interest
+and popularity.
 
 ``` r
 ggplot(taylor_long %>% filter(labels %in% c("acousticness","valence","energy", "danceability")), aes(x=album_release, y=values, color=labels)) +
@@ -524,23 +566,22 @@ ggplot(taylor_long %>% filter(labels %in% c("acousticness","valence","energy", "
               se = FALSE,
               formula = 'y ~ x',
               span = 0.8,
-              size=1.4) +
+              size=1.2) +
   stat_smooth(se=FALSE, geom="area",
               method = 'loess', alpha=.1,
               span = 0.8,aes(fill=labels)) +
 
   geom_line(data = taylor_albums_cleaned,
             aes(x = as.Date(album_release), 
-                y = Popularity / 100,
+                y = Popularity/100,
                 color = "Popularity"),
-            size = 3, linetype = "twodash") +
+            size = 2, linetype = "solid", lineend="round") +
   
   scale_y_continuous(
-    name = "Feature Values",
-    sec.axis = sec_axis(~ . / 100,
-                        name = "Popularity/100 (scaled)")
+    name = "Feature Values (0 - 1)",
+    sec.axis = sec_axis(~ .*100,
+                        name = "Popularity (%)")
   ) +
-  
   labs(title = "Musical Attributes and Popularity Across Taylor Swift Albums",
        x = "Album Release Date", y = "Feature Values") +
   
@@ -548,7 +589,14 @@ ggplot(taylor_long %>% filter(labels %in% c("acousticness","valence","energy", "
   scale_fill_manual(values = c("acousticness" = "blue", "valence" = "red", "energy" = "green", "danceability" = "purple"), guide = "none") +
   
   theme_minimal() +
-  theme(legend.position = "top")    
+  theme(legend.position = "top",
+  axis.line.y.right = element_line(colour = "Black"),
+  axis.ticks.y.right = element_line(color="red"),
+  axis.ticks.length.y.right=unit(.25, "cm"),
+  axis.line.y.left = element_line(color="brown"),
+  axis.ticks.y.left = element_line(color="red"),
+  axis.ticks.length.y.left=unit(.25, "cm"),
+  aspect.ratio=0.4)    
 ```
 
     ## Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
@@ -562,6 +610,66 @@ ggplot(taylor_long %>% filter(labels %in% c("acousticness","valence","energy", "
 ![](Code_files/figure-gfm/lineplot-dual-axes-1.png)<!-- -->
 
 ### c. Which feature(s) has/have the greatest impact on Taylor Swift’s songs?
+
+We have chosen Swift’s most popular album to investigate this
+subquestion. Here, we will examine how each feature contributes
+proportionally to her songs. This stacked bar chart illustrates each
+song’s feature makeup within the album, revealing which musical elements
+are dominant in her songs and may have potentially driven their success.
+This analysis complements the previous sections by showing the relative
+importance of each feature in her highest-rated album.
+
+``` r
+#Finding her most popular album
+most_popular_album <- taylor_albums_cleaned %>%
+  arrange(desc(Popularity)) %>%
+  head(1) %>%
+  pull(album_name)
+
+#Filtering the songs from her most popular album
+most_popular_album_songs <- taylor_album_songs %>%
+  filter(album_name==most_popular_album) %>%
+  select(album_name,track_name,danceability,acousticness,energy,valence)
+
+#Normalize the numerical features to scale them between 0 and 1 
+scaled_songs <- most_popular_album_songs %>%
+  mutate(across(danceability:valence, ~ (.-min(.)) / (max(.) - min(.)), .names = "scaled_{.col}"))
+
+#Reshape the data into long format for plotting
+scaled_songs_long <- scaled_songs %>%
+  pivot_longer(cols = starts_with("scaled_"), 
+               names_to = "feature", 
+               values_to = "value") %>%
+  mutate(feature = gsub("scaled_", "", feature)) %>%
+  group_by(track_name) %>%
+  mutate(total_value = sum(value),
+         normalized_value = value / total_value) %>%
+  ungroup()
+
+#Check the mean value of each feature
+feature_mean <- scaled_songs_long %>%
+  select(feature, normalized_value) %>%
+  group_by(feature) %>%
+  summarize(mean = mean(normalized_value)) %>%
+  arrange(mean) %>%
+  pull(feature)
+
+#Sort the feature column by mean value
+scaled_songs_long <- scaled_songs_long %>%
+  mutate(feature = factor(feature, levels = feature_mean))
+
+# Create the plot
+ggplot(scaled_songs_long, aes(x = normalized_value, y = track_name, fill = feature)) +
+  geom_bar(stat = "identity", position = "stack") +
+  theme_minimal() +
+  labs(title = paste("Proportion of Significant Features of Songs in the Most Popular Album: ", most_popular_album),
+       x = "Proportion of Normalised Features", y = "Songs",
+       fill = "Feature") +
+  theme(axis.text.y = element_blank(),plot.title = element_text(size = 11)) +
+  scale_fill_brewer(palette = "Set3")
+```
+
+![](Code_files/figure-gfm/proportion-plot-1.png)<!-- -->
 
 ## 4. Discussions
 
