@@ -45,6 +45,15 @@ In this project, we used the Taylor Swift Spotify data sourced from the TidyTues
 This dataset includes detailed audio attributes of her songs which we aim to use. 
 By exploring the given data, we aim to discover the patterns that have emerged throughout Taylor Swift’s career and gain insights into how her music has evolved.
 
+
+### Brief description of dataset
+`taylor_album_songs` ~ 
+
+`taylor_all_songs` ~
+
+`taylor_albums` ~ 
+
+
 For our project, we aim to answer the following question:
 ```bash
 How do musical and lyrical features evolve across Taylor Swift's albums, and what insights can we gain about the progression of her artistry over time?
@@ -54,8 +63,10 @@ By doing so, we hope to provide a deeper understanding of how Taylor Swift has r
 
 
 ## 2. Data Cleaning & Summary
+
 ### Summary of relevant statistics
 The following table contains a brief description of the variables we have chosen to use for our project:
+These features will enable us to analyse and compare the songs musically and lyrically. 
 ```{r}
 track_attributes <- data.frame(
   Variable = c(
@@ -88,13 +99,14 @@ kable(track_attributes, col.names = c("Variable", "Class", "Description"), align
 ```
 
 ### Data cleaning
-We'll start off by filtering for the features listed above which we want to keep:
+We'll start off by filtering for the features listed above which we want to keep. We also do not need the "EP" flag
+because we are interested in all her songs which are present in the songs under `taylor_albums`. 
 ```{r}
 taylor_album_songs <- taylor_album_songs %>%
-    select(album_name, album_release, track_name, danceability, energy, loudness, mode, speechiness, acousticness, instrumentalness, liveness, valence, tempo, explicit)
+    select(album_name, album_release,track_number, track_name, danceability, energy, loudness, mode, speechiness, acousticness, instrumentalness, liveness, valence, tempo, explicit)
 
 taylor_all_songs <- taylor_all_songs %>%
-    select(album_name, album_release, track_name, danceability, energy, loudness, mode, speechiness, acousticness, instrumentalness, liveness, valence, tempo, explicit)
+    select(album_name, album_release,track_number, track_name, danceability, energy, loudness, mode, speechiness, acousticness, instrumentalness, liveness, valence, tempo, explicit)
 
 taylor_albums <- taylor_albums %>%
     select(!ep)
@@ -155,13 +167,11 @@ Loudness is measured in decibels, which has a logarithmic scale. To enable a cle
 taylor_all_songs <- taylor_all_songs %>%
   ungroup() %>%
   mutate(loudness = 10^(loudness/10)) #%>%
-  #mutate(normalised_intensity = (intensity - min(intensity)) / (max(intensity) - min(intensity)))
 glimpse(taylor_all_songs)
 
 # Scaling loudness for taylor_album_songs
 taylor_album_songs <- taylor_album_songs %>%
   mutate(loudness = 10^(loudness/10)) #%>%
-  #mutate(normalised_intensity = (intensity - min(intensity)) / (max(intensity) - min(intensity)))
 glimpse(taylor_album_songs)
 ```
 
@@ -346,7 +356,7 @@ most_popular_album <- taylor_albums_cleaned %>%
 #Filtering the songs from her most popular album
 most_popular_album_songs <- taylor_album_songs %>%
   filter(album_name==most_popular_album) %>%
-  select(album_name,track_name,danceability,acousticness,energy,valence)
+  select(album_name,track_number, track_name,danceability,acousticness,energy,valence)
 
 #Normalize the numerical features to scale them between 0 and 1 
 scaled_songs <- most_popular_album_songs %>%
@@ -376,14 +386,22 @@ scaled_songs_long <- scaled_songs_long %>%
   mutate(feature = factor(feature, levels = feature_mean))
 
 # Create the plot
-ggplot(scaled_songs_long, aes(x = normalized_value, y = track_name, fill = feature)) +
+ggplot(scaled_songs_long, aes(x = normalized_value, y = as.factor(track_number), fill = feature)) +
   geom_bar(stat = "identity", position = "stack") +
   theme_minimal() +
-  labs(title = paste("Proportion of Significant Features of Songs in the Most Popular Album: ", most_popular_album),
-       x = "Proportion of Normalised Features", y = "Songs",
+  labs(title = paste("Proportion of Significant Features of Songs in the Most Popular Album:", most_popular_album),
+       x = "Proportion of Normalised Features", y = "Songs (Track Number)",
        fill = "Feature") +
-  theme(axis.text.y = element_blank(),plot.title = element_text(size = 11)) +
-  scale_fill_brewer(palette = "Set3")
+  theme(axis.text.y.left = element_text(size=12.5),
+  plot.title = element_text(size = 14, vjust=2, face=2),
+  aspect.ratio=0.8,
+  axis.title.y.left = element_text(vjust=2, size=12)) +
+  scale_fill_viridis_d()   #(palette = "Set3")
+
+songname_tracknumber_table = cbind(scaled_songs$track_number,scaled_songs$track_name)
+kable(songname_tracknumber_table, 
+  col.names = c("Track Number","Album Songs"), 
+  caption=paste("Songs within ", most_popular_album, "mapped to Track number"))
 ```
 
 
