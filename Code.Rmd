@@ -113,7 +113,7 @@ kable(track_attributes, col.names = c("Variable", "Class", "Description"), align
 
 ### Data cleaning
 We'll start off by filtering for the features listed above. We do not need the "EP" flag as well
-because we are interested in **all** her songs which are present in the songs under `taylor_albums`. 
+because we are interested in **all** the songs in her albums which are present in `taylor_albums`. 
 ```{r}
 taylor_album_songs <- taylor_album_songs %>%
     select(album_name, album_release,track_number, track_name, danceability, energy, loudness, mode, speechiness, acousticness, instrumentalness, liveness, valence, tempo, explicit)
@@ -158,7 +158,49 @@ taylor_albums <- taylor_albums %>%
     na.omit()
 ```
 
-To ensure that the visualisation representations are balanced, we will check the range of the various song features to see if there is a need to scale the features:
+Next we will check if data presented by `taylor_album_songs` and `taylor_all_songs` are the same, in case we are missing crucial differences.
+```{r}
+names(taylor_album_songs)==names(taylor_all_songs)
+checking_conflicts_left <- taylor_album_songs %>% anti_join(taylor_all_songs, by=names(taylor_all_songs))
+glimpse(checking_conflicts_left)
+checking_conflicts_right <- taylor_all_songs %>% anti_join(taylor_album_songs, by = names(taylor_album_songs))
+glimpse(checking_conflicts_right)
+checking_conflicts_right$album_name%>%unique
+```
+
+All the column names match for both tables. There were no non-matching songs in `taylor_album_songs` to `taylor_all_songs`. However, there were 3 albums: "Fearless", "Red" and "The Taylor Swift Holiday Collection", which were found in `taylor_all_songs` but not `taylor_album_songs`.
+This means that we should use data from the larger dataset to give us the widest coverage, hence use `taylor_all_songs`. 
+Next, since we will compare receptivity statistics by album, we need to check which albums are present in `taylor_all_songs` and `taylor_albums`.
+
+```{r}
+names1 <- taylor_albums %>% select(album_name) %>% unique() %>% arrange(album_name)
+names2 <- taylor_all_songs %>% select(album_name) %>% unique() %>% arrange(album_name)
+
+comp_table=full_join(names1, names2, by=c("album_name"))
+
+combined_table = rep("No",length(comp_table$album_name))
+combined_table  = cbind(combined_table, combined_table)
+
+for (i in 1:length(comp_table$album_name) ){
+  if (comp_table$album_name[i] %in% names1$album_name) {
+    combined_table[i,1] <- "Yes"
+  }
+  if (comp_table$album_name[i] %in% names2$album_name){
+    combined_table[i,2] <- "Yes"
+  }
+}
+
+combined_table = cbind(comp_table$album_name,combined_table)
+knitr::kable(combined_table, col.names = c("All Albums", "Taylor Albums","Taylor All Songs"), caption="Comparison of album names between the tables")
+```
+
+Checking the table generated, "The Taylor Swift Holiday Collection" does not appear in `taylor_albums`, thus it will not be considered for receptivity comparison as there is no receptivity data. We will remove that album from `taylor_all_songs`.
+
+```{r removing-The-Taylor-Swift-Holiday-Collection}
+taylor_all_songs <- taylor_all_songs %>% filter(album_name!="The Taylor Swift Holiday Collection")
+```
+
+To ensure that the visualisation representations are balanced, we will check the range of the various song features in `taylor_all_songs` to see if there is a need to scale the features:
 ```{r}
 # Checking range of values (for all the songs) of numerical variables in taylor_all_songs
 ranges_taylor_all_songs <- taylor_all_songs %>%
@@ -167,25 +209,7 @@ ranges_taylor_all_songs <- taylor_all_songs %>%
   summarise(across(danceability:tempo, ~paste(min(.), "to", max(.))))
 glimpse(ranges_taylor_all_songs)
 
-# Checking range of values of numerical variables in taylor_album_songs
-ranges_taylor_album_songs <- taylor_album_songs %>%
-  ungroup()%>%
-  select(danceability:tempo) %>%
-  summarise(across(danceability:tempo, ~paste(min(.), "to", max(.))))
-glimpse(ranges_taylor_album_songs)
 ```
-
-Next we will check if data presented by `taylor_album_songs` and `taylor_all_songs` are the same, in case we are missing crucial differences.
-```{r}
-names(taylor_album_songs)==names(taylor_all_songs)
-checking_conflicts <- taylor_album_songs %>% anti_join(taylor_all_songs, by=names(taylor_all_songs))
-glimpse(checking_conflicts_left)
-checking_conflicts_right <- taylor_all_songs %>% anti_join(taylor_album_songs, by = names(taylor_album_songs))
-glimpse(checking_conflicts_right)
-```
-
-All the column names match for both tables. A tibble of no elements was generated, thus confirming that all rows are present in either tables. Since we can choose which
-table we want, we will use taylor_album_songs.
 
 From the data dictionary in TidyTuesday, the all the features scores except loudness and tempo range from 0 to 1, hence we do not need the scale them.
 We are left with loudness and tempo for normalisation. Loudness is measured in decibels, which has a logarithmic scale. To enable a clearer visual representation, we will first convert the values of loudness to a linear scale between 0 and 1. 1 represents loudest while 0 represents softest.
@@ -196,54 +220,28 @@ taylor_all_songs <- taylor_all_songs %>%
   ungroup() %>%
   mutate(loudness = 10^(loudness/10), tempo = (tempo-min(tempo))/(max(tempo)-min(tempo))) #%>%
 glimpse(taylor_all_songs)
-
-# Scaling loudness for taylor_album_songs
-taylor_album_songs <- taylor_album_songs %>%
-  mutate(loudness = 10^(loudness/10), tempo = (tempo-min(tempo))/(max(tempo)-min(tempo))) #%>%
-glimpse(taylor_album_songs)
 ```
+
 
 Finally, the cleaned data are saved as new files for us to reference later on:
 ```{r}
-write.csv(taylor_album_songs, "CSV files/taylor_album_songs_cleaned.csv", row.names = FALSE)
+#write.csv(taylor_album_songs, "CSV files/taylor_album_songs_cleaned.csv", row.names = FALSE) This is not needed
 write.csv(taylor_all_songs, "CSV files/taylor_all_songs_cleaned.csv", row.names = FALSE)
-write.csv(taylor_albums, "CSV files/taylor_albums_cleaned.csv", row.names = FALSE)
 ```
 
 
 ### Data engineering
-Let's look at the resulting dataframes for each dataset.
+Let's look at the cleaned dataframes for each `taylor_all_songs` and `taylor_albums`.
 ```{r using-cleaned-datasets}
-head(taylor_album_songs)
-head(taylor_all_songs)
-head(taylor_albums)
+head(taylor_all_songs, 10)
+head(taylor_albums, 10)
 ```
 
-Next, since we will compare receptivity statistics by album, we need to check which albums are present in `taylor_album_songs` and `taylor_albums`.
+Next, we will aggregate statistics for each of the musical attributes by taking their mean. Then, we will combine `taylor_all_songs` and `taylor_albums` to tie the receptivity metrics with each common album.
 
-```{r}
-names1 <- taylor_albums %>% select(album_name) %>% unique() %>% arrange(album_name)
-names2 <- taylor_album_songs %>% select(album_name) %>% unique() %>% arrange(album_name)
-
-comp_table=left_join(names1, names2, by=c("album_name"))
-
-combined_table = rep(NA,length(comp_table$album_name))
-
-for (i in 1:length(names1$album_name) ){
-  if (names1$album_name[i] %in% names2$album_name) {
-    combined_table[i] <- comp_table$album_name[i]
-  }
-}
-
-combined_table = cbind(names1$album_name,combined_table)
-knitr::kable(combined_table, col.names = c("Taylor Albums","Taylor Album Songs"), caption="Comparison of album names between the tables")
-```
-
-Checking the table generated, Fearless and Red do not appear in Taylor Album Songs, thus they will not be considered for receptivity comparison.
-Next, we will aggregate statistics for each of the musical attributes by taking their mean. Then, we will combine `taylor_album_songs` and `taylor_albums` to tie the receptivity metrics with each common album.
 
 ```{r aggregating-statistics}
-taylor_album_summary <- taylor_album_songs %>% group_by(album_name)%>% summarize(
+taylor_album_summary <- taylor_all_songs %>% group_by(album_name)%>% summarize(
   mean_loudness = mean(loudness),
   mean_danceability = mean(danceability),
   mean_liveness = mean(liveness),
@@ -266,9 +264,7 @@ We will aggregate these into one statistic, "Receptivity", weighted by their res
 Hence we use the following formula: Receptivity = (metacritic_score+(user_score*10))/2
 
 ```{r creating-Receptivity}
-taylor_albums_cleaned <- read.csv("CSV files/taylor_albums_cleaned.csv")
-taylor_albums_cleaned <- taylor_albums_cleaned %>% mutate(Receptivity = (metacritic_score+user_score*10)/2)
-taylor_albums_cleaned
+taylor_album_summary <- taylor_album_summary %>% mutate(Receptivity = (metacritic_score+user_score*10)/2)
 ```
 
 
@@ -281,7 +277,7 @@ We will use these features in the next visualisation to examine their possible r
 Tempo was not included as a feature to be compared against because the range of the data is fixed by us through the normalisation process, altering the true variance of the data. 
 ```{r boxplot}
 x_labels = c("Acousticness", "Danceability", "Energy", "Instrumentalness", "Liveness", "Loudness", "Speechiness", "Valence")
-taylor_long = taylor_album_songs %>% select(-mode) %>% pivot_longer(danceability:tempo, values_to = "values", names_to = "labels") %>%
+taylor_long = taylor_all_songs %>% select(-mode) %>% pivot_longer(danceability:tempo, values_to = "values", names_to = "labels") %>%
   mutate(labels = as.factor(labels))
 ggplot(taylor_long %>% filter(labels!="tempo"), aes(y=labels, x=values, fill = labels)) +
   geom_violin(show.legend = F, alpha=0.8, bw=0.1, color = F) +
@@ -315,7 +311,7 @@ ggplot(taylor_long %>% filter(labels %in% c("acousticness","valence","energy", "
               method = 'loess', alpha=.1,
               span = 0.8,aes(fill=labels)) +
 
-  geom_line(data = taylor_albums_cleaned,
+  geom_line(data = taylor_album_summary,
             aes(x = as.Date(album_release), 
                 y = Receptivity/100,
                 color = "Receptivity"),
@@ -349,13 +345,13 @@ This stacked bar chart illustrates each song’s feature makeup within the album
 This analysis complements the previous sections by showing the relative importance of each feature in her highest-rated album.
 ```{r proportion-plot}
 #Finding her most popular album
-most_popular_album <- taylor_albums_cleaned %>%
+most_popular_album <- taylor_album_summary %>%
   arrange(desc(Receptivity)) %>%
   head(1) %>%
   pull(album_name)
 
 #Filtering the songs from her most popular album
-most_popular_album_songs <- taylor_album_songs %>%
+most_popular_album_songs <- taylor_all_songs %>%
   filter(album_name==most_popular_album) %>%
   select(album_name,track_number, track_name,danceability,acousticness,energy,valence)
 
