@@ -389,13 +389,13 @@ scaled_songs_long <- scaled_songs_long %>%
 ggplot(scaled_songs_long, aes(x = normalized_value, y = as.factor(track_number), fill = feature)) +
   geom_bar(stat = "identity", position = "stack") +
   theme_minimal() +
-  labs(title = paste("Proportion of Significant Features of Songs in the Most Popular Album:", most_popular_album),
+  labs(title = paste(" Proportion of Significant Features of Songs in the Most Popular Album:\n", most_popular_album),
        x = "Proportion of Normalised Features", y = "Songs (Track Number)",
        fill = "Feature") +
-  theme(axis.text.y.left = element_text(size=12.5),
-  plot.title = element_text(size = 14, vjust=2, face=2),
+  theme(axis.text.y.left = element_text(size=11),
+  plot.title = element_text(size = 12, vjust=2, face=2),
   aspect.ratio=0.8,
-  axis.title.y.left = element_text(vjust=2, size=12)) +
+  axis.title.y.left = element_text(vjust=2, size=11)) +
   scale_fill_viridis_d()   #(palette = "Set3")
 
 songname_tracknumber_table = cbind(scaled_songs$track_number,scaled_songs$track_name)
