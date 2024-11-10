@@ -163,7 +163,7 @@ checking_conflicts_right$album_name%>%unique
 ```
 
 All the column names match for both tables. There were no non-matching songs in `taylor_album_songs` to `taylor_all_songs`. However, there were 3 albums: "Fearless", "Red" and "The Taylor Swift Holiday Collection", which were found in `taylor_all_songs` but not `taylor_album_songs`.
-This means that we should use data from the larger dataset to give us the widest coverage, hence use `taylor_all_songs`. 
+This means that we should use data from the overarching dataset to give us the widest coverage, hence use `taylor_all_songs`. 
 Next, since we will compare receptivity statistics by album, we need to check which albums are present in `taylor_all_songs` and `taylor_albums`.
 
 ```{r}
@@ -205,8 +205,8 @@ glimpse(ranges_taylor_all_songs)
 
 ```
 
-From the data dictionary in TidyTuesday, the all the features scores except loudness and tempo range from 0 to 1, hence we do not need the scale them.
-We are left with loudness and tempo for normalisation. Loudness is measured in decibels, which has a logarithmic scale. To enable a clearer visual representation, we will first convert the values of loudness to a linear scale between 0 and 1. 1 represents loudest while 0 represents softest.
+From the data dictionary in TidyTuesday, all the features scores except loudness and tempo range from 0 to 1, hence we do not need the scale them.
+We are left with loudness and tempo for normalisation. Loudness is measured in decibels, which has a logarithmic scale. To enable a clearer visual representation, we will convert the values of loudness to a linear scale between 0 and 1. 1 represents loudest while 0 represents softest.
 We will use min_max scaling for tempo, to fit it into the 0 to 1 scaling in line with the other features.
 ```{r}
 # Scaling loudness for taylor_all_songs
@@ -220,7 +220,7 @@ glimpse(taylor_all_songs)
 Finally, the cleaned data are saved as new files for us to reference later on:
 ```{r}
 #write.csv(taylor_album_songs, "CSV files/taylor_album_songs_cleaned.csv", row.names = FALSE) This is not needed
-write.csv(taylor_all_songs, "CSV files/taylor_all_songs_cleaned.csv", row.names = FALSE)
+write.csv(taylor_all_songs, "CSV files/taylor_all_songs_cleaned.csv", row.names = FALSE) # This step also I dont think is needed
 ```
 
 
@@ -231,7 +231,7 @@ head(taylor_all_songs, 10)
 head(taylor_albums, 10)
 ```
 
-Next, we will aggregate statistics for each of the musical attributes by taking their mean. Then, we will combine `taylor_all_songs` and `taylor_albums` to tie the receptivity metrics with each common album.
+To compare musical attributes across albums, we will aggregate statistics for each of the musical attributes in each album by taking their mean. Then, we will combine `taylor_all_songs` and `taylor_albums` to tie the receptivity metrics with each common album.
 
 
 ```{r aggregating-statistics}
