@@ -275,7 +275,8 @@ taylor_albums_cleaned
 This visualisation focuses on the distribution of musical feature values for Taylor Swift's songs using a overlayed violin and box plot. 
 These plots allow us to visually assess each feature’s distribution and spread, helping us pinpoint those with a higher variance, as they likely contribute more significantly to changes in her musical style, hence her receptivity. 
 By focusing on features that show the widest range (i.e. most diverse expressions) across her songs, we can identify the more significant attributes that make her music unique. 
-We will use these features in the next visualisation to examine their possible relationship with Swift's receptivity.
+We will use these features in the next visualisation to examine their possible relationship with Swift's receptivity. Additionaly, a colourblind friendly scheme was used to differentiate each feature. 
+Tempo was not included as a feature to be compared against because the range of the data is fixed by us through the normalisation process, altering the true variance of the data. 
 ```{r boxplot}
 x_labels = c("Acousticness", "Danceability", "Energy", "Instrumentalness", "Liveness", "Loudness", "Speechiness", "Valence")
 taylor_long = taylor_album_songs %>% select(-mode) %>% pivot_longer(danceability:valence, values_to = "values", names_to = "labels") %>%
