@@ -265,7 +265,7 @@ Hence we use the following formula: Receptivity = (metacritic_score+(user_score*
 
 ```{r creating-Receptivity}
 taylor_albums_cleaned <- read.csv("CSV files/taylor_albums_cleaned.csv")
-taylor_albums_cleaned <- taylor_albums_cleaned %>% mutate(Popularity = (metacritic_score+user_score*10)/2)
+taylor_albums_cleaned <- taylor_albums_cleaned %>% mutate(Receptivity = (metacritic_score+user_score*10)/2)
 taylor_albums_cleaned
 ```
 
@@ -279,9 +279,9 @@ We will use these features in the next visualisation to examine their possible r
 Tempo was not included as a feature to be compared against because the range of the data is fixed by us through the normalisation process, altering the true variance of the data. 
 ```{r boxplot}
 x_labels = c("Acousticness", "Danceability", "Energy", "Instrumentalness", "Liveness", "Loudness", "Speechiness", "Valence")
-taylor_long = taylor_album_songs %>% select(-mode) %>% pivot_longer(danceability:valence, values_to = "values", names_to = "labels") %>%
+taylor_long = taylor_album_songs %>% select(-mode) %>% pivot_longer(danceability:tempo, values_to = "values", names_to = "labels") %>%
   mutate(labels = as.factor(labels))
-ggplot(taylor_long, aes(y=labels, x=values, fill = labels)) +
+ggplot(taylor_long %>% filter(labels!="tempo"), aes(y=labels, x=values, fill = labels)) +
   geom_violin(show.legend = F, alpha=0.8, bw=0.1, color = F) +
   geom_boxplot(show.legend = F, alpha=0.6, fill = "lightblue", outlier.fill = "lightblue", width = 0.4) +
   theme_economist() +
@@ -301,9 +301,9 @@ ggplot(taylor_long, aes(y=labels, x=values, fill = labels)) +
 ### b. How have the features we selected influenced Taylor Swift's popularity?
 We plan to investigate how the selected features with the most variability (from part (a)) might impact Taylor Swift’s popularity across her career. 
 By plotting these features along with a line representing her album popularity over time, we will be able to observe patterns and potential correlations,
-thus revealing how changes in certain musical characteristics might cause a shift in listener interest and popularity.
+thus revealing how changes in certain musical characteristics might cause a shift in listener interest and popularity. Tempo is also included here to analyse its trend with respect to her popularity.
 ```{r lineplot-dual-axes, fig.width=10, fig.height=4}
-ggplot(taylor_long %>% filter(labels %in% c("acousticness","valence","energy", "danceability")), aes(x=album_release, y=values, color=labels)) +
+ggplot(taylor_long %>% filter(labels %in% c("acousticness","valence","energy", "danceability", "tempo")), aes(x=album_release, y=values, color=labels)) +
   geom_smooth(method = "loess",
               se = FALSE,
               formula = 'y ~ x',
@@ -315,20 +315,20 @@ ggplot(taylor_long %>% filter(labels %in% c("acousticness","valence","energy", "
 
   geom_line(data = taylor_albums_cleaned,
             aes(x = as.Date(album_release), 
-                y = Popularity/100,
-                color = "Popularity"),
+                y = Receptivity/100,
+                color = "Receptivity"),
             size = 2, linetype = "solid", lineend="round") +
   
   scale_y_continuous(
     name = "Feature Values (0 - 1)",
     sec.axis = sec_axis(~ .*100,
-                        name = "Popularity (%)")
+                        name = "Receptivity (%)")
   ) +
-  labs(title = "Musical Attributes and Popularity Across Taylor Swift Albums",
+  labs(title = "Musical Attributes and Receptivity Across Taylor Swift Albums",
        x = "Album Release Date", y = "Feature Values") +
   
-  scale_color_manual(values = c("acousticness" = "blue", "valence" = "red", "energy" = "green", "danceability" = "purple", "Popularity" = "black")) +
-  scale_fill_manual(values = c("acousticness" = "blue", "valence" = "red", "energy" = "green", "danceability" = "purple"), guide = "none") +
+  scale_color_manual(values = c("tempo" = "brown", "acousticness" = "blue", "valence" = "red", "energy" = "green", "danceability" = "purple", "Popularity" = "black")) +
+  scale_fill_manual(values = c("tempo" = "brown", "acousticness" = "blue", "valence" = "red", "energy" = "green", "danceability" = "purple"), guide = "none") +
   scale_fill_colorblind()+
   theme_minimal() +
   theme(legend.position = "top",
@@ -348,7 +348,7 @@ This analysis complements the previous sections by showing the relative importan
 ```{r proportion-plot}
 #Finding her most popular album
 most_popular_album <- taylor_albums_cleaned %>%
-  arrange(desc(Popularity)) %>%
+  arrange(desc(Receptivity)) %>%
   head(1) %>%
   pull(album_name)
 
