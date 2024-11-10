@@ -10,6 +10,7 @@ library(tidytuesdayR)
 library(tidyverse)
 library(readr)
 library(knitr)
+library(ggthemes)
 ```
 
 ## Group members
@@ -41,7 +42,7 @@ taylor_albums <- tuesdata$taylor_albums
 ## 1. Introduction
 
 Taylor Swift's music has had a significant impact on the global pop and country music scene. 
-In this project, we used the Taylor Swift Spotify data sourced from the TidyTuesday repository to analyse the musical and lyrical features of her music. 
+In this project, we used the Taylor Swift Spotify data sourced from the TidyTuesday repository (Harmon, 2023) to analyse the musical and lyrical features of her music. 
 This dataset includes detailed audio attributes of her songs which we aim to use. 
 By exploring the given data, we aim to discover the patterns that have emerged throughout Taylor Swift’s career and gain insights into how her music has evolved.
 
@@ -51,7 +52,7 @@ By exploring the given data, we aim to discover the patterns that have emerged t
 
 `taylor_all_songs` ~ Song features and *metadata* for all songs released by Artist
 
-`taylor_albums` ~ *Metadata* for each album, together with Metacritic and User Scores (Used as popularity metrics).
+`taylor_albums` ~ *Metadata* for each album, together with Metacritic and User Scores (Used as receptivity metrics).
 
 * **Metadata** refers to technical aspects of the release like track name, track number and release dates.
 * Download datasets from: https://github.com/rfordatascience/tidytuesday/blob/master/data/2023/2023-10-17/readme.md
@@ -59,27 +60,34 @@ By exploring the given data, we aim to discover the patterns that have emerged t
 
 For our project, we aim to answer the following question:
 ```bash
-How do musical and lyrical features evolve across Taylor Swift's albums, and what insights can we gain about the progression of her artistry over time?
+"How do musical and lyrical features evolve across Taylor Swift's albums, and what insights can we gain about the progression of her artistry over time?"
 ```
-This analysis will allow us to identify trends in musical characteristics and examine how stylistic changes have corresponded with different stages of her career. 
-By doing so, we hope to provide a deeper understanding of how Taylor Swift has redefined her career and connect with a global audience.
+This analysis will allow us to identify trends in musical characteristics and examine how stylistic changes in her songs have affected her popularity at different stages of her career.
+We hope to understand the type of songs 
+
+**New Angle** 
+```bash
+"How have changes in musical and lyrical features in Taylor Swift's songs resonated with her audience?" 
+```
+This analysis will allow us to identify trends in musical characteristics and examine how stylistic changes in her songs which have affected the receptivity of her music to her audience. 
+We also hope to understand her audience better by knowing their music preferences through this study. Hence, we can perhaps understand what makes Taylor Swift so popular.
 
 
 ## 2. Data Cleaning & Summary
 
 ### Summary of relevant statistics
-The following table contains a brief description of the variables we have chosen to use for our project:
-These features will enable us to analyse and compare the songs musically and lyrically. 
+The following table contains a brief description of the variables we have chosen to use for our project (Harmon, 2023):
+These features will enable us to compare the songs' descriptive features through a quantitative lense, allowing us to make judgements backed by figures. 
 ```{r}
 track_attributes <- data.frame(
   Variable = c(
     "album_name", "album_release", "track_name", "danceability", "energy", 
     "loudness", "mode", "speechiness", "acousticness", "instrumentalness", 
-    "liveness", "valence", "tempo", "explicit"
+    "liveness", "valence", "tempo", "explicit", "Metacritic Score", "User Score"
   ),
   Class = c(
     "character", "double", "character", "double", "double", "double", "integer",
-    "double", "double", "double", "double", "double", "double", "logical"
+    "double", "double", "double", "double", "double", "double", "logical", "double", "double"
   ),
   Description = c(
     "Name of the album the track belongs to.",
@@ -88,22 +96,24 @@ track_attributes <- data.frame(
     "Measures how suitable a track is for dancing.",
     "Measures the intensity and activity of a track, with higher values indicating more energetic sounds.",
     "The overall volume of the track, measured in decibels (dB).",
-    "This is also a categorical variable. It indicates the modality of the track: 1 for major, 0 for minor.",
+    "This is a categorical variable. It indicates the modality of the track: 1 for major, 0 for minor.",
     "Measures the presence of spoken words in a track, with higher values indicating more speech-like content.",
     "Represents the likelihood that the track is acoustic, with higher values indicating more acoustic qualities.",
     "Predicts whether a track is instrumental, with higher values suggesting a lack of vocals.",
     "Measures the presence of an audience in the recording, with higher values indicating a stronger likelihood that the track is live",
     "Describes the musical positiveness conveyed, with higher values indicating more cheerful and happy tones.",
     "The speed of the track, measured in beats per minute (BPM).",
-    "Indicates whether the track contains explicit content: 1 for explicit, 0 otherwise."
+    "Indicates whether the track contains explicit content: 1 for explicit, 0 otherwise.",
+    "Average score of the album obtained from critics at Metacritic.com",
+    "Average score of the album obtained from average users at Meatcritic.com"
   )
 )
 kable(track_attributes, col.names = c("Variable", "Class", "Description"), align = "l")
 ```
 
 ### Data cleaning
-We'll start off by filtering for the features listed above which we want to keep. We also do not need the "EP" flag
-because we are interested in all her songs which are present in the songs under `taylor_albums`. 
+We'll start off by filtering for the features listed above. We do not need the "EP" flag as well
+because we are interested in **all** her songs which are present in the songs under `taylor_albums`. 
 ```{r}
 taylor_album_songs <- taylor_album_songs %>%
     select(album_name, album_release,track_number, track_name, danceability, energy, loudness, mode, speechiness, acousticness, instrumentalness, liveness, valence, tempo, explicit)
@@ -115,7 +125,7 @@ taylor_albums <- taylor_albums %>%
     select(!ep)
 ```
 
-Then, we group the data by their respective albums for aggregating album data:
+Then, we group the data by their **respective albums** for aggregating album data:
 ```{r}
 taylor_album_songs <- taylor_album_songs %>%
   group_by(album_name)
@@ -148,33 +158,36 @@ taylor_albums <- taylor_albums %>%
     na.omit()
 ```
 
-To ensure that the visualisation representations are balanced, we will check the range of the various song features to see whether there is a need to scale the features:
+To ensure that the visualisation representations are balanced, we will check the range of the various song features to see if there is a need to scale the features:
 ```{r}
 # Checking range of values (for all the songs) of numerical variables in taylor_all_songs
 ranges_taylor_all_songs <- taylor_all_songs %>%
   ungroup() %>%
-  select(liveness:tempo) %>%
-  summarise(across(liveness:tempo, ~paste(min(.), "to", max(.))))
+  select(danceability:tempo) %>%
+  summarise(across(danceability:tempo, ~paste(min(.), "to", max(.))))
 glimpse(ranges_taylor_all_songs)
 
 # Checking range of values of numerical variables in taylor_album_songs
 ranges_taylor_album_songs <- taylor_album_songs %>%
-  select(liveness:tempo) %>%
-  summarise(across(liveness:tempo, ~paste(min(.), "to", max(.))))
+  ungroup()%>%
+  select(danceability:tempo) %>%
+  summarise(across(danceability:tempo, ~paste(min(.), "to", max(.))))
 glimpse(ranges_taylor_album_songs)
 ```
 
-Loudness is measured in decibels, which has a logarithmic scale. To enable a clearer visual representation, we will first convert the values of loudness to a linear scale, before scaling the values between 0 and 1.
+From the data dictionary in TidyTuesday, the all the features scores except loudness and tempo range from 0 to 1, hence we do not need the scale them.
+We are left with loudness and tempo for normalisation. Loudness is measured in decibels, which has a logarithmic scale. To enable a clearer visual representation, we will first convert the values of loudness to a linear scale between 0 and 1. 1 represents loudest while 0 represents softest.
+We will use min_max scaling for tempo, to fit it into the 0 to 1 scaling in line with the other features.
 ```{r}
 # Scaling loudness for taylor_all_songs
 taylor_all_songs <- taylor_all_songs %>%
   ungroup() %>%
-  mutate(loudness = 10^(loudness/10)) #%>%
+  mutate(loudness = 10^(loudness/10), tempo = (tempo-min(tempo))/(max(tempo)-min(tempo))) #%>%
 glimpse(taylor_all_songs)
 
 # Scaling loudness for taylor_album_songs
 taylor_album_songs <- taylor_album_songs %>%
-  mutate(loudness = 10^(loudness/10)) #%>%
+  mutate(loudness = 10^(loudness/10), tempo = (tempo-min(tempo))/(max(tempo)-min(tempo))) #%>%
 glimpse(taylor_album_songs)
 ```
 
@@ -187,12 +200,14 @@ write.csv(taylor_albums, "CSV files/taylor_albums_cleaned.csv", row.names = FALS
 
 
 ### Data engineering
+Let's look at the resulting dataframes for each dataset.
 ```{r using-cleaned-datasets}
 head(taylor_album_songs)
 head(taylor_all_songs)
 head(taylor_albums)
 ```
 
+Next we will check if data presented by `taylor_album_songs` and `taylor_all_songs` are the same, in case we are missing crucial differences.
 ```{r}
 names(taylor_album_songs)==names(taylor_all_songs)
 checking_conflicts <- taylor_album_songs %>% anti_join(taylor_all_songs, by=names(taylor_all_songs))
@@ -202,7 +217,7 @@ head(checking_conflicts)
 All the column names match for both tables. A tibble of no elements was generated, thus confirming that all rows are present in either tables. Since we can choose which
 table we want, we will use taylor_album_songs.
 
-Next, since we are trying to compare popularity statistics by album, we need to check which albums are present in `taylor_album_songs` and `taylor_albums`.
+Next, since we will compare receptivity statistics by album, we need to check which albums are present in `taylor_album_songs` and `taylor_albums`.
 
 ```{r}
 names1 <- taylor_albums %>% select(album_name) %>% unique() %>% arrange(album_name)
@@ -222,8 +237,8 @@ combined_table = cbind(names1$album_name,combined_table)
 knitr::kable(combined_table, col.names = c("Taylor Albums","Taylor Album Songs"), caption="Comparison of album names between the tables")
 ```
 
-Checking the table generated, Fearless and Red do not appear in Taylor Album Songs, thus they will not be considered for popularity comparison.
-Next, we will aggregate statistics for each of the musical attributes by taking their mean. Then, we will combine `taylor_album_songs` and `taylor_albums` to tie the popularity metrics with each common album.
+Checking the table generated, Fearless and Red do not appear in Taylor Album Songs, thus they will not be considered for receptivity comparison.
+Next, we will aggregate statistics for each of the musical attributes by taking their mean. Then, we will combine `taylor_album_songs` and `taylor_albums` to tie the receptivity metrics with each common album.
 
 ```{r aggregating-statistics}
 taylor_album_summary <- taylor_album_songs %>% group_by(album_name)%>% summarize(
@@ -240,15 +255,15 @@ taylor_album_summary <- taylor_album_songs %>% group_by(album_name)%>% summarize
 ) %>% inner_join(taylor_albums, by=c("album_name")) %>% relocate(album_release, .after=album_name)
 ```
 
-Overall Metacritic scores and user scores are representative of the popularity of the albums because they are the "weighted average" of the albums' individual scores
+Overall Metacritic scores and user scores are representative of the receptivity of the albums because they are the "weighted average" of the albums' individual ratings
 from critics and the public respectively (Metacritic, 2023).
 
 While the Metacritic score ranges from 0 to 100 (Metacritic, 2023), the user score has a different range of 0 to 10 which we noticed when exploring the "user reviews" section (Metacritic, n.d.).
-We will aggregate these into one statistic, "Popularity", weighted by their respective ranges. 
+We will aggregate these into one statistic, "Receptivity", weighted by their respective ranges. 
 
-Hence we use the following formula: Popularity = (metacritic_score+(user_score*10))/2
+Hence we use the following formula: Receptivity = (metacritic_score+(user_score*10))/2
 
-```{r creating-Popularity}
+```{r creating-Receptivity}
 taylor_albums_cleaned <- read.csv("CSV files/taylor_albums_cleaned.csv")
 taylor_albums_cleaned <- taylor_albums_cleaned %>% mutate(Popularity = (metacritic_score+user_score*10)/2)
 taylor_albums_cleaned
@@ -257,12 +272,11 @@ taylor_albums_cleaned
 
 ## 3. Visualisations
 ### a. What are the most significant features?
-This visualisation focuses on the distribution of musical feature values for Taylor Swift's songs using a violin and box plot. 
-These plots allow us to visually assess each feature’s distribution and spread, helping us pinpoint those with a higher variance, as they likely contribute more significantly to her musical style. 
+This visualisation focuses on the distribution of musical feature values for Taylor Swift's songs using a overlayed violin and box plot. 
+These plots allow us to visually assess each feature’s distribution and spread, helping us pinpoint those with a higher variance, as they likely contribute more significantly to changes in her musical style, hence her receptivity. 
 By focusing on features that show the widest range (i.e. most diverse expressions) across her songs, we can identify the more significant attributes that make her music unique. 
-We will use these features in the next visualisation to examine their possible relationship with Swift's popularity.
+We will use these features in the next visualisation to examine their possible relationship with Swift's receptivity.
 ```{r boxplot}
-library(ggthemes)
 x_labels = c("Acousticness", "Danceability", "Energy", "Instrumentalness", "Liveness", "Loudness", "Speechiness", "Valence")
 taylor_long = taylor_album_songs %>% select(-mode) %>% pivot_longer(danceability:valence, values_to = "values", names_to = "labels") %>%
   mutate(labels = as.factor(labels))
@@ -280,26 +294,6 @@ ggplot(taylor_long, aes(y=labels, x=values, fill = labels)) +
     plot.title = element_text(size=16),
     aspect.ratio = 0.4,
     plot.background = element_rect(fill = "#fae7d7")
-  )
-```
-
-```{r reviolin}
-
-library(ggthemes)
-x_labels = c("Acousticness", "Danceability", "Energy", "Instrumentalness", "Liveness", "Loudness", "Speechiness", "Valence")
-taylor_long = taylor_album_songs %>% select(-mode) %>% pivot_longer(danceability:valence, values_to = "values", names_to = "labels") %>%
-  mutate(labels = as.factor(labels))
-ggplot(taylor_long, aes(y=labels, x=values, fill = labels)) +
-  geom_violin(show.legend = F, alpha=0.55, bw=0.05) +
-  theme_economist() +
-  labs(y= "", x = "Magnitude (From 0 to 1)", title = "Violin plot of musical features for Swift's songs") +
-  scale_y_discrete(labels = x_labels) +
-  theme(
-    axis.text.x = element_text(size = 6), 
-    axis.text.y = element_text(size = 8),
-    axis.title.x = element_text(vjust=-1, size=10),
-    plot.title = element_text(size=16),
-    aspect.ratio = 0.4
   )
 ```
 
