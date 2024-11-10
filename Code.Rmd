@@ -175,6 +175,18 @@ ranges_taylor_album_songs <- taylor_album_songs %>%
 glimpse(ranges_taylor_album_songs)
 ```
 
+Next we will check if data presented by `taylor_album_songs` and `taylor_all_songs` are the same, in case we are missing crucial differences.
+```{r}
+names(taylor_album_songs)==names(taylor_all_songs)
+checking_conflicts <- taylor_album_songs %>% anti_join(taylor_all_songs, by=names(taylor_all_songs))
+glimpse(checking_conflicts_left)
+checking_conflicts_right <- taylor_all_songs %>% anti_join(taylor_album_songs, by = names(taylor_album_songs))
+glimpse(checking_conflicts_right)
+```
+
+All the column names match for both tables. A tibble of no elements was generated, thus confirming that all rows are present in either tables. Since we can choose which
+table we want, we will use taylor_album_songs.
+
 From the data dictionary in TidyTuesday, the all the features scores except loudness and tempo range from 0 to 1, hence we do not need the scale them.
 We are left with loudness and tempo for normalisation. Loudness is measured in decibels, which has a logarithmic scale. To enable a clearer visual representation, we will first convert the values of loudness to a linear scale between 0 and 1. 1 represents loudest while 0 represents softest.
 We will use min_max scaling for tempo, to fit it into the 0 to 1 scaling in line with the other features.
@@ -206,16 +218,6 @@ head(taylor_album_songs)
 head(taylor_all_songs)
 head(taylor_albums)
 ```
-
-Next we will check if data presented by `taylor_album_songs` and `taylor_all_songs` are the same, in case we are missing crucial differences.
-```{r}
-names(taylor_album_songs)==names(taylor_all_songs)
-checking_conflicts <- taylor_album_songs %>% anti_join(taylor_all_songs, by=names(taylor_all_songs))
-head(checking_conflicts)
-```
-
-All the column names match for both tables. A tibble of no elements was generated, thus confirming that all rows are present in either tables. Since we can choose which
-table we want, we will use taylor_album_songs.
 
 Next, since we will compare receptivity statistics by album, we need to check which albums are present in `taylor_album_songs` and `taylor_albums`.
 
