@@ -40,18 +40,21 @@ taylor_albums <- tuesdata$taylor_albums
 
 ## 1. Introduction
 
-Taylor Swift's music has had a significant impact on the global pop and country music scenes. 
+Taylor Swift's music has had a significant impact on the global pop and country music scene. 
 In this project, we used the Taylor Swift Spotify data sourced from the TidyTuesday repository to analyse the musical and lyrical features of her music. 
 This dataset includes detailed audio attributes of her songs which we aim to use. 
 By exploring the given data, we aim to discover the patterns that have emerged throughout Taylor Swift’s career and gain insights into how her music has evolved.
 
 
-### Brief description of dataset
-`taylor_album_songs` ~ 
+### Brief description of the Dataset
+`taylor_album_songs` ~ Song features and *metadata* for only songs released in albums.
 
-`taylor_all_songs` ~
+`taylor_all_songs` ~ Song features and *metadata* for all songs released by Artist
 
-`taylor_albums` ~ 
+`taylor_albums` ~ *Metadata* for each album, together with Metacritic and User Scores (Used as popularity metrics).
+
+* **Metadata** refers to technical aspects of the release like track name, track number and release dates.
+* Download datasets from: https://github.com/rfordatascience/tidytuesday/blob/master/data/2023/2023-10-17/readme.md
 
 
 For our project, we aim to answer the following question:
