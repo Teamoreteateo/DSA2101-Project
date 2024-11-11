@@ -292,12 +292,12 @@ From this visualisation, we can pinpoint those features with a higher variance, 
 By focusing on features that show the widest range (i.e. most diverse expressions) across her songs, we can identify the more significant attributes that make her music unique. 
 We will use these features in the next visualisation to examine their possible relationship with Swift's receptivity.  
 
-It appears that Valence, Acousticness, Energy and Danceability have the most variance - the tails for each feature spans the widest across the graph. This indicates vast differences between these features within Swift's songs. Such differences could indicate large dynamic shifts in the style of music produced, which will likely be received differently by the audience. 
-The rest of the musical features seem to be concentrated closer to zero, indicating that most of the features are weakly present and consistent throughout the songs. Additionally, since Loudness values are mostly closer to 0, it indicates that Swift's songs are consistently moderately loud. Overall we gather that most of her songs are vocally driven (low Instrumentalness), not spoken (low Speechiness) and are not live (low Liveness). 
-Examining the plot again for the above four features gives us more relationships to hypothesise about. The wide range in Valence could indicate shifts in the happiness of her Songs, like her songs becoming less happy. The range of Energy indicates that there are vast differences in the power and drive of her songs. Large differences in Danceability could indicate that Swift is either moving away or towards more danceable tunes. Lastly,
-the difference in Acousticness could indicate that Taylor Swift is also switching from commercial and electronic sounding songs to acoustic songs. Moreover, scrutinizing the violin plot of Acousticness also hints at polarisation. There are two visible bulges in the plot, indicate two areas of high density. This means that Taylor's songs which have acoustic elements likely do not have any electronic elements, vice versa, indicating her preference for keeping the two type of songs separate.
+It appears that `valence`, `acousticness`, `energy` and `danceability` have the most variance - the tails for each feature spans the widest across the graph. This indicates vast differences between these features within Swift's songs. Such differences could indicate large dynamic shifts in the style of music produced, which will likely be received differently by the audience. 
+The rest of the musical features seem to be concentrated closer to zero, indicating that most of the features are weakly present and consistent throughout the songs. Additionally, since `loudness` values are mostly closer to 0, it indicates that Swift's songs are consistently moderately loud. Overall we gather that most of her songs are vocally driven (low `instrumentalness`), not spoken (low `speechiness`) and are not live (low `liveness`). 
+Examining the plot again for the above four features gives us more relationships to hypothesise about. The wide range in `valence` could indicate shifts in the happiness of her songs, like her songs becoming less happy. The range of `energy` indicates that there are vast differences in the power and drive of her songs. Large differences in `danceability` could indicate that Swift is either moving away or towards more danceable tunes. 
+Lastly, the difference in `acousticness` could indicate that Taylor Swift is also switching from commercial and electronic sounding songs to more acoustic songs. Moreover, scrutinising the violin plot of Acousticness also hints at polarisation. There are two visible bulges in the plot, indicate two areas of high density. This means that Taylor's songs which have acoustic elements likely do not have any electronic elements, vice versa, indicating her preference for keeping the two type of songs separate.
 These plots were great at hinting at potential large differences in musical features within Swift's repertoire, but they do not give us any information about the trends of the features. We need a way to observe the changes in the highly variant features across time.
-Hence, we will be plotting Valence, Acousticness, Energy and Danceability in a line graph in the next part.
+Hence, we will be plotting `valence`, `acousticness`, `energy` and `danceability` in a line graph in the next part.
 
 
 ### b. How have the features we selected influenced Taylor Swift's popularity?
@@ -343,6 +343,7 @@ ggplot(taylor_long %>% filter(labels %in% c("acousticness", "valence", "energy",
   axis.ticks.length.y.left = unit(.25, "cm"),
   aspect.ratio = 0.4)
 ```
+
 #### Discussion
 
 
