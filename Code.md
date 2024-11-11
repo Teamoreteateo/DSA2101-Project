@@ -3,15 +3,6 @@ DSA2101 Group Project: Analysis of Taylor Swift Spotify Data
 
 ## Group members
 
-``` r
-students <- data.frame(
-  Group_Members = c("Chua Yong Sheng Joel", "Lim Zeen Kiat", "Robin Ghosh", "Timothy Teo Shao Jun"),
-  Matriculation_Number = c("A0282307H", "A0273151M", "A0271671A", "A0272851B")
-)
-
-kable(students, col.names = c("Group Members", "Matriculation Number"))
-```
-
 | Group Members        | Matriculation Number |
 |:---------------------|:---------------------|
 | Chua Yong Sheng Joel | A0282307H            |
@@ -73,7 +64,7 @@ and User Scores (Used as receptivity metrics).
 
 - **Metadata** refers to technical aspects of the release like track
   name, track number and release dates.
-- Download datasets from:
+- Download dataset from:
   <https://github.com/rfordatascience/tidytuesday/blob/master/data/2023/2023-10-17/readme.md>
 
 For our project, we aim to answer the following question:
@@ -97,39 +88,6 @@ The following table contains a brief description of the variables we
 have chosen to use for our project (Harmon, 2023): These features will
 enable us to compare the songs’ descriptive features through a
 quantitative lense, allowing us to make judgements backed by figures.
-
-``` r
-track_attributes <- data.frame(
-  Variable = c(
-    "album_name", "album_release", "track_name", "danceability", "energy", 
-    "loudness", "mode", "speechiness", "acousticness", "instrumentalness", 
-    "liveness", "valence", "tempo", "explicit", "Metacritic Score", "User Score"
-  ),
-  Class = c(
-    "character", "double", "character", "double", "double", "double", "integer",
-    "double", "double", "double", "double", "double", "double", "logical", "double", "double"
-  ),
-  Description = c(
-    "Name of the album the track belongs to.",
-    "Release date of the album.",
-    "Name of the individual track.",
-    "Measures how suitable a track is for dancing.",
-    "Measures the intensity and activity of a track, with higher values indicating more energetic sounds.",
-    "The overall volume of the track, measured in decibels (dB).",
-    "This is a categorical variable. It indicates the modality of the track: 1 for major, 0 for minor.",
-    "Measures the presence of spoken words in a track, with higher values indicating more speech-like content.",
-    "Represents the likelihood that the track is acoustic, with higher values indicating more acoustic qualities.",
-    "Predicts whether a track is instrumental, with higher values suggesting a lack of vocals.",
-    "Measures the presence of an audience in the recording, with higher values indicating a stronger likelihood that the track is live",
-    "Describes the musical positiveness conveyed, with higher values indicating more cheerful and happy tones.",
-    "The speed of the track, measured in beats per minute (BPM).",
-    "Indicates whether the track contains explicit content: 1 for explicit, 0 otherwise.",
-    "Average score of the album obtained from critics at Metacritic.com",
-    "Average score of the album obtained from average users at Meatcritic.com"
-  )
-)
-kable(track_attributes, col.names = c("Variable", "Class", "Description"), align = "l")
-```
 
 | Variable | Class | Description |
 |:---|:---|:---|
@@ -158,13 +116,13 @@ songs in her albums which are present in `taylor_albums`.
 
 ``` r
 taylor_album_songs <- taylor_album_songs %>%
-    select(album_name, album_release,track_number, track_name, danceability, energy, loudness, mode, speechiness, acousticness, instrumentalness, liveness, valence, tempo, explicit)
+  select(album_name, album_release, track_number, track_name, danceability, energy, loudness, mode, speechiness, acousticness, instrumentalness, liveness, valence, tempo, explicit)
 
 taylor_all_songs <- taylor_all_songs %>%
-    select(album_name, album_release,track_number, track_name, danceability, energy, loudness, mode, speechiness, acousticness, instrumentalness, liveness, valence, tempo, explicit)
+  select(album_name, album_release, track_number, track_name, danceability, energy, loudness, mode, speechiness, acousticness, instrumentalness, liveness, valence, tempo, explicit)
 
 taylor_albums <- taylor_albums %>%
-    select(!ep)
+  select(!ep)
 ```
 
 Then, we group the data by their **respective albums** for aggregating
@@ -222,13 +180,13 @@ print(taylor_albums_na_count)
 
 ``` r
 taylor_album_songs <- taylor_album_songs %>%
-    na.omit()
+  na.omit()
 
 taylor_all_songs <- taylor_all_songs %>%
-    na.omit()
+  na.omit()
 
 taylor_albums <- taylor_albums %>%
-    na.omit()
+  na.omit()
 ```
 
 Next we will check if data presented by `taylor_album_songs` and
@@ -236,13 +194,13 @@ Next we will check if data presented by `taylor_album_songs` and
 differences.
 
 ``` r
-names(taylor_album_songs)==names(taylor_all_songs)
+names(taylor_album_songs) == names(taylor_all_songs)
 ```
 
     ##  [1] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
 
 ``` r
-checking_conflicts_left <- taylor_album_songs %>% anti_join(taylor_all_songs, by=names(taylor_all_songs))
+checking_conflicts_left <- taylor_album_songs %>% anti_join(taylor_all_songs, by = names(taylor_all_songs))
 glimpse(checking_conflicts_left)
 ```
 
@@ -290,7 +248,7 @@ glimpse(checking_conflicts_right)
     ## $ explicit         <lgl> FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALS…
 
 ``` r
-checking_conflicts_right$album_name%>%unique
+checking_conflicts_right$album_name %>% unique
 ```
 
     ## [1] "Fearless"                            "Red"                                
@@ -309,22 +267,22 @@ albums are present in `taylor_all_songs` and `taylor_albums`.
 names1 <- taylor_albums %>% select(album_name) %>% unique() %>% arrange(album_name)
 names2 <- taylor_all_songs %>% select(album_name) %>% unique() %>% arrange(album_name)
 
-comp_table=full_join(names1, names2, by=c("album_name"))
+comp_table <- full_join(names1, names2, by = c("album_name"))
 
-combined_table = rep("No",length(comp_table$album_name))
-combined_table  = cbind(combined_table, combined_table)
+combined_table <- rep("No", length(comp_table$album_name))
+combined_table <- cbind(combined_table, combined_table)
 
-for (i in 1:length(comp_table$album_name) ){
+for (i in 1:length(comp_table$album_name)){
   if (comp_table$album_name[i] %in% names1$album_name) {
-    combined_table[i,1] <- "Yes"
+    combined_table[i, 1] <- "Yes"
   }
-  if (comp_table$album_name[i] %in% names2$album_name){
-    combined_table[i,2] <- "Yes"
+  if (comp_table$album_name[i] %in% names2$album_name) {
+    combined_table[i, 2] <- "Yes"
   }
 }
 
-combined_table = cbind(comp_table$album_name,combined_table)
-knitr::kable(combined_table, col.names = c("All Albums", "Taylor Albums","Taylor All Songs"), caption="Comparison of album names between the tables")
+combined_table <- cbind(comp_table$album_name, combined_table)
+knitr::kable(combined_table, col.names = c("All Albums", "Taylor Albums", "Taylor All Songs"), caption = "Comparison of album names between the tables")
 ```
 
 | All Albums                          | Taylor Albums | Taylor All Songs |
@@ -351,7 +309,7 @@ receptivity comparison as there is no receptivity data. We will remove
 that album from `taylor_all_songs`.
 
 ``` r
-taylor_all_songs <- taylor_all_songs %>% filter(album_name!="The Taylor Swift Holiday Collection")
+taylor_all_songs <- taylor_all_songs %>% filter(album_name != "The Taylor Swift Holiday Collection")
 ```
 
 To ensure that the visualisation representations are balanced, we will
@@ -387,13 +345,14 @@ measured in decibels, which has a logarithmic scale. To enable a clearer
 visual representation, we will convert the values of loudness to a
 linear scale between 0 and 1. 1 represents loudest while 0 represents
 softest. We will use min_max scaling for tempo, to fit it into the 0 to
-1 scaling in line with the other features.
+1 scaling in line with the other features (not for direct comparison to
+the features as range is fixed by us).
 
 ``` r
 # Scaling loudness for taylor_all_songs
 taylor_all_songs <- taylor_all_songs %>%
   ungroup() %>%
-  mutate(loudness = 10^(loudness/10), tempo = (tempo-min(tempo))/(max(tempo)-min(tempo))) #%>%
+  mutate(loudness = 10^(loudness / 10), tempo = (tempo - min(tempo)) / (max(tempo) - min(tempo))) #%>%
 glimpse(taylor_all_songs)
 ```
 
@@ -466,7 +425,7 @@ their mean. Then, we will combine `taylor_all_songs` and `taylor_albums`
 to tie the receptivity metrics with each common album.
 
 ``` r
-taylor_album_summary <- taylor_all_songs %>% group_by(album_name)%>% summarize(
+taylor_album_summary <- taylor_all_songs %>% group_by(album_name) %>% summarize(
   mean_loudness = mean(loudness),
   mean_danceability = mean(danceability),
   mean_liveness = mean(liveness),
@@ -476,14 +435,15 @@ taylor_album_summary <- taylor_all_songs %>% group_by(album_name)%>% summarize(
   mean_acousticness = mean(acousticness),
   mean_instrumentalness = mean(instrumentalness),
   mean_valence = mean(valence),
-  mean_tempo = mean(tempo)
-) %>% inner_join(taylor_albums, by=c("album_name")) %>% relocate(album_release, .after=album_name)
+  mean_tempo = mean(tempo)) %>%
+  inner_join(taylor_albums, by = c("album_name")) %>%
+  relocate(album_release, .after = album_name)
 ```
 
-Overall Metacritic scores and user scores are representative of the
-receptivity of the albums because they are the “weighted average” of the
-albums’ individual ratings from critics and the public respectively
-(Metacritic, 2023).
+Metacritic scores and user scores are representative of the receptivity
+of the albums because they are the “weighted average” of the albums’
+individual ratings from critics and the public respectively (Metacritic,
+2023).
 
 While the Metacritic score ranges from 0 to 100 (Metacritic, 2023), the
 user score has a different range of 0 to 10 which we noticed when
@@ -495,44 +455,46 @@ Hence we use the following formula: Receptivity =
 (metacritic_score+(user_score\*10))/2
 
 ``` r
-taylor_album_summary <- taylor_album_summary %>% mutate(Receptivity = (metacritic_score+user_score*10)/2)
+taylor_album_summary <- taylor_album_summary %>% mutate(Receptivity = (metacritic_score + user_score * 10) / 2)
 ```
 
-## 3. Visualisations
+## 3. Visualisations and Discussions
 
 ### a. What are the most significant features?
 
-This visualisation focuses on the distribution of musical feature values
-for Taylor Swift’s songs using a overlayed violin and box plot. These
-plots allow us to visually assess each feature’s distribution and
-spread, helping us pinpoint those with a higher variance, as they likely
-contribute more significantly to changes in her musical style, hence her
-receptivity. By focusing on features that show the widest range
-(i.e. most diverse expressions) across her songs, we can identify the
-more significant attributes that make her music unique. We will use
-these features in the next visualisation to examine their possible
-relationship with Swift’s receptivity. Additionaly, a colourblind
-friendly scheme was used to differentiate each feature. Tempo was not
-included as a feature to be compared against because the range of the
-data is fixed by us through the normalisation process, altering the true
-variance of the data.
+#### Methodology
+
+We have chosen to use an overlayed boxplot and violin plot to represent
+the values of the song features, less tempo. This will allow us to
+examine the spread and distribution of values for each feature together
+with information about the interquartile range and median. The violin
+plot additionally shows potential polarisation in the data as it is a
+density plot of the values. Additionaly, a colourblind friendly scheme
+was used to differentiate each feature.
+
+#### Plot
 
 ``` r
-x_labels = c("Acousticness", "Danceability", "Energy", "Instrumentalness", "Liveness", "Loudness", "Speechiness", "Valence")
-taylor_long = taylor_all_songs %>% select(-mode) %>% pivot_longer(danceability:tempo, values_to = "values", names_to = "labels") %>%
-  mutate(labels = as.factor(labels))
-ggplot(taylor_long %>% filter(labels!="tempo"), aes(y=labels, x=values, fill = labels)) +
-  geom_violin(show.legend = F, alpha=0.8, bw=0.1, color = F) +
-  geom_boxplot(show.legend = F, alpha=0.6, fill = "lightblue", outlier.fill = "lightblue", width = 0.4) +
+# Defining labels for usage
+x_labels <- c("Acousticness", "Danceability", "Energy", "Instrumentalness", "Liveness", "Loudness", "Speechiness", "Valence")
+
+# Convertion to long format for plotting
+taylor_long <- taylor_all_songs %>% select(-mode) %>% pivot_longer(danceability:tempo, values_to = "values", names_to = "labels") %>%
+  mutate(labels <- as.factor(labels))
+
+# Plot
+ggplot(taylor_long %>% filter(labels != "tempo"), aes(y = labels, x = values, fill = labels)) +
+  geom_violin(show.legend = FALSE, alpha = 0.8, bw = 0.1, color = FALSE) +
+  geom_boxplot(show.legend = FALSE, alpha = 0.6, fill = "lightblue", outlier.fill = "lightblue", width = 0.4) +
   theme_economist() +
-  labs(y= "", x = "Magnitude (From 0 to 1)", title = "Boxplot of musical features for Swift's songs") +
+  labs(y = "", x = "Magnitude (From 0 to 1)", title = "Boxplot of musical features for Swift's songs") +
   scale_y_discrete(labels = x_labels) +
-  scale_fill_colorblind()+
+  scale_fill_colorblind() +
   theme(
-    axis.text.x = element_text(size = 6), 
+    axis.text.x = element_text(size = 6),
     axis.text.y = element_text(size = 8),
-    axis.title.x = element_text(vjust=-1, size=10),
-    plot.title = element_text(size=16),
+    axis.title.x = element_text(vjust = -1, size = 10),
+    plot.title = element_text(size = 16),
     aspect.ratio = 0.4,
     plot.background = element_rect(fill = "#fae7d7")
   )
@@ -540,7 +502,51 @@ ggplot(taylor_long %>% filter(labels!="tempo"), aes(y=labels, x=values, fill = l
 
 ![](Code_files/figure-gfm/boxplot-1.png)<!-- -->
 
+#### Discussion
+
+From this visualisation, we can pinpoint those features with a higher
+variance, as they likely contribute more significantly to changes in her
+musical style, hence her receptivity. By focusing on features that show
+the widest range (i.e. most diverse expressions) across her songs, we
+can identify the more significant attributes that make her music unique.
+We will use these features in the next visualisation to examine their
+possible relationship with Swift’s receptivity.
+
+It appears that Valence, Acousticness, Energy and Danceability have the
+most variance - the tails for each feature spans the widest across the
+graph. This indicates vast differences between these features within
+Swift’s songs. Such differences could indicate large dynamic shifts in
+the style of music produced, which will likely be received differently
+by the audience. The rest of the musical features seem to be
+concentrated closer to zero, indicating that most of the features are
+weakly present and consistent throughout the songs. Additionally, since
+Loudness values are mostly closer to 0, it indicates that Swift’s songs
+are consistently moderately loud. Overall we gather that most of her
+songs are vocally driven (low Instrumentalness), not spoken (low
+Speechiness) and are not live (low Liveness). Examining the plot again
+for the above four features gives us more relationships to hypothesise
+about. The wide range in Valence could indicate shifts in the happiness
+of her Songs, like her songs becoming less happy. The range of Energy
+indicates that there are vast differences in the power and drive of her
+songs. Large differences in Danceability could indicate that Swift is
+either moving away or towards more danceable tunes. Lastly, the
+difference in Acousticness could indicate that Taylor Swift is also
+switching from commercial and electronic sounding songs to acoustic
+songs. Moreover, scrutinizing the violin plot of Acousticness also hints
+at polarisation. There are two visible bulges in the plot, indicate two
+areas of high density. This means that Taylor’s songs which have
+acoustic elements likely do not have any electronic elements, vice
+versa, indicating her preference for keeping the two type of songs
+separate. These plots were great at hinting at potential large
+differences in musical features within Swift’s repertoire, but they do
+not give us any information about the trends of the features. We need a
+way to observe the changes in the highly variant features across time.
+Hence, we will be plotting Valence, Acousticness, Energy and
+Danceability in a line graph in the next part.
+
 ### b. How have the features we selected influenced Taylor Swift’s popularity?
+
+#### Methodology
 
 We plan to investigate how the selected features with the most
 variability (from part (a)) might impact Taylor Swift’s popularity
@@ -551,43 +557,42 @@ certain musical characteristics might cause a shift in listener interest
 and popularity. Tempo is also included here to analyse its trend with
 respect to her popularity.
 
+#### Plot
+
 ``` r
-ggplot(taylor_long %>% filter(labels %in% c("acousticness","valence","energy", "danceability", "tempo")), aes(x=album_release, y=values, color=labels)) +
+ggplot(taylor_long %>% filter(labels %in% c("acousticness", "valence", "energy", "danceability", "tempo")), aes(x = album_release, y = values, color = labels)) +
   geom_smooth(method = "loess",
               se = FALSE,
-              formula = 'y ~ x',
+              formula = y ~ x,
               span = 0.8,
-              size=1.2) +
-  stat_smooth(se=FALSE, geom="area",
-              method = 'loess', alpha=.1,
-              span = 0.8,aes(fill=labels)) +
-
+              size = 1.2) +
+  stat_smooth(se = FALSE, geom = "area",
+              method = "loess", alpha = .1,
+              span = 0.8, aes(fill = labels)) +
   geom_line(data = taylor_album_summary,
-            aes(x = as.Date(album_release), 
-                y = Receptivity/100,
+            aes(x = as.Date(album_release),
+                y = Receptivity / 100,
                 color = "Receptivity"),
-            size = 2, linetype = "solid", lineend="round") +
-  
+            size = 2, linetype = "solid", lineend = "round") +
   scale_y_continuous(
     name = "Feature Values (0 - 1)",
-    sec.axis = sec_axis(~ .*100,
+    sec.axis = sec_axis(~ . * 100,
                         name = "Receptivity (%)")
   ) +
   labs(title = "Musical Attributes and Receptivity Across Taylor Swift Albums",
        x = "Album Release Date", y = "Feature Values") +
-  
   scale_color_manual(values = c("tempo" = "brown", "acousticness" = "blue", "valence" = "red", "energy" = "green", "danceability" = "purple", "Popularity" = "black")) +
   scale_fill_manual(values = c("tempo" = "brown", "acousticness" = "blue", "valence" = "red", "energy" = "green", "danceability" = "purple"), guide = "none") +
-  scale_fill_colorblind()+
+  scale_fill_colorblind() +
   theme_minimal() +
   theme(legend.position = "top",
   axis.line.y.right = element_line(colour = "Black"),
-  axis.ticks.y.right = element_line(color="red"),
-  axis.ticks.length.y.right=unit(.25, "cm"),
-  axis.line.y.left = element_line(color="brown"),
-  axis.ticks.y.left = element_line(color="red"),
-  axis.ticks.length.y.left=unit(.25, "cm"),
-  aspect.ratio=0.4)    
+  axis.ticks.y.right = element_line(color = "red"),
+  axis.ticks.length.y.right = unit(.25, "cm"),
+  axis.line.y.left = element_line(color = "brown"),
+  axis.ticks.y.left = element_line(color = "red"),
+  axis.ticks.length.y.left = unit(.25, "cm"),
+  aspect.ratio = 0.4)
 ```
 
     ## Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
@@ -602,7 +607,11 @@ ggplot(taylor_long %>% filter(labels %in% c("acousticness","valence","energy", "
 
 ![](Code_files/figure-gfm/lineplot-dual-axes-1.png)<!-- -->
 
+#### Discussion
+
 ### c. Which feature(s) has/have the greatest impact on Taylor Swift’s songs?
+
+#### Methodology
 
 We have chosen Swift’s most popular album to investigate this
 subquestion. Here, we will examine how each feature contributes
@@ -612,105 +621,11 @@ are dominant in her songs and may have potentially driven their success.
 This analysis complements the previous sections by showing the relative
 importance of each feature in her highest-rated album.
 
-``` r
-# Finding her most popular album
-most_popular_album <- taylor_album_summary %>%
-  arrange(desc(Receptivity)) %>%
-  head(1) %>%
-  pull(album_name)
+*Disclaimer: Track Numbers reflected in the table and plot do not
+correspond to actual track numbers. They have been mapped to the track
+names according to the order seen in the plot for ease of reading.*
 
-# Filtering the songs from her most popular album
-most_popular_album_songs <- taylor_all_songs %>%
-  filter(album_name==most_popular_album) %>%
-  select(album_name,track_number, track_name,danceability,acousticness,energy,valence)
-
-# Normalize the numerical features to scale them between 0 and 1 
-scaled_songs <- most_popular_album_songs %>%
-  mutate(across(danceability:valence, ~ (.-min(.)) / (max(.) - min(.)), .names = "scaled_{.col}"))
-
-# Reshape the data into long format for plotting
-scaled_songs_long <- scaled_songs %>%
-  pivot_longer(cols = starts_with("scaled_"), 
-               names_to = "feature", 
-               values_to = "value") %>%
-  mutate(feature = gsub("scaled_", "", feature)) %>%
-  group_by(track_name) %>%
-  mutate(total_value = sum(value),
-         normalized_value = value / total_value) %>%
-  ungroup()
-
-# Check the mean value of each feature
-feature_mean <- scaled_songs_long %>%
-  select(feature, normalized_value) %>%
-  group_by(feature) %>%
-  summarize(mean = mean(normalized_value)) %>%
-  arrange(mean) %>%
-  pull(feature)
-
-# Sort the feature column by mean value
-scaled_songs_long <- scaled_songs_long %>%
-  mutate(feature = factor(feature, levels = feature_mean))
-
-# Create the plot
-ggplot(scaled_songs_long, aes(x = normalized_value, y = as.factor(track_number), fill = feature)) +
-  geom_bar(stat = "identity", position = "stack") +
-  theme_minimal() +
-  labs(title = paste(" Proportion of Significant Features of Songs in the Most Popular Album:\n", most_popular_album),
-       x = "Proportion of Normalised Features", y = "Songs (Track Number)",
-       fill = "Feature") +
-  theme(axis.text.y.left = element_text(size=9),
-  panel.grid.major.y = element_line(color = "#ff8f8f", ),
-  plot.title = element_text(size = 12, vjust=2, face=2),
-  aspect.ratio=0.8,
-  axis.title.y.left = element_text(vjust=2, size=11)) +
-  scale_fill_viridis_d() 
-```
-
-![](Code_files/figure-gfm/proportion-plot-1.png)<!-- -->
-
-``` r
-songname_tracknumber_table = cbind(scaled_songs$track_number,scaled_songs$track_name)
-kable(songname_tracknumber_table, 
-  col.names = c("Track Number","Album Songs"), 
-  caption=paste("Songs within ", most_popular_album, "mapped to Track number"))
-```
-
-| Track Number | Album Songs |
-|:---|:---|
-| 1 | State Of Grace (Taylor’s Version) |
-| 2 | Red (Taylor’s Version) |
-| 3 | Treacherous (Taylor’s Version) |
-| 4 | I Knew You Were Trouble (Taylor’s Version) |
-| 5 | All Too Well (Taylor’s Version) |
-| 6 | 22 (Taylor’s Version) |
-| 7 | I Almost Do (Taylor’s Version) |
-| 8 | We Are Never Ever Getting Back Together (Taylor’s Version) |
-| 9 | Stay Stay Stay (Taylor’s Version) |
-| 10 | The Last Time (Taylor’s Version) |
-| 11 | Holy Ground (Taylor’s Version) |
-| 12 | Sad Beautiful Tragic (Taylor’s Version) |
-| 13 | The Lucky One (Taylor’s Version) |
-| 14 | Everything Has Changed (Taylor’s Version) |
-| 15 | Starlight (Taylor’s Version) |
-| 16 | Begin Again (Taylor’s Version) |
-| 17 | The Moment I Knew (Taylor’s Version) |
-| 18 | Come Back…Be Here (Taylor’s Version) |
-| 19 | Girl At Home (Taylor’s Version) |
-| 20 | State Of Grace (Acoustic Version) \[Taylor’s Version\] |
-| 21 | Ronan (Taylor’s Version) |
-| 22 | Better Man (Taylor’s Version) \[From The Vault\] |
-| 23 | Nothing New (Taylor’s Version) \[From The Vault\] |
-| 24 | Babe (Taylor’s Version) \[From The Vault\] |
-| 25 | Message In A Bottle (Taylor’s Version) \[From The Vault\] |
-| 26 | I Bet You Think About Me (Taylor’s Version) \[From The Vault\] |
-| 27 | Forever Winter (Taylor’s Version) \[From The Vault\] |
-| 28 | Run (Taylor’s Version) \[From The Vault\] |
-| 29 | The Very First Night (Taylor’s Version) \[From The Vault\] |
-| 30 | All Too Well (10 Minute Version) \[Taylor’s Version\] \[From The Vault\] |
-
-Songs within Red (Taylor’s Version) mapped to Track number
-
-**ALTERNATIVE PLOT 3**\*
+#### Plot
 
 ``` r
 # Finding her most popular album
@@ -721,19 +636,13 @@ most_popular_album <- taylor_album_summary %>%
 
 # Filtering the songs from her most popular album
 most_popular_album_songs <- taylor_all_songs %>%
-  filter(album_name==most_popular_album) %>%
-  select(album_name,track_number, track_name,danceability,acousticness,energy,valence)
-
-# Normalize the numerical features to scale them between 0 and 1 
-scaled_songs <- most_popular_album_songs %>%
-  mutate(across(danceability:valence, ~ (.-min(.)) / (max(.) - min(.)), .names = "scaled_{.col}"))
-
+  filter(album_name == most_popular_album) %>%
+  select(album_name, track_number, track_name, danceability, acousticness, energy, valence)
 # Reshape the data into long format for plotting
-scaled_songs_long <- scaled_songs %>%
-  pivot_longer(cols = starts_with("scaled_"), 
-               names_to = "feature", 
+scaled_songs_long <- most_popular_album_songs %>%
+  pivot_longer(cols = danceability:valence,
+               names_to = "feature",
                values_to = "value") %>%
-  mutate(feature = gsub("scaled_", "", feature)) %>%
   group_by(track_name) %>%
   mutate(total_value = sum(value)) %>%
   ungroup()
@@ -748,77 +657,77 @@ feature_mean <- scaled_songs_long %>%
 
 scaled_songs_long <- scaled_songs_long %>%
   arrange(total_value) %>%
-  mutate(track_number = factor(track_number, levels = unique(track_number)))
+  pivot_wider(names_from = "feature", values_from = "value") %>%
+  arrange(desc(total_value)) %>%
+  mutate(new_track_number = row_number()) %>%
+  pivot_longer(cols = danceability:valence, names_to = "feature", values_to = "value")
 
 # Plot with sorted order
-ggplot(scaled_songs_long, aes(x = total_value, y = track_number, fill = feature)) +
+ggplot(scaled_songs_long, aes(x = value, y = as.factor(new_track_number), fill = feature)) +
   geom_bar(stat = "identity", position = "stack") +
   theme_minimal() +
   labs(title = paste("Composition of Significant Features of each Song in the \nMost Popular Album:", most_popular_album),
        x = "Total Value of Features", y = "Songs (Track Number)",
-       fill = "Feature") +
+       fill = "Feature", subtitle = "Sorted by Total Score") +
   theme(
     axis.text.y.left = element_text(size = 9),
-    panel.grid.major.y = element_line(color = "#ff8f8f"),
+    panel.grid.major.x = element_line(color = "#addced"),
     plot.title = element_text(size = 12, vjust = 2, face = "bold"),
+    plot.subtitle = element_text(size = 8, face = 3),
     aspect.ratio = 0.8,
     axis.title.y.left = element_text(vjust = 2, size = 11)
   ) +
-  scale_fill_viridis_d()
+  scale_fill_viridis_d() +
+  coord_flip()
 ```
 
 ![](Code_files/figure-gfm/proportion-plot-ALTERNATIVE-1.png)<!-- -->
 
 ``` r
 # Display song names mapped to track numbers
-songname_tracknumber_table <- cbind(scaled_songs$track_number, scaled_songs$track_name)
-kable(songname_tracknumber_table, 
-      col.names = c("Track Number", "Album Songs"), 
+album_songs_table <- scaled_songs_long %>% select(c("track_name", "new_track_number")) %>% unique()
+songname_tracknumber_table <- cbind(album_songs_table$new_track_number, album_songs_table$track_name)
+kable(songname_tracknumber_table,
+      col.names = c("Track Number", "Album Songs"),
       caption = paste("Songs within", most_popular_album, "mapped to Track Number"))
 ```
 
 | Track Number | Album Songs |
 |:---|:---|
-| 1 | State Of Grace (Taylor’s Version) |
-| 2 | Red (Taylor’s Version) |
-| 3 | Treacherous (Taylor’s Version) |
-| 4 | I Knew You Were Trouble (Taylor’s Version) |
-| 5 | All Too Well (Taylor’s Version) |
-| 6 | 22 (Taylor’s Version) |
-| 7 | I Almost Do (Taylor’s Version) |
-| 8 | We Are Never Ever Getting Back Together (Taylor’s Version) |
-| 9 | Stay Stay Stay (Taylor’s Version) |
-| 10 | The Last Time (Taylor’s Version) |
-| 11 | Holy Ground (Taylor’s Version) |
-| 12 | Sad Beautiful Tragic (Taylor’s Version) |
-| 13 | The Lucky One (Taylor’s Version) |
-| 14 | Everything Has Changed (Taylor’s Version) |
-| 15 | Starlight (Taylor’s Version) |
-| 16 | Begin Again (Taylor’s Version) |
-| 17 | The Moment I Knew (Taylor’s Version) |
-| 18 | Come Back…Be Here (Taylor’s Version) |
-| 19 | Girl At Home (Taylor’s Version) |
-| 20 | State Of Grace (Acoustic Version) \[Taylor’s Version\] |
-| 21 | Ronan (Taylor’s Version) |
-| 22 | Better Man (Taylor’s Version) \[From The Vault\] |
-| 23 | Nothing New (Taylor’s Version) \[From The Vault\] |
-| 24 | Babe (Taylor’s Version) \[From The Vault\] |
-| 25 | Message In A Bottle (Taylor’s Version) \[From The Vault\] |
-| 26 | I Bet You Think About Me (Taylor’s Version) \[From The Vault\] |
-| 27 | Forever Winter (Taylor’s Version) \[From The Vault\] |
-| 28 | Run (Taylor’s Version) \[From The Vault\] |
-| 29 | The Very First Night (Taylor’s Version) \[From The Vault\] |
-| 30 | All Too Well (10 Minute Version) \[Taylor’s Version\] \[From The Vault\] |
+| 1 | Run (Taylor’s Version) \[From The Vault\] |
+| 2 | Nothing New (Taylor’s Version) \[From The Vault\] |
+| 3 | Babe (Taylor’s Version) \[From The Vault\] |
+| 4 | Stay Stay Stay (Taylor’s Version) |
+| 5 | Girl At Home (Taylor’s Version) |
+| 6 | We Are Never Ever Getting Back Together (Taylor’s Version) |
+| 7 | The Very First Night (Taylor’s Version) \[From The Vault\] |
+| 8 | 22 (Taylor’s Version) |
+| 9 | Holy Ground (Taylor’s Version) |
+| 10 | Ronan (Taylor’s Version) |
+| 11 | Starlight (Taylor’s Version) |
+| 12 | I Knew You Were Trouble (Taylor’s Version) |
+| 13 | Message In A Bottle (Taylor’s Version) \[From The Vault\] |
+| 14 | Sad Beautiful Tragic (Taylor’s Version) |
+| 15 | The Lucky One (Taylor’s Version) |
+| 16 | Everything Has Changed (Taylor’s Version) |
+| 17 | Forever Winter (Taylor’s Version) \[From The Vault\] |
+| 18 | I Bet You Think About Me (Taylor’s Version) \[From The Vault\] |
+| 19 | Red (Taylor’s Version) |
+| 20 | State Of Grace (Taylor’s Version) |
+| 21 | All Too Well (10 Minute Version) \[Taylor’s Version\] \[From The Vault\] |
+| 22 | Treacherous (Taylor’s Version) |
+| 23 | Better Man (Taylor’s Version) \[From The Vault\] |
+| 24 | Come Back…Be Here (Taylor’s Version) |
+| 25 | Begin Again (Taylor’s Version) |
+| 26 | State Of Grace (Acoustic Version) \[Taylor’s Version\] |
+| 27 | I Almost Do (Taylor’s Version) |
+| 28 | The Moment I Knew (Taylor’s Version) |
+| 29 | The Last Time (Taylor’s Version) |
+| 30 | All Too Well (Taylor’s Version) |
 
 Songs within Red (Taylor’s Version) mapped to Track Number
 
-## 4. Discussions
-
-### a.
-
-### b.
-
-### c.
+#### Discussion
 
 ## 5. Teamwork
 

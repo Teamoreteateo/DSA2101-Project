@@ -14,7 +14,7 @@ library(ggthemes)
 ```
 
 ## Group members
-```{r}
+```{r, echo = FALSE}
 students <- data.frame(
   Group_Members = c("Chua Yong Sheng Joel", "Lim Zeen Kiat", "Robin Ghosh", "Timothy Teo Shao Jun"),
   Matriculation_Number = c("A0282307H", "A0273151M", "A0271671A", "A0272851B")
@@ -72,11 +72,11 @@ We also hope to understand her audience better by knowing their music preference
 ### Summary of relevant statistics
 The following table contains a brief description of the variables we have chosen to use for our project (Harmon, 2023):
 These features will enable us to compare the songs' descriptive features through a quantitative lense, allowing us to make judgements backed by figures. 
-```{r}
+```{r, echo = FALSE}
 track_attributes <- data.frame(
   Variable = c(
-    "album_name", "album_release", "track_name", "danceability", "energy", 
-    "loudness", "mode", "speechiness", "acousticness", "instrumentalness", 
+    "album_name", "album_release", "track_name", "danceability", "energy",
+    "loudness", "mode", "speechiness", "acousticness", "instrumentalness",
     "liveness", "valence", "tempo", "explicit", "Metacritic Score", "User Score"
   ),
   Class = c(
@@ -110,13 +110,13 @@ We'll start off by filtering for the features listed above. We do not need the "
 because we are interested in **all** the songs in her albums which are present in `taylor_albums`. 
 ```{r}
 taylor_album_songs <- taylor_album_songs %>%
-    select(album_name, album_release,track_number, track_name, danceability, energy, loudness, mode, speechiness, acousticness, instrumentalness, liveness, valence, tempo, explicit)
+  select(album_name, album_release, track_number, track_name, danceability, energy, loudness, mode, speechiness, acousticness, instrumentalness, liveness, valence, tempo, explicit)
 
 taylor_all_songs <- taylor_all_songs %>%
-    select(album_name, album_release,track_number, track_name, danceability, energy, loudness, mode, speechiness, acousticness, instrumentalness, liveness, valence, tempo, explicit)
+  select(album_name, album_release, track_number, track_name, danceability, energy, loudness, mode, speechiness, acousticness, instrumentalness, liveness, valence, tempo, explicit)
 
 taylor_albums <- taylor_albums %>%
-    select(!ep)
+  select(!ep)
 ```
 
 Then, we group the data by their **respective albums** for aggregating album data:
@@ -143,23 +143,23 @@ taylor_albums_na_count <- sapply(taylor_albums, function(x) sum(is.na(x)))
 print(taylor_albums_na_count)
 
 taylor_album_songs <- taylor_album_songs %>%
-    na.omit()
+  na.omit()
 
 taylor_all_songs <- taylor_all_songs %>%
-    na.omit()
+  na.omit()
 
 taylor_albums <- taylor_albums %>%
-    na.omit()
+  na.omit()
 ```
 
 Next we will check if data presented by `taylor_album_songs` and `taylor_all_songs` are the same, in case we are missing crucial differences.
 ```{r}
-names(taylor_album_songs)==names(taylor_all_songs)
-checking_conflicts_left <- taylor_album_songs %>% anti_join(taylor_all_songs, by=names(taylor_all_songs))
+names(taylor_album_songs) == names(taylor_all_songs)
+checking_conflicts_left <- taylor_album_songs %>% anti_join(taylor_all_songs, by = names(taylor_all_songs))
 glimpse(checking_conflicts_left)
 checking_conflicts_right <- taylor_all_songs %>% anti_join(taylor_album_songs, by = names(taylor_album_songs))
 glimpse(checking_conflicts_right)
-checking_conflicts_right$album_name%>%unique
+checking_conflicts_right$album_name %>% unique
 ```
 
 All the column names match for both tables. There were no non-matching songs in `taylor_album_songs` to `taylor_all_songs`. However, there were 3 albums: "Fearless", "Red" and "The Taylor Swift Holiday Collection", which were found in `taylor_all_songs` but not `taylor_album_songs`.
@@ -170,27 +170,27 @@ Next, since we will compare receptivity statistics by album, we need to check wh
 names1 <- taylor_albums %>% select(album_name) %>% unique() %>% arrange(album_name)
 names2 <- taylor_all_songs %>% select(album_name) %>% unique() %>% arrange(album_name)
 
-comp_table=full_join(names1, names2, by=c("album_name"))
+comp_table <- full_join(names1, names2, by = c("album_name"))
 
-combined_table = rep("No",length(comp_table$album_name))
-combined_table  = cbind(combined_table, combined_table)
+combined_table <- rep("No", length(comp_table$album_name))
+combined_table <- cbind(combined_table, combined_table)
 
-for (i in 1:length(comp_table$album_name) ){
+for (i in 1:length(comp_table$album_name)){
   if (comp_table$album_name[i] %in% names1$album_name) {
-    combined_table[i,1] <- "Yes"
+    combined_table[i, 1] <- "Yes"
   }
-  if (comp_table$album_name[i] %in% names2$album_name){
-    combined_table[i,2] <- "Yes"
+  if (comp_table$album_name[i] %in% names2$album_name) {
+    combined_table[i, 2] <- "Yes"
   }
 }
 
-combined_table = cbind(comp_table$album_name,combined_table)
-knitr::kable(combined_table, col.names = c("All Albums", "Taylor Albums","Taylor All Songs"), caption="Comparison of album names between the tables")
+combined_table <- cbind(comp_table$album_name, combined_table)
+knitr::kable(combined_table, col.names = c("All Albums", "Taylor Albums", "Taylor All Songs"), caption = "Comparison of album names between the tables")
 ```
 
 Checking the table generated, "The Taylor Swift Holiday Collection" does not appear in `taylor_albums`, thus it will not be considered for receptivity comparison as there is no receptivity data. We will remove that album from `taylor_all_songs`.
 ```{r removing-The-Taylor-Swift-Holiday-Collection}
-taylor_all_songs <- taylor_all_songs %>% filter(album_name!="The Taylor Swift Holiday Collection")
+taylor_all_songs <- taylor_all_songs %>% filter(album_name != "The Taylor Swift Holiday Collection")
 ```
 
 To ensure that the visualisation representations are balanced, we will check the range of the various song features in `taylor_all_songs` to see if there is a need to scale the features:
@@ -211,7 +211,7 @@ We will use min_max scaling for tempo, to fit it into the 0 to 1 scaling in line
 # Scaling loudness for taylor_all_songs
 taylor_all_songs <- taylor_all_songs %>%
   ungroup() %>%
-  mutate(loudness = 10^(loudness/10), tempo = (tempo-min(tempo))/(max(tempo)-min(tempo))) #%>%
+  mutate(loudness = 10^(loudness / 10), tempo = (tempo - min(tempo)) / (max(tempo) - min(tempo))) #%>%
 glimpse(taylor_all_songs)
 ```
 
@@ -225,7 +225,7 @@ head(taylor_albums, 10)
 
 To compare musical attributes across albums, we will aggregate statistics for each of the musical attributes in each album by taking their mean. Then, we will combine `taylor_all_songs` and `taylor_albums` to tie the receptivity metrics with each common album.
 ```{r aggregating-statistics}
-taylor_album_summary <- taylor_all_songs %>% group_by(album_name)%>% summarize(
+taylor_album_summary <- taylor_all_songs %>% group_by(album_name) %>% summarize(
   mean_loudness = mean(loudness),
   mean_danceability = mean(danceability),
   mean_liveness = mean(liveness),
@@ -235,8 +235,9 @@ taylor_album_summary <- taylor_all_songs %>% group_by(album_name)%>% summarize(
   mean_acousticness = mean(acousticness),
   mean_instrumentalness = mean(instrumentalness),
   mean_valence = mean(valence),
-  mean_tempo = mean(tempo)
-) %>% inner_join(taylor_albums, by=c("album_name")) %>% relocate(album_release, .after=album_name)
+  mean_tempo = mean(tempo)) %>%
+  inner_join(taylor_albums, by = c("album_name")) %>%
+  relocate(album_release, .after = album_name)
 ```
 
 Metacritic scores and user scores are representative of the receptivity of the albums because they are the "weighted average" of the albums' individual ratings
@@ -248,7 +249,7 @@ We will aggregate these into one statistic, "Receptivity", weighted by their res
 Hence we use the following formula: Receptivity = (metacritic_score+(user_score*10))/2
 
 ```{r creating-Receptivity}
-taylor_album_summary <- taylor_album_summary %>% mutate(Receptivity = (metacritic_score+user_score*10)/2)
+taylor_album_summary <- taylor_album_summary %>% mutate(Receptivity = (metacritic_score + user_score * 10) / 2)
 ```
 
 
@@ -261,33 +262,32 @@ The violin plot additionally shows potential polarisation in the data as it is a
 
 #### Plot
 ```{r boxplot}
-#Defining labels for usage
-x_labels = c("Acousticness", "Danceability", "Energy", "Instrumentalness", "Liveness", "Loudness", "Speechiness", "Valence")
+# Defining labels for usage
+x_labels <- c("Acousticness", "Danceability", "Energy", "Instrumentalness", "Liveness", "Loudness", "Speechiness", "Valence")
 
-#Convertion to long format for plotting
-taylor_long = taylor_all_songs %>% select(-mode) %>% pivot_longer(danceability:tempo, values_to = "values", names_to = "labels") %>%
-  mutate(labels = as.factor(labels))
+# Convertion to long format for plotting
+taylor_long <- taylor_all_songs %>% select(-mode) %>% pivot_longer(danceability:tempo, values_to = "values", names_to = "labels") %>%
+  mutate(labels <- as.factor(labels))
 
-#Plot
-ggplot(taylor_long %>% filter(labels!="tempo"), aes(y=labels, x=values, fill = labels)) +
-  geom_violin(show.legend = F, alpha=0.8, bw=0.1, color = F) +
-  geom_boxplot(show.legend = F, alpha=0.6, fill = "lightblue", outlier.fill = "lightblue", width = 0.4) +
+# Plot
+ggplot(taylor_long %>% filter(labels != "tempo"), aes(y = labels, x = values, fill = labels)) +
+  geom_violin(show.legend = FALSE, alpha = 0.8, bw = 0.1, color = FALSE) +
+  geom_boxplot(show.legend = FALSE, alpha = 0.6, fill = "lightblue", outlier.fill = "lightblue", width = 0.4) +
   theme_economist() +
-  labs(y= "", x = "Magnitude (From 0 to 1)", title = "Boxplot of musical features for Swift's songs") +
+  labs(y = "", x = "Magnitude (From 0 to 1)", title = "Boxplot of musical features for Swift's songs") +
   scale_y_discrete(labels = x_labels) +
-  scale_fill_colorblind()+
+  scale_fill_colorblind() +
   theme(
-    axis.text.x = element_text(size = 6), 
+    axis.text.x = element_text(size = 6),
     axis.text.y = element_text(size = 8),
-    axis.title.x = element_text(vjust=-1, size=10),
-    plot.title = element_text(size=16),
+    axis.title.x = element_text(vjust = -1, size = 10),
+    plot.title = element_text(size = 16),
     aspect.ratio = 0.4,
     plot.background = element_rect(fill = "#fae7d7")
   )
 ```
 
 #### Discussion
-
 From this visualisation, we can pinpoint those features with a higher variance, as they likely contribute more significantly to changes in her musical style, hence her receptivity.
 By focusing on features that show the widest range (i.e. most diverse expressions) across her songs, we can identify the more significant attributes that make her music unique. 
 We will use these features in the next visualisation to examine their possible relationship with Swift's receptivity.  
@@ -310,42 +310,39 @@ thus revealing how changes in certain musical characteristics might cause a shif
 
 #### Plot
 ```{r lineplot-dual-axes, fig.width=10, fig.height=4}
-ggplot(taylor_long %>% filter(labels %in% c("acousticness","valence","energy", "danceability", "tempo")), aes(x=album_release, y=values, color=labels)) +
+ggplot(taylor_long %>% filter(labels %in% c("acousticness", "valence", "energy", "danceability", "tempo")), aes(x = album_release, y = values, color = labels)) +
   geom_smooth(method = "loess",
               se = FALSE,
-              formula = 'y ~ x',
+              formula = y ~ x,
               span = 0.8,
-              size=1.2) +
-  stat_smooth(se=FALSE, geom="area",
-              method = 'loess', alpha=.1,
-              span = 0.8,aes(fill=labels)) +
-
+              size = 1.2) +
+  stat_smooth(se = FALSE, geom = "area",
+              method = "loess", alpha = .1,
+              span = 0.8, aes(fill = labels)) +
   geom_line(data = taylor_album_summary,
-            aes(x = as.Date(album_release), 
-                y = Receptivity/100,
+            aes(x = as.Date(album_release),
+                y = Receptivity / 100,
                 color = "Receptivity"),
-            size = 2, linetype = "solid", lineend="round") +
-  
+            size = 2, linetype = "solid", lineend = "round") +
   scale_y_continuous(
     name = "Feature Values (0 - 1)",
-    sec.axis = sec_axis(~ .*100,
+    sec.axis = sec_axis(~ . * 100,
                         name = "Receptivity (%)")
   ) +
   labs(title = "Musical Attributes and Receptivity Across Taylor Swift Albums",
        x = "Album Release Date", y = "Feature Values") +
-  
   scale_color_manual(values = c("tempo" = "brown", "acousticness" = "blue", "valence" = "red", "energy" = "green", "danceability" = "purple", "Popularity" = "black")) +
   scale_fill_manual(values = c("tempo" = "brown", "acousticness" = "blue", "valence" = "red", "energy" = "green", "danceability" = "purple"), guide = "none") +
-  scale_fill_colorblind()+
+  scale_fill_colorblind() +
   theme_minimal() +
   theme(legend.position = "top",
   axis.line.y.right = element_line(colour = "Black"),
-  axis.ticks.y.right = element_line(color="red"),
-  axis.ticks.length.y.right=unit(.25, "cm"),
-  axis.line.y.left = element_line(color="brown"),
-  axis.ticks.y.left = element_line(color="red"),
-  axis.ticks.length.y.left=unit(.25, "cm"),
-  aspect.ratio=0.4)    
+  axis.ticks.y.right = element_line(color = "red"),
+  axis.ticks.length.y.right = unit(.25, "cm"),
+  axis.line.y.left = element_line(color = "brown"),
+  axis.ticks.y.left = element_line(color = "red"),
+  axis.ticks.length.y.left = unit(.25, "cm"),
+  aspect.ratio = 0.4)
 ```
 
 
@@ -370,12 +367,12 @@ most_popular_album <- taylor_album_summary %>%
 
 # Filtering the songs from her most popular album
 most_popular_album_songs <- taylor_all_songs %>%
-  filter(album_name==most_popular_album) %>%
-  select(album_name,track_number, track_name,danceability,acousticness,energy,valence)
-#Reshape the data into long format for plotting
+  filter(album_name == most_popular_album) %>%
+  select(album_name, track_number, track_name, danceability, acousticness, energy, valence)
+# Reshape the data into long format for plotting
 scaled_songs_long <- most_popular_album_songs %>%
-  pivot_longer(cols = danceability:valence, 
-               names_to = "feature", 
+  pivot_longer(cols = danceability:valence,
+               names_to = "feature",
                values_to = "value") %>%
   group_by(track_name) %>%
   mutate(total_value = sum(value)) %>%
@@ -394,7 +391,7 @@ scaled_songs_long <- scaled_songs_long %>%
   pivot_wider(names_from = "feature", values_from = "value") %>%
   arrange(desc(total_value)) %>%
   mutate(new_track_number = row_number()) %>%
-  pivot_longer(cols = danceability:valence, names_to="feature", values_to="value")
+  pivot_longer(cols = danceability:valence, names_to = "feature", values_to = "value")
 
 # Plot with sorted order
 ggplot(scaled_songs_long, aes(x = value, y = as.factor(new_track_number), fill = feature)) +
@@ -407,18 +404,18 @@ ggplot(scaled_songs_long, aes(x = value, y = as.factor(new_track_number), fill =
     axis.text.y.left = element_text(size = 9),
     panel.grid.major.x = element_line(color = "#addced"),
     plot.title = element_text(size = 12, vjust = 2, face = "bold"),
-    plot.subtitle = element_text(size=8, face=3),
+    plot.subtitle = element_text(size = 8, face = 3),
     aspect.ratio = 0.8,
     axis.title.y.left = element_text(vjust = 2, size = 11)
   ) +
-  scale_fill_viridis_d()+
+  scale_fill_viridis_d() +
   coord_flip()
 
 # Display song names mapped to track numbers
-album_songs_table <- scaled_songs_long %>% select(c("track_name","new_track_number")) %>% unique()
+album_songs_table <- scaled_songs_long %>% select(c("track_name", "new_track_number")) %>% unique()
 songname_tracknumber_table <- cbind(album_songs_table$new_track_number, album_songs_table$track_name)
-kable(songname_tracknumber_table, 
-      col.names = c("Track Number", "Album Songs"), 
+kable(songname_tracknumber_table,
+      col.names = c("Track Number", "Album Songs"),
       caption = paste("Songs within", most_popular_album, "mapped to Track Number"))
 ```
 
