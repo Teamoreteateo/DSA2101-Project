@@ -260,9 +260,14 @@ By focusing on features that show the widest range (i.e. most diverse expression
 We will use these features in the next visualisation to examine their possible relationship with Swift's receptivity. Additionaly, a colourblind friendly scheme was used to differentiate each feature. 
 Tempo was not included as a feature to be compared against because the range of the data is fixed by us through the normalisation process, altering the true variance of the data. 
 ```{r boxplot}
+#Defining labels for usage
 x_labels = c("Acousticness", "Danceability", "Energy", "Instrumentalness", "Liveness", "Loudness", "Speechiness", "Valence")
+
+#Convertion to long format for plotting
 taylor_long = taylor_all_songs %>% select(-mode) %>% pivot_longer(danceability:tempo, values_to = "values", names_to = "labels") %>%
   mutate(labels = as.factor(labels))
+
+#Plot
 ggplot(taylor_long %>% filter(labels!="tempo"), aes(y=labels, x=values, fill = labels)) +
   geom_violin(show.legend = F, alpha=0.8, bw=0.1, color = F) +
   geom_boxplot(show.legend = F, alpha=0.6, fill = "lightblue", outlier.fill = "lightblue", width = 0.4) +
