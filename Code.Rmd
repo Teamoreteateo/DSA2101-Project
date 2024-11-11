@@ -375,7 +375,7 @@ ggplot(scaled_songs_long, aes(x = normalized_value, y = as.factor(track_number),
   axis.title.y.left = element_text(vjust=2, size=11)) +
   scale_fill_viridis_d() 
 
-songname_tracknumber_table = cbind(scaled_songs$track_number,scaled_songs$track_name)
+songname_tracknumber_table = cbind(most_popular_album_songs$track_number,most_popular_album_songs$track_name)
 kable(songname_tracknumber_table, 
   col.names = c("Track Number","Album Songs"), 
   caption=paste("Songs within ", most_popular_album, "mapped to Track number"))
@@ -395,7 +395,7 @@ most_popular_album_songs <- taylor_all_songs %>%
   select(album_name,track_number, track_name,danceability,acousticness,energy,valence)
 
 #Reshape the data into long format for plotting
-scaled_songs_long <- scaled_songs %>%
+scaled_songs_long <- most_popular_album_songs %>%
   pivot_longer(cols = danceability:valence, 
                names_to = "feature", 
                values_to = "value") %>%
@@ -432,7 +432,7 @@ ggplot(scaled_songs_long, aes(x = value, y = track_number, fill = feature)) +
   scale_fill_viridis_d()
 
 # Display song names mapped to track numbers
-songname_tracknumber_table <- cbind(scaled_songs$track_number, scaled_songs$track_name)
+songname_tracknumber_table <- cbind(most_popular_album_songs$track_number, most_popular_album_songs$track_name)
 kable(songname_tracknumber_table, 
       col.names = c("Track Number", "Album Songs"), 
       caption = paste("Songs within", most_popular_album, "mapped to Track Number"))
