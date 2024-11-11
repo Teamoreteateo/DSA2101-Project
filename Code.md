@@ -788,12 +788,12 @@ and emotional impact of Swift’s popular tracks.
 ## 6. References
 
 Harmon, J. (2023, October 16). Taylor Swift. GitHub.
-<https://github.com/rfordatascience/tidytuesday/blob/master/data/2023/2023-10-17/readme.md>
+<https://github.com/rfordatascience/tidytuesday/blob/master/data/2023/2023-10-17/readme.md>  
 Holtz, Y. (n.d.). Dual Y axis with R and ggplot2. The R Graph Gallery –
 Help and inspiration for R charts.
-<https://r-graph-gallery.com/line-chart-dual-Y-axis-ggplot2.html>
+<https://r-graph-gallery.com/line-chart-dual-Y-axis-ggplot2.html>  
 Metacritic. (2023). How do you compute METASCORES? Retrieved November 7,
 2024, from
-<https://metacritichelp.zendesk.com/hc/en-us/articles/14478499933079-How-do-you-compute-METASCORES>
+<https://metacritichelp.zendesk.com/hc/en-us/articles/14478499933079-How-do-you-compute-METASCORES>  
 Metacritic. (n.d.). Taylor Swift by Taylor Swift.
 <https://www.metacritic.com/music/taylor-swift/taylor-swift/user-reviews>
