@@ -377,6 +377,7 @@ ggplot(scaled_songs_long, aes(x = normalized_value, y = as.factor(track_number),
        x = "Proportion of Normalised Features", y = "Songs (Track Number)",
        fill = "Feature") +
   theme(axis.text.y.left = element_text(size=9),
+  panel.grid.major.y = element_line(color = "#ff8f8f", ),
   plot.title = element_text(size = 12, vjust=2, face=2),
   aspect.ratio=0.8,
   axis.title.y.left = element_text(vjust=2, size=11)) +
@@ -435,6 +436,7 @@ ggplot(scaled_songs_long, aes(x = total_value, y = as.factor(track_number), fill
        x = "Total value of Features", y = "Songs (Track Number)",
        fill = "Feature") +
   theme(axis.text.y.left = element_text(size=9),
+  panel.grid.major.y = element_line(color = "#ff8f8f", ),
   plot.title = element_text(size = 12, vjust=2, face=2),
   aspect.ratio=0.8,
   axis.title.y.left = element_text(vjust=2, size=11)) +
