@@ -189,7 +189,6 @@ knitr::kable(combined_table, col.names = c("All Albums", "Taylor Albums","Taylor
 ```
 
 Checking the table generated, "The Taylor Swift Holiday Collection" does not appear in `taylor_albums`, thus it will not be considered for receptivity comparison as there is no receptivity data. We will remove that album from `taylor_all_songs`.
-
 ```{r removing-The-Taylor-Swift-Holiday-Collection}
 taylor_all_songs <- taylor_all_songs %>% filter(album_name!="The Taylor Swift Holiday Collection")
 ```
@@ -225,8 +224,6 @@ head(taylor_albums, 10)
 ```
 
 To compare musical attributes across albums, we will aggregate statistics for each of the musical attributes in each album by taking their mean. Then, we will combine `taylor_all_songs` and `taylor_albums` to tie the receptivity metrics with each common album.
-
-
 ```{r aggregating-statistics}
 taylor_album_summary <- taylor_all_songs %>% group_by(album_name)%>% summarize(
   mean_loudness = mean(loudness),
@@ -416,7 +413,7 @@ scaled_songs_long <- scaled_songs %>%
   mutate(total_value = sum(value)) %>%
   ungroup()
 
-#Check the mean value of each feature
+# Check the mean value of each feature
 feature_mean <- scaled_songs_long %>%
   select(feature, total_value) %>%
   group_by(feature) %>%
@@ -424,28 +421,31 @@ feature_mean <- scaled_songs_long %>%
   arrange(mean) %>%
   pull(feature)
 
-#Sort the feature column by mean value
 scaled_songs_long <- scaled_songs_long %>%
-  mutate(feature = factor(feature, levels = feature_mean))
+  arrange(total_value) %>%  # Sort by total_value in descending order
+  mutate(track_number = factor(track_number, levels = unique(track_number)))  # Preserve order for plotting
 
-# Create the plot
-ggplot(scaled_songs_long, aes(x = total_value, y = as.factor(track_number), fill = feature)) +
+# Plot with sorted order
+ggplot(scaled_songs_long, aes(x = total_value, y = track_number, fill = feature)) +
   geom_bar(stat = "identity", position = "stack") +
   theme_minimal() +
   labs(title = paste("Composition of Significant Features of each Song in the \nMost Popular Album:", most_popular_album),
-       x = "Total value of Features", y = "Songs (Track Number)",
+       x = "Total Value of Features", y = "Songs (Track Number)",
        fill = "Feature") +
-  theme(axis.text.y.left = element_text(size=9),
-  panel.grid.major.y = element_line(color = "#ff8f8f", ),
-  plot.title = element_text(size = 12, vjust=2, face=2),
-  aspect.ratio=0.8,
-  axis.title.y.left = element_text(vjust=2, size=11)) +
-  scale_fill_viridis_d() 
+  theme(
+    axis.text.y.left = element_text(size = 9),
+    panel.grid.major.y = element_line(color = "#ff8f8f"),
+    plot.title = element_text(size = 12, vjust = 2, face = "bold"),
+    aspect.ratio = 0.8,
+    axis.title.y.left = element_text(vjust = 2, size = 11)
+  ) +
+  scale_fill_viridis_d()
 
-songname_tracknumber_table = cbind(scaled_songs$track_number,scaled_songs$track_name)
+# Display song names mapped to track numbers
+songname_tracknumber_table <- cbind(scaled_songs$track_number, scaled_songs$track_name)
 kable(songname_tracknumber_table, 
-  col.names = c("Track Number","Album Songs"), 
-  caption=paste("Songs within ", most_popular_album, "mapped to Track number"))
+      col.names = c("Track Number", "Album Songs"), 
+      caption = paste("Songs within", most_popular_album, "mapped to Track Number"))
 ```
 
 ## 4. Discussions

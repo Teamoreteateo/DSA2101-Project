@@ -738,7 +738,7 @@ scaled_songs_long <- scaled_songs %>%
   mutate(total_value = sum(value)) %>%
   ungroup()
 
-#Check the mean value of each feature
+# Check the mean value of each feature
 feature_mean <- scaled_songs_long %>%
   select(feature, total_value) %>%
   group_by(feature) %>%
@@ -746,32 +746,35 @@ feature_mean <- scaled_songs_long %>%
   arrange(mean) %>%
   pull(feature)
 
-#Sort the feature column by mean value
 scaled_songs_long <- scaled_songs_long %>%
-  mutate(feature = factor(feature, levels = feature_mean))
+  arrange(total_value) %>%  # Sort by total_value in descending order
+  mutate(track_number = factor(track_number, levels = unique(track_number)))  # Preserve order for plotting
 
-# Create the plot
-ggplot(scaled_songs_long, aes(x = total_value, y = as.factor(track_number), fill = feature)) +
+# Plot with sorted order
+ggplot(scaled_songs_long, aes(x = total_value, y = track_number, fill = feature)) +
   geom_bar(stat = "identity", position = "stack") +
   theme_minimal() +
   labs(title = paste("Composition of Significant Features of each Song in the \nMost Popular Album:", most_popular_album),
-       x = "Total value of Features", y = "Songs (Track Number)",
+       x = "Total Value of Features", y = "Songs (Track Number)",
        fill = "Feature") +
-  theme(axis.text.y.left = element_text(size=9),
-  panel.grid.major.y = element_line(color = "#ff8f8f", ),
-  plot.title = element_text(size = 12, vjust=2, face=2),
-  aspect.ratio=0.8,
-  axis.title.y.left = element_text(vjust=2, size=11)) +
-  scale_fill_viridis_d() 
+  theme(
+    axis.text.y.left = element_text(size = 9),
+    panel.grid.major.y = element_line(color = "#ff8f8f"),
+    plot.title = element_text(size = 12, vjust = 2, face = "bold"),
+    aspect.ratio = 0.8,
+    axis.title.y.left = element_text(vjust = 2, size = 11)
+  ) +
+  scale_fill_viridis_d()
 ```
 
 ![](Code_files/figure-gfm/proportion-plot-ALTERNATIVE-1.png)<!-- -->
 
 ``` r
-songname_tracknumber_table = cbind(scaled_songs$track_number,scaled_songs$track_name)
+# Display song names mapped to track numbers
+songname_tracknumber_table <- cbind(scaled_songs$track_number, scaled_songs$track_name)
 kable(songname_tracknumber_table, 
-  col.names = c("Track Number","Album Songs"), 
-  caption=paste("Songs within ", most_popular_album, "mapped to Track number"))
+      col.names = c("Track Number", "Album Songs"), 
+      caption = paste("Songs within", most_popular_album, "mapped to Track Number"))
 ```
 
 | Track Number | Album Songs |
@@ -807,7 +810,7 @@ kable(songname_tracknumber_table,
 | 29 | The Very First Night (Taylor’s Version) \[From The Vault\] |
 | 30 | All Too Well (10 Minute Version) \[Taylor’s Version\] \[From The Vault\] |
 
-Songs within Red (Taylor’s Version) mapped to Track number
+Songs within Red (Taylor’s Version) mapped to Track Number
 
 ## 4. Discussions
 
