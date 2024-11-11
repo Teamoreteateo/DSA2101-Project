@@ -427,7 +427,10 @@ kable(songname_tracknumber_table,
 ```
 
 #### Discussion
-
+The stacked bar chart for Swift's most popular album reveals the distribution of key musical features (i.e. `danceability`, `acousticness`, `energy`, and `valence`) across each track, sorted by total feature values. By arranging the songs in descending order of their overall feature composition, we get an intuitive sense of the relative importance and magnitude of each feature for individual songs in this album.
+Our visualisation shows a clear variability in how features contribute to individual songs. Songs with high total feature values tend to have substantial contributions from `danceability`, `energy` and `valence`, highlighting how upbeat tracks may play a significant role in the album's popularity. `Acousticness`, though generally lower across tracks, appears sporadically higher in a few songs, suggesting moments where a more subdued, acoustic quality might contrast the otherwise energetic and dynamic nature of the album.
+From these insights, it becomes evident that Swift’s most popular album combines a balance of high-energy elements with a degree of emotional resonance (`valence`), which could contribute significantly to listener engagement and receptivity. Acoustic elements, while less dominant, add texture to specific tracks, possibly creating memorable contrast and supporting the overall album narrative.
+This analysis indicates that `danceability`, `energy` and `valence` are the more dominant, high-variability features likely driving the album's success, while `acousticness` provide complementary qualities. Understanding this mix could provide insights into audience preferences and help pinpoint stylistic choices that resonate widely, explaining both the commercial and emotional impact of Swift's popular tracks.
 
 
 ## 5. Teamwork
@@ -435,8 +438,8 @@ kable(songname_tracknumber_table,
 
 
 ## 6. References
-Harmon, J. (2023, October 16). Taylor Swift. GitHub. https://github.com/rfordatascience/tidytuesday/blob/master/data/2023/2023-10-17/readme.md
-Holtz, Y. (n.d.). Dual Y axis with R and ggplot2. The R Graph Gallery – Help and inspiration for R charts. https://r-graph-gallery.com/line-chart-dual-Y-axis-ggplot2.html
+Harmon, J. (2023, October 16). Taylor Swift. GitHub. https://github.com/rfordatascience/tidytuesday/blob/master/data/2023/2023-10-17/readme.md    
+Holtz, Y. (n.d.). Dual Y axis with R and ggplot2. The R Graph Gallery – Help and inspiration for R charts. https://r-graph-gallery.com/line-chart-dual-Y-axis-ggplot2.html  
 Metacritic. (2023). How do you compute METASCORES? Retrieved November 7, 2024, from https://metacritichelp.zendesk.com/hc/en-us/articles/14478499933079-How-do-you-compute-METASCORES  
 Metacritic. (n.d.). Taylor Swift by Taylor Swift. https://www.metacritic.com/music/taylor-swift/taylor-swift/user-reviews  
 Savage, M. (2020, January 11). Five ways music changed in the 2010s. BBC. https://www.bbc.com/news/entertainment-arts-51061099
