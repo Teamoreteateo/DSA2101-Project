@@ -254,11 +254,16 @@ taylor_album_summary <- taylor_album_summary %>% mutate(Receptivity = (metacriti
 
 ## 3. Visualisations
 ### a. What are the most significant features?
-This visualisation focuses on the distribution of musical feature values for Taylor Swift's songs using a overlayed violin and box plot. 
-These plots allow us to visually assess each feature’s distribution and spread, helping us pinpoint those with a higher variance, as they likely contribute more significantly to changes in her musical style, hence her receptivity. 
+
+#### Methodology
+This visualisation focuses on the distribution of musical feature values for Taylor Swift's songs using an overlayed violin and box plot. 
+These plots allow us to visually assess each feature’s distribution and spread, helping us pinpoint those with a higher variance, as they likely contribute more significantly to changes in her musical style, hence her receptivity.
+The violin plot also allows us to notice any multi-modal distributions within the data, which may indicate polarisation of songs within a feature. 
 By focusing on features that show the widest range (i.e. most diverse expressions) across her songs, we can identify the more significant attributes that make her music unique. 
 We will use these features in the next visualisation to examine their possible relationship with Swift's receptivity. Additionaly, a colourblind friendly scheme was used to differentiate each feature. 
 Tempo was not included as a feature to be compared against because the range of the data is fixed by us through the normalisation process, altering the true variance of the data. 
+
+#### Plot
 ```{r boxplot}
 #Defining labels for usage
 x_labels = c("Acousticness", "Danceability", "Energy", "Instrumentalness", "Liveness", "Loudness", "Speechiness", "Valence")
@@ -285,10 +290,18 @@ ggplot(taylor_long %>% filter(labels!="tempo"), aes(y=labels, x=values, fill = l
   )
 ```
 
+#### Discussion
+
+
+
 ### b. How have the features we selected influenced Taylor Swift's popularity?
+
+#### Methodology
 We plan to investigate how the selected features with the most variability (from part (a)) might impact Taylor Swift’s popularity across her career. 
 By plotting these features along with a line representing her album popularity over time, we will be able to observe patterns and potential correlations,
 thus revealing how changes in certain musical characteristics might cause a shift in listener interest and popularity. Tempo is also included here to analyse its trend with respect to her popularity.
+
+#### Plot
 ```{r lineplot-dual-axes, fig.width=10, fig.height=4}
 ggplot(taylor_long %>% filter(labels %in% c("acousticness","valence","energy", "danceability", "tempo")), aes(x=album_release, y=values, color=labels)) +
   geom_smooth(method = "loess",
@@ -328,12 +341,19 @@ ggplot(taylor_long %>% filter(labels %in% c("acousticness","valence","energy", "
   aspect.ratio=0.4)    
 ```
 
+
+#### Discussion
+
 ### c. Which feature(s) has/have the greatest impact on Taylor Swift's songs?
+
+#### Methodology
 We have chosen Swift's most popular album to investigate this subquestion. Here, we will examine how each feature contributes proportionally to her songs. 
 This stacked bar chart illustrates each song’s feature makeup within the album, revealing which musical elements are dominant in her songs and may have potentially driven their success. 
 This analysis complements the previous sections by showing the relative importance of each feature in her highest-rated album.
 
 *Disclaimer: Track Numbers reflected in the table and plot do not correspond to actual track numbers. They have been mapped to the track names according to the order seen in the plot for ease of reading.*
+
+#### Plot
 ```{r proportion-plot-ALTERNATIVE}
 # Finding her most popular album
 most_popular_album <- taylor_album_summary %>%
@@ -395,12 +415,8 @@ kable(songname_tracknumber_table,
       caption = paste("Songs within", most_popular_album, "mapped to Track Number"))
 ```
 
-## 4. Discussions
-### a.
+#### Discussion
 
-### b.
-
-### c.
 
 
 ## 5. Teamwork
