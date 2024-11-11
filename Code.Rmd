@@ -400,7 +400,6 @@ most_popular_album <- taylor_album_summary %>%
 most_popular_album_songs <- taylor_all_songs %>%
   filter(album_name==most_popular_album) %>%
   select(album_name,track_number, track_name,danceability,acousticness,energy,valence)
-
 #Reshape the data into long format for plotting
 scaled_songs_long <- most_popular_album_songs %>%
   pivot_longer(cols = danceability:valence, 
@@ -431,11 +430,12 @@ ggplot(scaled_songs_long, aes(x = value, y = as.factor(new_track_number), fill =
   theme_minimal() +
   labs(title = paste("Composition of Significant Features of each Song in the \nMost Popular Album:", most_popular_album),
        x = "Total Value of Features", y = "Songs (Track Number)",
-       fill = "Feature") +
+       fill = "Feature", subtitle = "Sorted by Total Score") +
   theme(
     axis.text.y.left = element_text(size = 9),
     panel.grid.major.x = element_line(color = "#addced"),
     plot.title = element_text(size = 12, vjust = 2, face = "bold"),
+    plot.subtitle = element_text(size=8, face=3),
     aspect.ratio = 0.8,
     axis.title.y.left = element_text(vjust = 2, size = 11)
   ) +
