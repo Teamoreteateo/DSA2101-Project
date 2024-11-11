@@ -605,9 +605,8 @@ ggplot(taylor_long %>% filter(labels %in% c("acousticness", "valence", "energy",
     ## Adding another scale for fill, which will replace the existing scale.
     ## `geom_smooth()` using formula = 'y ~ x'
 
-![](Code_files/figure-gfm/lineplot-dual-axes-1.png)<!-- -->
-
-#### Discussion
+![](Code_files/figure-gfm/lineplot-dual-axes-1.png)<!-- --> \####
+Discussion
 
 ### c. Which feature(s) has/have the greatest impact on Taylor Swift’s songs?
 

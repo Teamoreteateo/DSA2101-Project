@@ -300,7 +300,6 @@ These plots were great at hinting at potential large differences in musical feat
 Hence, we will be plotting Valence, Acousticness, Energy and Danceability in a line graph in the next part.
 
 
-
 ### b. How have the features we selected influenced Taylor Swift's popularity?
 
 #### Methodology
@@ -344,9 +343,9 @@ ggplot(taylor_long %>% filter(labels %in% c("acousticness", "valence", "energy",
   axis.ticks.length.y.left = unit(.25, "cm"),
   aspect.ratio = 0.4)
 ```
-
-
 #### Discussion
+
+
 
 ### c. Which feature(s) has/have the greatest impact on Taylor Swift's songs?
 
