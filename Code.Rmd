@@ -427,12 +427,13 @@ ggplot(scaled_songs_long, aes(x = value, y = as.factor(new_track_number), fill =
        fill = "Feature") +
   theme(
     axis.text.y.left = element_text(size = 9),
-    panel.grid.major.y = element_line(color = "#ff8f8f"),
+    panel.grid.major.x = element_line(color = "#addced"),
     plot.title = element_text(size = 12, vjust = 2, face = "bold"),
     aspect.ratio = 0.8,
     axis.title.y.left = element_text(vjust = 2, size = 11)
   ) +
-  scale_fill_viridis_d()
+  scale_fill_viridis_d()+
+  coord_flip()
 
 # Display song names mapped to track numbers
 album_songs_table <- scaled_songs_long %>% select(c("track_name","new_track_number")) %>% unique()
