@@ -1264,22 +1264,22 @@ song’s feature makeup within the album, revealing which musical elements
 are dominant in her songs and may have potentially driven their success.
 This analysis complements the previous sections by showing the relative
 importance of each feature in her highest-rated album.</p>
-<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" tabindex="-1"></a><span class="co">#Finding her most popular album</span></span>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" tabindex="-1"></a><span class="co"># Finding her most popular album</span></span>
 <span id="cb39-2"><a href="#cb39-2" tabindex="-1"></a>most_popular_album <span class="ot">&lt;-</span> taylor_album_summary <span class="sc">%&gt;%</span></span>
 <span id="cb39-3"><a href="#cb39-3" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(Receptivity)) <span class="sc">%&gt;%</span></span>
 <span id="cb39-4"><a href="#cb39-4" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb39-5"><a href="#cb39-5" tabindex="-1"></a>  <span class="fu">pull</span>(album_name)</span>
 <span id="cb39-6"><a href="#cb39-6" tabindex="-1"></a></span>
-<span id="cb39-7"><a href="#cb39-7" tabindex="-1"></a><span class="co">#Filtering the songs from her most popular album</span></span>
+<span id="cb39-7"><a href="#cb39-7" tabindex="-1"></a><span class="co"># Filtering the songs from her most popular album</span></span>
 <span id="cb39-8"><a href="#cb39-8" tabindex="-1"></a>most_popular_album_songs <span class="ot">&lt;-</span> taylor_all_songs <span class="sc">%&gt;%</span></span>
 <span id="cb39-9"><a href="#cb39-9" tabindex="-1"></a>  <span class="fu">filter</span>(album_name<span class="sc">==</span>most_popular_album) <span class="sc">%&gt;%</span></span>
 <span id="cb39-10"><a href="#cb39-10" tabindex="-1"></a>  <span class="fu">select</span>(album_name,track_number, track_name,danceability,acousticness,energy,valence)</span>
 <span id="cb39-11"><a href="#cb39-11" tabindex="-1"></a></span>
-<span id="cb39-12"><a href="#cb39-12" tabindex="-1"></a><span class="co">#Normalize the numerical features to scale them between 0 and 1 </span></span>
+<span id="cb39-12"><a href="#cb39-12" tabindex="-1"></a><span class="co"># Normalize the numerical features to scale them between 0 and 1 </span></span>
 <span id="cb39-13"><a href="#cb39-13" tabindex="-1"></a>scaled_songs <span class="ot">&lt;-</span> most_popular_album_songs <span class="sc">%&gt;%</span></span>
 <span id="cb39-14"><a href="#cb39-14" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(danceability<span class="sc">:</span>valence, <span class="sc">~</span> (.<span class="sc">-</span><span class="fu">min</span>(.)) <span class="sc">/</span> (<span class="fu">max</span>(.) <span class="sc">-</span> <span class="fu">min</span>(.)), <span class="at">.names =</span> <span class="st">&quot;scaled_{.col}&quot;</span>))</span>
 <span id="cb39-15"><a href="#cb39-15" tabindex="-1"></a></span>
-<span id="cb39-16"><a href="#cb39-16" tabindex="-1"></a><span class="co">#Reshape the data into long format for plotting</span></span>
+<span id="cb39-16"><a href="#cb39-16" tabindex="-1"></a><span class="co"># Reshape the data into long format for plotting</span></span>
 <span id="cb39-17"><a href="#cb39-17" tabindex="-1"></a>scaled_songs_long <span class="ot">&lt;-</span> scaled_songs <span class="sc">%&gt;%</span></span>
 <span id="cb39-18"><a href="#cb39-18" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">starts_with</span>(<span class="st">&quot;scaled_&quot;</span>), </span>
 <span id="cb39-19"><a href="#cb39-19" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">&quot;feature&quot;</span>, </span>
@@ -1290,7 +1290,7 @@ importance of each feature in her highest-rated album.</p>
 <span id="cb39-24"><a href="#cb39-24" tabindex="-1"></a>         <span class="at">normalized_value =</span> value <span class="sc">/</span> total_value) <span class="sc">%&gt;%</span></span>
 <span id="cb39-25"><a href="#cb39-25" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span>
 <span id="cb39-26"><a href="#cb39-26" tabindex="-1"></a></span>
-<span id="cb39-27"><a href="#cb39-27" tabindex="-1"></a><span class="co">#Check the mean value of each feature</span></span>
+<span id="cb39-27"><a href="#cb39-27" tabindex="-1"></a><span class="co"># Check the mean value of each feature</span></span>
 <span id="cb39-28"><a href="#cb39-28" tabindex="-1"></a>feature_mean <span class="ot">&lt;-</span> scaled_songs_long <span class="sc">%&gt;%</span></span>
 <span id="cb39-29"><a href="#cb39-29" tabindex="-1"></a>  <span class="fu">select</span>(feature, normalized_value) <span class="sc">%&gt;%</span></span>
 <span id="cb39-30"><a href="#cb39-30" tabindex="-1"></a>  <span class="fu">group_by</span>(feature) <span class="sc">%&gt;%</span></span>
@@ -1298,7 +1298,7 @@ importance of each feature in her highest-rated album.</p>
 <span id="cb39-32"><a href="#cb39-32" tabindex="-1"></a>  <span class="fu">arrange</span>(mean) <span class="sc">%&gt;%</span></span>
 <span id="cb39-33"><a href="#cb39-33" tabindex="-1"></a>  <span class="fu">pull</span>(feature)</span>
 <span id="cb39-34"><a href="#cb39-34" tabindex="-1"></a></span>
-<span id="cb39-35"><a href="#cb39-35" tabindex="-1"></a><span class="co">#Sort the feature column by mean value</span></span>
+<span id="cb39-35"><a href="#cb39-35" tabindex="-1"></a><span class="co"># Sort the feature column by mean value</span></span>
 <span id="cb39-36"><a href="#cb39-36" tabindex="-1"></a>scaled_songs_long <span class="ot">&lt;-</span> scaled_songs_long <span class="sc">%&gt;%</span></span>
 <span id="cb39-37"><a href="#cb39-37" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">feature =</span> <span class="fu">factor</span>(feature, <span class="at">levels =</span> feature_mean))</span>
 <span id="cb39-38"><a href="#cb39-38" tabindex="-1"></a></span>
@@ -1458,22 +1458,22 @@ Vault]</td>
 </table>
 <p>Songs within Red (Taylor’s Version) mapped to Track number</p>
 <p><strong>ALTERNATIVE PLOT 3</strong>*</p>
-<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" tabindex="-1"></a><span class="co">#Finding her most popular album</span></span>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" tabindex="-1"></a><span class="co"># Finding her most popular album</span></span>
 <span id="cb41-2"><a href="#cb41-2" tabindex="-1"></a>most_popular_album <span class="ot">&lt;-</span> taylor_album_summary <span class="sc">%&gt;%</span></span>
 <span id="cb41-3"><a href="#cb41-3" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(Receptivity)) <span class="sc">%&gt;%</span></span>
 <span id="cb41-4"><a href="#cb41-4" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb41-5"><a href="#cb41-5" tabindex="-1"></a>  <span class="fu">pull</span>(album_name)</span>
 <span id="cb41-6"><a href="#cb41-6" tabindex="-1"></a></span>
-<span id="cb41-7"><a href="#cb41-7" tabindex="-1"></a><span class="co">#Filtering the songs from her most popular album</span></span>
+<span id="cb41-7"><a href="#cb41-7" tabindex="-1"></a><span class="co"># Filtering the songs from her most popular album</span></span>
 <span id="cb41-8"><a href="#cb41-8" tabindex="-1"></a>most_popular_album_songs <span class="ot">&lt;-</span> taylor_all_songs <span class="sc">%&gt;%</span></span>
 <span id="cb41-9"><a href="#cb41-9" tabindex="-1"></a>  <span class="fu">filter</span>(album_name<span class="sc">==</span>most_popular_album) <span class="sc">%&gt;%</span></span>
 <span id="cb41-10"><a href="#cb41-10" tabindex="-1"></a>  <span class="fu">select</span>(album_name,track_number, track_name,danceability,acousticness,energy,valence)</span>
 <span id="cb41-11"><a href="#cb41-11" tabindex="-1"></a></span>
-<span id="cb41-12"><a href="#cb41-12" tabindex="-1"></a><span class="co">#Normalize the numerical features to scale them between 0 and 1 </span></span>
+<span id="cb41-12"><a href="#cb41-12" tabindex="-1"></a><span class="co"># Normalize the numerical features to scale them between 0 and 1 </span></span>
 <span id="cb41-13"><a href="#cb41-13" tabindex="-1"></a>scaled_songs <span class="ot">&lt;-</span> most_popular_album_songs <span class="sc">%&gt;%</span></span>
 <span id="cb41-14"><a href="#cb41-14" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(danceability<span class="sc">:</span>valence, <span class="sc">~</span> (.<span class="sc">-</span><span class="fu">min</span>(.)) <span class="sc">/</span> (<span class="fu">max</span>(.) <span class="sc">-</span> <span class="fu">min</span>(.)), <span class="at">.names =</span> <span class="st">&quot;scaled_{.col}&quot;</span>))</span>
 <span id="cb41-15"><a href="#cb41-15" tabindex="-1"></a></span>
-<span id="cb41-16"><a href="#cb41-16" tabindex="-1"></a><span class="co">#Reshape the data into long format for plotting</span></span>
+<span id="cb41-16"><a href="#cb41-16" tabindex="-1"></a><span class="co"># Reshape the data into long format for plotting</span></span>
 <span id="cb41-17"><a href="#cb41-17" tabindex="-1"></a>scaled_songs_long <span class="ot">&lt;-</span> scaled_songs <span class="sc">%&gt;%</span></span>
 <span id="cb41-18"><a href="#cb41-18" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">starts_with</span>(<span class="st">&quot;scaled_&quot;</span>), </span>
 <span id="cb41-19"><a href="#cb41-19" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">&quot;feature&quot;</span>, </span>
@@ -1492,8 +1492,8 @@ Vault]</td>
 <span id="cb41-32"><a href="#cb41-32" tabindex="-1"></a>  <span class="fu">pull</span>(feature)</span>
 <span id="cb41-33"><a href="#cb41-33" tabindex="-1"></a></span>
 <span id="cb41-34"><a href="#cb41-34" tabindex="-1"></a>scaled_songs_long <span class="ot">&lt;-</span> scaled_songs_long <span class="sc">%&gt;%</span></span>
-<span id="cb41-35"><a href="#cb41-35" tabindex="-1"></a>  <span class="fu">arrange</span>(total_value) <span class="sc">%&gt;%</span>  <span class="co"># Sort by total_value in descending order</span></span>
-<span id="cb41-36"><a href="#cb41-36" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">track_number =</span> <span class="fu">factor</span>(track_number, <span class="at">levels =</span> <span class="fu">unique</span>(track_number)))  <span class="co"># Preserve order for plotting</span></span>
+<span id="cb41-35"><a href="#cb41-35" tabindex="-1"></a>  <span class="fu">arrange</span>(total_value) <span class="sc">%&gt;%</span></span>
+<span id="cb41-36"><a href="#cb41-36" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">track_number =</span> <span class="fu">factor</span>(track_number, <span class="at">levels =</span> <span class="fu">unique</span>(track_number)))</span>
 <span id="cb41-37"><a href="#cb41-37" tabindex="-1"></a></span>
 <span id="cb41-38"><a href="#cb41-38" tabindex="-1"></a><span class="co"># Plot with sorted order</span></span>
 <span id="cb41-39"><a href="#cb41-39" tabindex="-1"></a><span class="fu">ggplot</span>(scaled_songs_long, <span class="fu">aes</span>(<span class="at">x =</span> total_value, <span class="at">y =</span> track_number, <span class="at">fill =</span> feature)) <span class="sc">+</span></span>

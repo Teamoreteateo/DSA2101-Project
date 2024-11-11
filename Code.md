@@ -613,22 +613,22 @@ This analysis complements the previous sections by showing the relative
 importance of each feature in her highest-rated album.
 
 ``` r
-#Finding her most popular album
+# Finding her most popular album
 most_popular_album <- taylor_album_summary %>%
   arrange(desc(Receptivity)) %>%
   head(1) %>%
   pull(album_name)
 
-#Filtering the songs from her most popular album
+# Filtering the songs from her most popular album
 most_popular_album_songs <- taylor_all_songs %>%
   filter(album_name==most_popular_album) %>%
   select(album_name,track_number, track_name,danceability,acousticness,energy,valence)
 
-#Normalize the numerical features to scale them between 0 and 1 
+# Normalize the numerical features to scale them between 0 and 1 
 scaled_songs <- most_popular_album_songs %>%
   mutate(across(danceability:valence, ~ (.-min(.)) / (max(.) - min(.)), .names = "scaled_{.col}"))
 
-#Reshape the data into long format for plotting
+# Reshape the data into long format for plotting
 scaled_songs_long <- scaled_songs %>%
   pivot_longer(cols = starts_with("scaled_"), 
                names_to = "feature", 
@@ -639,7 +639,7 @@ scaled_songs_long <- scaled_songs %>%
          normalized_value = value / total_value) %>%
   ungroup()
 
-#Check the mean value of each feature
+# Check the mean value of each feature
 feature_mean <- scaled_songs_long %>%
   select(feature, normalized_value) %>%
   group_by(feature) %>%
@@ -647,7 +647,7 @@ feature_mean <- scaled_songs_long %>%
   arrange(mean) %>%
   pull(feature)
 
-#Sort the feature column by mean value
+# Sort the feature column by mean value
 scaled_songs_long <- scaled_songs_long %>%
   mutate(feature = factor(feature, levels = feature_mean))
 
@@ -713,22 +713,22 @@ Songs within Red (Taylor’s Version) mapped to Track number
 **ALTERNATIVE PLOT 3**\*
 
 ``` r
-#Finding her most popular album
+# Finding her most popular album
 most_popular_album <- taylor_album_summary %>%
   arrange(desc(Receptivity)) %>%
   head(1) %>%
   pull(album_name)
 
-#Filtering the songs from her most popular album
+# Filtering the songs from her most popular album
 most_popular_album_songs <- taylor_all_songs %>%
   filter(album_name==most_popular_album) %>%
   select(album_name,track_number, track_name,danceability,acousticness,energy,valence)
 
-#Normalize the numerical features to scale them between 0 and 1 
+# Normalize the numerical features to scale them between 0 and 1 
 scaled_songs <- most_popular_album_songs %>%
   mutate(across(danceability:valence, ~ (.-min(.)) / (max(.) - min(.)), .names = "scaled_{.col}"))
 
-#Reshape the data into long format for plotting
+# Reshape the data into long format for plotting
 scaled_songs_long <- scaled_songs %>%
   pivot_longer(cols = starts_with("scaled_"), 
                names_to = "feature", 
@@ -747,8 +747,8 @@ feature_mean <- scaled_songs_long %>%
   pull(feature)
 
 scaled_songs_long <- scaled_songs_long %>%
-  arrange(total_value) %>%  # Sort by total_value in descending order
-  mutate(track_number = factor(track_number, levels = unique(track_number)))  # Preserve order for plotting
+  arrange(total_value) %>%
+  mutate(track_number = factor(track_number, levels = unique(track_number)))
 
 # Plot with sorted order
 ggplot(scaled_songs_long, aes(x = total_value, y = track_number, fill = feature)) +
