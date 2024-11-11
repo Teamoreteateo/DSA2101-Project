@@ -217,13 +217,6 @@ glimpse(taylor_all_songs)
 ```
 
 
-Finally, the cleaned data are saved as new files for us to reference later on:
-```{r}
-#write.csv(taylor_album_songs, "CSV files/taylor_album_songs_cleaned.csv", row.names = FALSE) This is not needed
-write.csv(taylor_all_songs, "CSV files/taylor_all_songs_cleaned.csv", row.names = FALSE) # This step also I dont think is needed
-```
-
-
 ### Data engineering
 Let's look at the cleaned dataframes for each `taylor_all_songs` and `taylor_albums`.
 ```{r using-cleaned-datasets}
