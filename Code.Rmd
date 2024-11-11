@@ -388,6 +388,63 @@ kable(songname_tracknumber_table,
   caption=paste("Songs within ", most_popular_album, "mapped to Track number"))
 ```
 
+**ALTERNATIVE PLOT 3***
+```{r proportion-plot-ALTERNATIVE}
+#Finding her most popular album
+most_popular_album <- taylor_album_summary %>%
+  arrange(desc(Receptivity)) %>%
+  head(1) %>%
+  pull(album_name)
+
+#Filtering the songs from her most popular album
+most_popular_album_songs <- taylor_all_songs %>%
+  filter(album_name==most_popular_album) %>%
+  select(album_name,track_number, track_name,danceability,acousticness,energy,valence)
+
+#Normalize the numerical features to scale them between 0 and 1 
+scaled_songs <- most_popular_album_songs %>%
+  mutate(across(danceability:valence, ~ (.-min(.)) / (max(.) - min(.)), .names = "scaled_{.col}"))
+
+#Reshape the data into long format for plotting
+scaled_songs_long <- scaled_songs %>%
+  pivot_longer(cols = starts_with("scaled_"), 
+               names_to = "feature", 
+               values_to = "value") %>%
+  mutate(feature = gsub("scaled_", "", feature)) %>%
+  group_by(track_name) %>%
+  mutate(total_value = sum(value)) %>%
+  ungroup()
+
+#Check the mean value of each feature
+feature_mean <- scaled_songs_long %>%
+  select(feature, total_value) %>%
+  group_by(feature) %>%
+  summarize(mean = mean(total_value)) %>%
+  arrange(mean) %>%
+  pull(feature)
+
+#Sort the feature column by mean value
+scaled_songs_long <- scaled_songs_long %>%
+  mutate(feature = factor(feature, levels = feature_mean))
+
+# Create the plot
+ggplot(scaled_songs_long, aes(x = total_value, y = as.factor(track_number), fill = feature)) +
+  geom_bar(stat = "identity", position = "stack") +
+  theme_minimal() +
+  labs(title = paste("Composition of Significant Features of each Song in the \nMost Popular Album:", most_popular_album),
+       x = "Total value of Features", y = "Songs (Track Number)",
+       fill = "Feature") +
+  theme(axis.text.y.left = element_text(size=9),
+  plot.title = element_text(size = 12, vjust=2, face=2),
+  aspect.ratio=0.8,
+  axis.title.y.left = element_text(vjust=2, size=11)) +
+  scale_fill_viridis_d() 
+
+songname_tracknumber_table = cbind(scaled_songs$track_number,scaled_songs$track_name)
+kable(songname_tracknumber_table, 
+  col.names = c("Track Number","Album Songs"), 
+  caption=paste("Songs within ", most_popular_album, "mapped to Track number"))
+```
 
 ## 4. Discussions
 ### a.
