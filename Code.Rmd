@@ -327,7 +327,7 @@ ggplot(taylor_long %>% filter(labels %in% c("acousticness", "valence", "energy",
                 color = "Receptivity"),
             size = 2, linetype = "solid", lineend = "round") +
   scale_y_continuous(
-    name = "Feature Values (0 - 1)",
+    name = "Feature Magnitude (0 - 1)",
     sec.axis = sec_axis(~ . * 100,
                         name = "Receptivity (%)") # (Holtz, n.d.)
   ) +
