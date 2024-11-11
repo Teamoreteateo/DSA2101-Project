@@ -658,14 +658,114 @@ ggplot(scaled_songs_long, aes(x = normalized_value, y = as.factor(track_number),
   labs(title = paste(" Proportion of Significant Features of Songs in the Most Popular Album:\n", most_popular_album),
        x = "Proportion of Normalised Features", y = "Songs (Track Number)",
        fill = "Feature") +
-  theme(axis.text.y.left = element_text(size=11),
+  theme(axis.text.y.left = element_text(size=9),
+  panel.grid.major.y = element_line(color = "#ff8f8f", ),
   plot.title = element_text(size = 12, vjust=2, face=2),
   aspect.ratio=0.8,
   axis.title.y.left = element_text(vjust=2, size=11)) +
-  scale_fill_viridis_d()   #(palette = "Set3")
+  scale_fill_viridis_d() 
 ```
 
 ![](Code_files/figure-gfm/proportion-plot-1.png)<!-- -->
+
+``` r
+songname_tracknumber_table = cbind(scaled_songs$track_number,scaled_songs$track_name)
+kable(songname_tracknumber_table, 
+  col.names = c("Track Number","Album Songs"), 
+  caption=paste("Songs within ", most_popular_album, "mapped to Track number"))
+```
+
+| Track Number | Album Songs |
+|:---|:---|
+| 1 | State Of Grace (Taylor’s Version) |
+| 2 | Red (Taylor’s Version) |
+| 3 | Treacherous (Taylor’s Version) |
+| 4 | I Knew You Were Trouble (Taylor’s Version) |
+| 5 | All Too Well (Taylor’s Version) |
+| 6 | 22 (Taylor’s Version) |
+| 7 | I Almost Do (Taylor’s Version) |
+| 8 | We Are Never Ever Getting Back Together (Taylor’s Version) |
+| 9 | Stay Stay Stay (Taylor’s Version) |
+| 10 | The Last Time (Taylor’s Version) |
+| 11 | Holy Ground (Taylor’s Version) |
+| 12 | Sad Beautiful Tragic (Taylor’s Version) |
+| 13 | The Lucky One (Taylor’s Version) |
+| 14 | Everything Has Changed (Taylor’s Version) |
+| 15 | Starlight (Taylor’s Version) |
+| 16 | Begin Again (Taylor’s Version) |
+| 17 | The Moment I Knew (Taylor’s Version) |
+| 18 | Come Back…Be Here (Taylor’s Version) |
+| 19 | Girl At Home (Taylor’s Version) |
+| 20 | State Of Grace (Acoustic Version) \[Taylor’s Version\] |
+| 21 | Ronan (Taylor’s Version) |
+| 22 | Better Man (Taylor’s Version) \[From The Vault\] |
+| 23 | Nothing New (Taylor’s Version) \[From The Vault\] |
+| 24 | Babe (Taylor’s Version) \[From The Vault\] |
+| 25 | Message In A Bottle (Taylor’s Version) \[From The Vault\] |
+| 26 | I Bet You Think About Me (Taylor’s Version) \[From The Vault\] |
+| 27 | Forever Winter (Taylor’s Version) \[From The Vault\] |
+| 28 | Run (Taylor’s Version) \[From The Vault\] |
+| 29 | The Very First Night (Taylor’s Version) \[From The Vault\] |
+| 30 | All Too Well (10 Minute Version) \[Taylor’s Version\] \[From The Vault\] |
+
+Songs within Red (Taylor’s Version) mapped to Track number
+
+**ALTERNATIVE PLOT 3**\*
+
+``` r
+#Finding her most popular album
+most_popular_album <- taylor_album_summary %>%
+  arrange(desc(Receptivity)) %>%
+  head(1) %>%
+  pull(album_name)
+
+#Filtering the songs from her most popular album
+most_popular_album_songs <- taylor_all_songs %>%
+  filter(album_name==most_popular_album) %>%
+  select(album_name,track_number, track_name,danceability,acousticness,energy,valence)
+
+#Normalize the numerical features to scale them between 0 and 1 
+scaled_songs <- most_popular_album_songs %>%
+  mutate(across(danceability:valence, ~ (.-min(.)) / (max(.) - min(.)), .names = "scaled_{.col}"))
+
+#Reshape the data into long format for plotting
+scaled_songs_long <- scaled_songs %>%
+  pivot_longer(cols = starts_with("scaled_"), 
+               names_to = "feature", 
+               values_to = "value") %>%
+  mutate(feature = gsub("scaled_", "", feature)) %>%
+  group_by(track_name) %>%
+  mutate(total_value = sum(value)) %>%
+  ungroup()
+
+#Check the mean value of each feature
+feature_mean <- scaled_songs_long %>%
+  select(feature, total_value) %>%
+  group_by(feature) %>%
+  summarize(mean = mean(total_value)) %>%
+  arrange(mean) %>%
+  pull(feature)
+
+#Sort the feature column by mean value
+scaled_songs_long <- scaled_songs_long %>%
+  mutate(feature = factor(feature, levels = feature_mean))
+
+# Create the plot
+ggplot(scaled_songs_long, aes(x = total_value, y = as.factor(track_number), fill = feature)) +
+  geom_bar(stat = "identity", position = "stack") +
+  theme_minimal() +
+  labs(title = paste("Composition of Significant Features of each Song in the \nMost Popular Album:", most_popular_album),
+       x = "Total value of Features", y = "Songs (Track Number)",
+       fill = "Feature") +
+  theme(axis.text.y.left = element_text(size=9),
+  panel.grid.major.y = element_line(color = "#ff8f8f", ),
+  plot.title = element_text(size = 12, vjust=2, face=2),
+  aspect.ratio=0.8,
+  axis.title.y.left = element_text(vjust=2, size=11)) +
+  scale_fill_viridis_d() 
+```
+
+![](Code_files/figure-gfm/proportion-plot-ALTERNATIVE-1.png)<!-- -->
 
 ``` r
 songname_tracknumber_table = cbind(scaled_songs$track_number,scaled_songs$track_name)
