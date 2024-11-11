@@ -405,7 +405,7 @@ ggplot(scaled_songs_long, aes(x = value, y = as.factor(new_track_number), fill =
   geom_bar(stat = "identity", position = "stack") +
   theme_minimal() +
   labs(title = paste("Composition of Significant Features of each Song in the \nMost Popular Album:", most_popular_album),
-       x = "Total Value of Features", y = "Songs (Track Number)",
+       x = "Total Magnitude of Features", y = "Songs (Track Number)",
        fill = "Feature", subtitle = "Sorted by Total Score") +
   theme(
     axis.text.y.left = element_text(size = 9),
@@ -427,7 +427,7 @@ kable(songname_tracknumber_table,
 ```
 
 #### Discussion
-The stacked bar chart for Swift's most popular album reveals the distribution of key musical features (i.e. `danceability`, `acousticness`, `energy`, and `valence`) across each track, sorted by total feature values. By arranging the songs in descending order of their overall feature composition, we get an intuitive sense of the relative importance and magnitude of each feature for individual songs in this album.
+The stacked bar chart for Swift's most popular album reveals the distribution of key musical features (i.e. `danceability`, `acousticness`, `energy`, and `valence`) across each track, sorted by total feature magnitudes. By arranging the songs in descending order of their overall feature composition, we get an intuitive sense of the relative importance and magnitude of each feature for individual songs in this album.
 Our visualisation shows a clear variability in how features contribute to individual songs. Songs with high total feature values tend to have substantial contributions from `danceability`, `energy` and `valence`, highlighting how upbeat tracks may play a significant role in the album's popularity. `Acousticness`, though generally lower across tracks, appears sporadically higher in a few songs, suggesting moments where a more subdued, acoustic quality might contrast the otherwise energetic and dynamic nature of the album.
 From these insights, it becomes evident that Swift’s most popular album combines a balance of high-energy elements with a degree of emotional resonance (`valence`), which could contribute significantly to listener engagement and receptivity. Acoustic elements, while less dominant, add texture to specific tracks, possibly creating memorable contrast and supporting the overall album narrative.
 This analysis indicates that `danceability`, `energy` and `valence` are the more dominant, high-variability features likely driving the album's success, while `acousticness` provide complementary qualities. Understanding this mix could provide insights into audience preferences and help pinpoint stylistic choices that resonate widely, explaining both the commercial and emotional impact of Swift's popular tracks. 
