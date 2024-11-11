@@ -413,10 +413,13 @@ feature_mean <- scaled_songs_long %>%
 
 scaled_songs_long <- scaled_songs_long %>%
   arrange(total_value) %>%
-  mutate(track_number = factor(track_number, levels = unique(track_number)))
+  pivot_wider(names_from = "feature", values_from = "value") %>%
+  arrange(desc(total_value)) %>%
+  mutate(new_track_number = row_number()) %>%
+  pivot_longer(cols = danceability:valence, names_to="feature", values_to="value")
 
 # Plot with sorted order
-ggplot(scaled_songs_long, aes(x = value, y = track_number, fill = feature)) +
+ggplot(scaled_songs_long, aes(x = value, y = as.factor(new_track_number), fill = feature)) +
   geom_bar(stat = "identity", position = "stack") +
   theme_minimal() +
   labs(title = paste("Composition of Significant Features of each Song in the \nMost Popular Album:", most_popular_album),
@@ -432,7 +435,8 @@ ggplot(scaled_songs_long, aes(x = value, y = track_number, fill = feature)) +
   scale_fill_viridis_d()
 
 # Display song names mapped to track numbers
-songname_tracknumber_table <- cbind(most_popular_album_songs$track_number, most_popular_album_songs$track_name)
+album_songs_table <- scaled_songs_long %>% select(c("track_name","new_track_number")) %>% unique()
+songname_tracknumber_table <- cbind(album_songs_table$new_track_number, album_songs_table$track_name)
 kable(songname_tracknumber_table, 
       col.names = c("Track Number", "Album Songs"), 
       caption = paste("Songs within", most_popular_album, "mapped to Track Number"))
