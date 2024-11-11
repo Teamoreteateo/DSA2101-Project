@@ -55,7 +55,7 @@ By exploring the given data, we aim to discover the patterns that have emerged t
 `taylor_albums` ~ *Metadata* for each album, together with Metacritic and User Scores (Used as receptivity metrics).
 
 * **Metadata** refers to technical aspects of the release like track name, track number and release dates.
-* Download datasets from: https://github.com/rfordatascience/tidytuesday/blob/master/data/2023/2023-10-17/readme.md
+* Download dataset from: https://github.com/rfordatascience/tidytuesday/blob/master/data/2023/2023-10-17/readme.md
 
 
 For our project, we aim to answer the following question:
@@ -206,7 +206,7 @@ glimpse(ranges_taylor_all_songs)
 
 From the data dictionary in TidyTuesday, all the features scores except loudness and tempo range from 0 to 1, hence we do not need the scale them.
 We are left with loudness and tempo for normalisation. Loudness is measured in decibels, which has a logarithmic scale. To enable a clearer visual representation, we will convert the values of loudness to a linear scale between 0 and 1. 1 represents loudest while 0 represents softest.
-We will use min_max scaling for tempo, to fit it into the 0 to 1 scaling in line with the other features.
+We will use min_max scaling for tempo, to fit it into the 0 to 1 scaling in line with the other features (not for direct comparison to the features as range is fixed by us).
 ```{r}
 # Scaling loudness for taylor_all_songs
 taylor_all_songs <- taylor_all_songs %>%
@@ -239,7 +239,7 @@ taylor_album_summary <- taylor_all_songs %>% group_by(album_name)%>% summarize(
 ) %>% inner_join(taylor_albums, by=c("album_name")) %>% relocate(album_release, .after=album_name)
 ```
 
-Overall Metacritic scores and user scores are representative of the receptivity of the albums because they are the "weighted average" of the albums' individual ratings
+Metacritic scores and user scores are representative of the receptivity of the albums because they are the "weighted average" of the albums' individual ratings
 from critics and the public respectively (Metacritic, 2023).
 
 While the Metacritic score ranges from 0 to 100 (Metacritic, 2023), the user score has a different range of 0 to 10 which we noticed when exploring the "user reviews" section (Metacritic, n.d.).
@@ -252,16 +252,12 @@ taylor_album_summary <- taylor_album_summary %>% mutate(Receptivity = (metacriti
 ```
 
 
-## 3. Visualisations
+## 3. Visualisations and Discussions
 ### a. What are the most significant features?
 
 #### Methodology
-This visualisation focuses on the distribution of musical feature values for Taylor Swift's songs using an overlayed violin and box plot. 
-These plots allow us to visually assess each feature’s distribution and spread, helping us pinpoint those with a higher variance, as they likely contribute more significantly to changes in her musical style, hence her receptivity.
-The violin plot also allows us to notice any multi-modal distributions within the data, which may indicate polarisation of songs within a feature. 
-By focusing on features that show the widest range (i.e. most diverse expressions) across her songs, we can identify the more significant attributes that make her music unique. 
-We will use these features in the next visualisation to examine their possible relationship with Swift's receptivity. Additionaly, a colourblind friendly scheme was used to differentiate each feature. 
-Tempo was not included as a feature to be compared against because the range of the data is fixed by us through the normalisation process, altering the true variance of the data. 
+We have chosen to use an overlayed boxplot and violin plot to represent the values of the song features, less tempo. This will allow us to examine the spread and distribution of values for each feature together with information about the interquartile range and median.
+The violin plot additionally shows potential polarisation in the data as it is a density plot of the values. Additionaly, a colourblind friendly scheme was used to differentiate each feature.
 
 #### Plot
 ```{r boxplot}
@@ -291,6 +287,17 @@ ggplot(taylor_long %>% filter(labels!="tempo"), aes(y=labels, x=values, fill = l
 ```
 
 #### Discussion
+
+From this visualisation, we can pinpoint those features with a higher variance, as they likely contribute more significantly to changes in her musical style, hence her receptivity.
+By focusing on features that show the widest range (i.e. most diverse expressions) across her songs, we can identify the more significant attributes that make her music unique. 
+We will use these features in the next visualisation to examine their possible relationship with Swift's receptivity.  
+
+It appears that Valence, Acousticness, Energy and Danceability have the most variance - the tails for each feature spans the widest across the graph. This indicates vast differences between these features within Swift's songs. Such differences could indicate large dynamic shifts in the style of music produced, which will likely be received differently by the audience. 
+The rest of the musical features seem to be concentrated closer to zero, indicating that most of the features are weakly present and consistent throughout the songs. Additionally, since Loudness values are mostly closer to 0, it indicates that Swift's songs are consistently moderately loud. Overall we gather that most of her songs are vocally driven (low Instrumentalness), not spoken (low Speechiness) and are not live (low Liveness). 
+Examining the plot again for the above four features gives us more relationships to hypothesise about. The wide range in Valence could indicate shifts in the happiness of her Songs, like her songs becoming less happy. The range of Energy indicates that there are vast differences in the power and drive of her songs. Large differences in Danceability could indicate that Swift is either moving away or towards more danceable tunes. Lastly,
+the difference in Acousticness could indicate that Taylor Swift is also switching from commercial and electronic sounding songs to acoustic songs. Moreover, scrutinizing the violin plot of Acousticness also hints at polarisation. There are two visible bulges in the plot, indicate two areas of high density. This means that Taylor's songs which have acoustic elements likely do not have any electronic elements, vice versa, indicating her preference for keeping the two type of songs separate.
+These plots were great at hinting at potential large differences in musical features within Swift's repertoire, but they do not give us any information about the trends of the features. We need a way to observe the changes in the highly variant features across time.
+Hence, we will be plotting Valence, Acousticness, Energy and Danceability in a line graph in the next part.
 
 
 
