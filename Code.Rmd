@@ -327,6 +327,8 @@ ggplot(taylor_long %>% filter(labels %in% c("acousticness","valence","energy", "
 We have chosen Swift's most popular album to investigate this subquestion. Here, we will examine how each feature contributes proportionally to her songs. 
 This stacked bar chart illustrates each song’s feature makeup within the album, revealing which musical elements are dominant in her songs and may have potentially driven their success. 
 This analysis complements the previous sections by showing the relative importance of each feature in her highest-rated album.
+
+*Disclaimer: Track Numbers reflected in the table and plot do not correspond to actual track numbers. They have been mapped to the track names according to the order seen in the plot for ease of reading.*
 ```{r proportion-plot}
 # Finding her most popular album
 most_popular_album <- taylor_album_summary %>%
