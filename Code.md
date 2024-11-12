@@ -70,7 +70,7 @@ and User Scores (Used as receptivity metrics).
 For our project, we aim to answer the following question:
 
 ``` bash
-"How have changes in musical and lyrical features in Taylor Swift's songs resonated with her audience?" 
+How have changes in musical and lyrical features in Taylor Swift's songs resonated with her audience?
 ```
 
 This analysis will allow us to identify trends in musical
