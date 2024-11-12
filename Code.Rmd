@@ -331,10 +331,10 @@ ggplot(taylor_album_plot %>% filter(labels %in% c("acousticness", "valence", "en
               se = FALSE,
               formula = y ~ x,
               span = 1.2,
-              size = 1.2)  +
-  stat_smooth(se = FALSE, geom = "area",
-              method = "loess", alpha = .1,
-              span = 1.2, aes(fill = labels), show.legend = F) +
+              size = 0.4)  +
+  #stat_smooth(se = FALSE, geom = "area",
+              #method = "loess", alpha = .1,
+              #span = 0.9, aes(fill = labels), show.legend = F) +
   geom_line(data = taylor_album_plot%>% filter(labels == "Receptivity"),
             aes(y = values / 100),
             size = 1, linetype = "solid", lineend = "round") +
