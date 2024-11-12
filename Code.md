@@ -425,7 +425,7 @@ their mean. Then, we will combine `taylor_all_songs` and `taylor_albums`
 to tie the receptivity metrics with each common album.
 
 ``` r
-taylor_album_summary <- taylor_all_songs %>% group_by(album_name) %>% summarize(
+taylor_album_summary <- taylor_all_songs %>% group_by(album_name) %>% summarise(
   mean_loudness = mean(loudness),
   mean_danceability = mean(danceability),
   mean_liveness = mean(liveness),
@@ -491,7 +491,7 @@ ggplot(taylor_long %>% filter(labels != "tempo"), aes(y = labels, x = values, fi
   scale_y_discrete(labels = x_labels) +
   scale_fill_colorblind() +
   theme(
-    axis.text.x = element_text(size = 6), 
+    axis.text.x = element_text(size = 6),
     axis.text.y = element_text(size = 8),
     axis.title.x = element_text(vjust = -1, size = 10),
     plot.title = element_text(size = 16),
@@ -533,16 +533,17 @@ indicate that Swift is either moving away or towards more danceable
 tunes. Lastly, the difference in `acousticness` could indicate that
 Taylor Swift is also switching from commercial and electronic sounding
 songs to more acoustic songs. Moreover, scrutinising the violin plot of
-Acousticness also hints at polarisation. There are two visible bulges in
-the plot, indicate two areas of high density. This means that Taylor’s
-songs which have acoustic elements likely do not have any electronic
-elements, vice versa, indicating her preference for keeping the two type
-of songs separate. These plots were great at hinting at potential large
-differences in musical features within Swift’s repertoire, but they do
-not give us any information about the trends of the features. We need a
-way to observe the changes in the highly variant features across time.
-Hence, we will be plotting `valence`, `acousticness`, `energy` and
-`danceability` in a line graph in the next part.
+`acousticness` also hints at polarisation. There are two visible bulges
+in the plot, indicate two areas of high density. This means that
+Taylor’s songs which have acoustic elements likely do not have any
+electronic elements, vice versa, indicating her preference for keeping
+the two type of songs separate. These plots were great at hinting at
+potential large differences in musical features within Swift’s
+repertoire, but they do not give us any information about the trends of
+the features. We need a way to observe the changes in the highly variant
+features across time. Hence, we will be plotting `valence`,
+`acousticness`, `energy` and `danceability` in a line graph in the next
+part.
 
 ### b. How have the features we selected influenced Taylor Swift’s popularity?
 
@@ -561,7 +562,7 @@ from the left y-axis. Each album has a unique release date, allowing us
 to directly plot their attributes directly using the release dates. We
 obtain musical attribute data from `taylor_all_songs` (converted for
 plotting into `taylor_long`) and Receptivity from
-`Taylor_album_summary`.
+`taylor_album_summary`.
 
 #### Plot
 
@@ -574,21 +575,23 @@ ggplot(taylor_long %>% filter(labels %in% c("acousticness", "valence", "energy",
               size = 1.2) +
   stat_smooth(se = FALSE, geom = "area",
               method = "loess", alpha = .1,
-              span = 0.8, aes(fill = labels)) +
+              span = 0.8, aes(fill = labels), show.legend = FALSE) +
   geom_line(data = taylor_album_summary,
-            aes(x = as.Date(album_release), 
+            aes(x = as.Date(album_release),
                 y = Receptivity / 100,
                 color = "Receptivity"),
             size = 2, linetype = "solid", lineend = "round") +
   scale_y_continuous(
-    name = "Feature Values (0 - 1)",
+    name = "Feature Magnitude (0 - 1)",
     sec.axis = sec_axis(~ . * 100,
                         name = "Receptivity (%)") # (Holtz, n.d.)
   ) +
   labs(title = "Musical Attributes and Receptivity Across Taylor Swift Albums",
        x = "Album Release Date", y = "Feature Values") +
-  scale_color_manual(values = c("tempo" = "brown", "acousticness" = "blue", "valence" = "red", "energy" = "green", "danceability" = "purple", "Popularity" = "black")) +
-  scale_fill_manual(values = c("tempo" = "brown", "acousticness" = "blue", "valence" = "red", "energy" = "green", "danceability" = "purple"), guide = "none") +
+  scale_color_manual(values = c("tempo" = "brown", "acousticness" = "blue", "valence" = "red", "energy" = "green", "danceability" = "purple", "Popularity" = "black"),
+  labels = c("Acousticness", "Danceability", "Energy", "Tempo", "Valence")) +
+  scale_fill_manual(values = c("tempo" = "brown", "acousticness" = "blue", "valence" = "red", "energy" = "green", "danceability" = "purple"), guide = "none",
+  labels = c("Acousticness", "Danceability", "Energy", "Tempo", "Valence")) +
   scale_fill_colorblind() +
   theme_minimal() +
   theme(legend.position = "top",
@@ -615,42 +618,46 @@ ggplot(taylor_long %>% filter(labels %in% c("acousticness", "valence", "energy",
 
 #### Discussion
 
-Off the bat, we observe that Receptivity has increased over the years,
+Off the bat, we observe that `receptivity` has increased over the years,
 meaning that Taylor Swift’s audience are liking her songs more. Since
 her fans perception of her songs are directly influenced by the features
 of the songs, we can ascertain that changes in those features are most
-likely the reason for the increase in receptivity. We also notice that
-Valence and Energy are decreasing. This means that her songs are
-becoming sadder and less bold, more withdrawn and moody. Danceability
+likely the reason for the increase in `receptivity`. We also notice that
+`valence` and `energy` are decreasing. This means that her songs are
+becoming sadder and less bold; more withdrawn and moody. `Danceability`
 has been on an upward trend, indicating greater emphasis on punch,
-rhythm and vibe in her songs. Tempo has also been decreasing, indicating
-slower songs. Acousticness seems to have the most interesting trend.
-Acousticness was low and decreasing from mid 2010s to 2015, before
-sharply increasing between 2015 and after 2020. 2015 to after 2020 is
-also the period when Taylor Swift’s receptivity increased significantly,
-indicating that her audience responded positively to her change in
-musical style. Overall, there seems to be a noted shift towards rhythmic
-and punchy songs that are sad and acoustically driven. We think that her
-audience received this shift well because they were yearning for
-something different from the usual mainstream pop soundscape of the
-early 2000s and mid 2010s which is characterized by Electronic Dance
-music and piercing Disco pop sounds (CITE).
+rhythm and vibe in her songs. `Tempo` has also been decreasing,
+indicating slower songs. `Acousticness` seems to have the most
+interesting trend. `Acousticness` was low and decreasing from mid 2010s
+to 2015, before sharply increasing between 2015 and after 2020. 2015 to
+after 2020 is also the period when Taylor Swift’s `receptivity`
+increased significantly, indicating that her audience responded
+positively to her change in musical style. Overall, there seems to be a
+noted shift towards rhythmic and punchy songs that are sad and
+acoustically driven. We think that her audience received this shift well
+because they were yearning for something different from the usual
+mainstream pop soundscape of the early 2000s and mid 2010s which is
+characterised by Electronic Dance music and piercing Disco pop sounds
+(Savage, 2020).
 
 ### c. Which feature(s) has/have the greatest impact on Taylor Swift’s songs?
 
 #### Methodology
 
-We have chosen Swift’s most popular album to investigate this
-subquestion. Here, we will examine how each feature contributes
-proportionally to her songs. This stacked bar chart illustrates each
-song’s feature makeup within the album, revealing which musical elements
-are dominant in her songs and may have potentially driven their success.
-This analysis complements the previous sections by showing the relative
-importance of each feature in her highest-rated album.
+Lastly, we will be zooming into Swift’s most highly rated album to
+investigate this subquestion. Here, we will examine how each feature
+contributes proportionally to her songs. This stacked bar chart
+illustrates each song’s feature makeup within the album, revealing which
+musical elements are dominant in her songs and may have potentially
+driven their success. This analysis complements the previous sections by
+showing the relative importance of each feature in her highest-rated
+album. You may refer to the table below the plot to check which songs
+correspond to the track numbers in the plot.
 
 *Disclaimer: Track Numbers reflected in the table and plot do not
-correspond to actual track numbers. They have been mapped to the track
-names according to the order seen in the plot for ease of reading.*
+correspond to the official track numbers. They have been mapped to the
+track names according to the order seen in the plot for ease of
+reading.*
 
 #### Plot
 
@@ -667,8 +674,8 @@ most_popular_album_songs <- taylor_all_songs %>%
   select(album_name, track_number, track_name, danceability, acousticness, energy, valence)
 # Reshape the data into long format for plotting
 scaled_songs_long <- most_popular_album_songs %>%
-  pivot_longer(cols = danceability:valence, 
-               names_to = "feature", 
+  pivot_longer(cols = danceability:valence,
+               names_to = "feature",
                values_to = "value") %>%
   group_by(track_name) %>%
   mutate(total_value = sum(value)) %>%
@@ -678,7 +685,7 @@ scaled_songs_long <- most_popular_album_songs %>%
 feature_mean <- scaled_songs_long %>%
   select(feature, total_value) %>%
   group_by(feature) %>%
-  summarize(mean = mean(total_value)) %>%
+  summarise(mean = mean(total_value)) %>%
   arrange(mean) %>%
   pull(feature)
 
@@ -693,8 +700,8 @@ scaled_songs_long <- scaled_songs_long %>%
 ggplot(scaled_songs_long, aes(x = value, y = as.factor(new_track_number), fill = feature)) +
   geom_bar(stat = "identity", position = "stack") +
   theme_minimal() +
-  labs(title = paste("Composition of Significant Features of each Song in the \nMost Popular Album:", most_popular_album),
-       x = "Total Value of Features", y = "Songs (Track Number)",
+  labs(title = paste("Composition of Significant Features of each Song in the \nHighest Rated Album:", most_popular_album),
+       x = "Total Magnitude of Features", y = "Songs (Track Number)",
        fill = "Feature", subtitle = "Sorted by Total Score") +
   theme(
     axis.text.y.left = element_text(size = 9),
@@ -704,7 +711,7 @@ ggplot(scaled_songs_long, aes(x = value, y = as.factor(new_track_number), fill =
     aspect.ratio = 0.8,
     axis.title.y.left = element_text(vjust = 2, size = 11)
   ) +
-  scale_fill_viridis_d() +
+  scale_fill_viridis_d(labels = c("Acousticness", "Danceability", "Energy", "Valence")) +
   coord_flip()
 ```
 
@@ -714,8 +721,8 @@ ggplot(scaled_songs_long, aes(x = value, y = as.factor(new_track_number), fill =
 # Display song names mapped to track numbers
 album_songs_table <- scaled_songs_long %>% select(c("track_name", "new_track_number")) %>% unique()
 songname_tracknumber_table <- cbind(album_songs_table$new_track_number, album_songs_table$track_name)
-kable(songname_tracknumber_table, 
-      col.names = c("Track Number", "Album Songs"), 
+kable(songname_tracknumber_table,
+      col.names = c("Track Number", "Album Songs"),
       caption = paste("Songs within", most_popular_album, "mapped to Track Number"))
 ```
 
@@ -756,21 +763,21 @@ Songs within Red (Taylor’s Version) mapped to Track Number
 
 #### Discussion
 
-The stacked bar chart for Swift’s most popular album reveals the
+The stacked bar chart for Swift’s highest rated album reveals the
 distribution of key musical features (i.e. `danceability`,
 `acousticness`, `energy`, and `valence`) across each track, sorted by
-total feature values. By arranging the songs in descending order of
+total feature magnitudes. By arranging the songs in descending order of
 their overall feature composition, we get an intuitive sense of the
 relative importance and magnitude of each feature for individual songs
 in this album. Our visualisation shows a clear variability in how
 features contribute to individual songs. Songs with high total feature
 values tend to have substantial contributions from `danceability`,
 `energy` and `valence`, highlighting how upbeat tracks may play a
-significant role in the album’s popularity. `Acousticness`, though
+significant role in the album’s receptivity. `Acousticness`, though
 generally lower across tracks, appears sporadically higher in a few
 songs, suggesting moments where a more subdued, acoustic quality might
 contrast the otherwise energetic and dynamic nature of the album. From
-these insights, it becomes evident that Swift’s most popular album
+these insights, it becomes evident that Swift’s most succesful album
 combines a balance of high-energy elements with a degree of emotional
 resonance (`valence`), which could contribute significantly to listener
 engagement and receptivity. Acoustic elements, while less dominant, add
@@ -782,6 +789,18 @@ high-variability features likely driving the album’s success, while
 could provide insights into audience preferences and help pinpoint
 stylistic choices that resonate widely, explaining both the commercial
 and emotional impact of Swift’s popular tracks.
+
+The critical acclaim of this album also likely means that Taylor Swift
+will be creating more songs in the future following the same musical
+pallate. We can hope to see more acoustic songs released alongside
+commercial tracks to satiate the hunger of her fans. However, music has
+an ever changing facade. What was popular last year could be boring this
+year, hence to predict trends in music is a little whimsical. Our
+analysis of the dataset also highlights this quality of music in how
+musical features are highly varied across songs and trends can sometimes
+alarmingly change course, like how `acousticness` suddenly spiked in
+2015 for Taylor Swift’s songs. However, it is still worth it to study
+what makes great songs, great.
 
 ## 5. Teamwork
 
@@ -796,4 +815,6 @@ Metacritic. (2023). How do you compute METASCORES? Retrieved November 7,
 2024, from
 <https://metacritichelp.zendesk.com/hc/en-us/articles/14478499933079-How-do-you-compute-METASCORES>  
 Metacritic. (n.d.). Taylor Swift by Taylor Swift.
-<https://www.metacritic.com/music/taylor-swift/taylor-swift/user-reviews>
+<https://www.metacritic.com/music/taylor-swift/taylor-swift/user-reviews>  
+Savage, M. (2020, January 11). Five ways music changed in the 2010s.
+BBC. <https://www.bbc.com/news/entertainment-arts-51061099>

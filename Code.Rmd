@@ -75,8 +75,8 @@ These features will enable us to compare the songs' descriptive features through
 ```{r, echo = FALSE}
 track_attributes <- data.frame(
   Variable = c(
-    "album_name", "album_release", "track_name", "danceability", "energy", 
-    "loudness", "mode", "speechiness", "acousticness", "instrumentalness", 
+    "album_name", "album_release", "track_name", "danceability", "energy",
+    "loudness", "mode", "speechiness", "acousticness", "instrumentalness",
     "liveness", "valence", "tempo", "explicit", "Metacritic Score", "User Score"
   ),
   Class = c(
@@ -225,7 +225,7 @@ head(taylor_albums, 10)
 
 To compare musical attributes across albums, we will aggregate statistics for each of the musical attributes in each album by taking their mean. Then, we will combine `taylor_all_songs` and `taylor_albums` to tie the receptivity metrics with each common album.
 ```{r aggregating-statistics}
-taylor_album_summary <- taylor_all_songs %>% group_by(album_name) %>% summarize(
+taylor_album_summary <- taylor_all_songs %>% group_by(album_name) %>% summarise(
   mean_loudness = mean(loudness),
   mean_danceability = mean(danceability),
   mean_liveness = mean(liveness),
@@ -278,7 +278,7 @@ ggplot(taylor_long %>% filter(labels != "tempo"), aes(y = labels, x = values, fi
   scale_y_discrete(labels = x_labels) +
   scale_fill_colorblind() +
   theme(
-    axis.text.x = element_text(size = 6), 
+    axis.text.x = element_text(size = 6),
     axis.text.y = element_text(size = 8),
     axis.title.x = element_text(vjust = -1, size = 10),
     plot.title = element_text(size = 16),
@@ -320,9 +320,9 @@ ggplot(taylor_long %>% filter(labels %in% c("acousticness", "valence", "energy",
               size = 1.2) +
   stat_smooth(se = FALSE, geom = "area",
               method = "loess", alpha = .1,
-              span = 0.8, aes(fill = labels), show.legend=F) +
+              span = 0.8, aes(fill = labels), show.legend = FALSE) +
   geom_line(data = taylor_album_summary,
-            aes(x = as.Date(album_release), 
+            aes(x = as.Date(album_release),
                 y = Receptivity / 100,
                 color = "Receptivity"),
             size = 2, linetype = "solid", lineend = "round") +
@@ -334,9 +334,9 @@ ggplot(taylor_long %>% filter(labels %in% c("acousticness", "valence", "energy",
   labs(title = "Musical Attributes and Receptivity Across Taylor Swift Albums",
        x = "Album Release Date", y = "Feature Values") +
   scale_color_manual(values = c("tempo" = "brown", "acousticness" = "blue", "valence" = "red", "energy" = "green", "danceability" = "purple", "Popularity" = "black"),
-  labels = c("Acousticness","Danceability","Energy","Tempo","Valence")) +
+  labels = c("Acousticness", "Danceability", "Energy", "Tempo", "Valence")) +
   scale_fill_manual(values = c("tempo" = "brown", "acousticness" = "blue", "valence" = "red", "energy" = "green", "danceability" = "purple"), guide = "none",
-  labels = c("Acousticness","Danceability","Energy","Tempo","Valence")) +
+  labels = c("Acousticness", "Danceability", "Energy", "Tempo", "Valence")) +
   scale_fill_colorblind() +
   theme_minimal() +
   theme(legend.position = "top",
@@ -352,10 +352,10 @@ ggplot(taylor_long %>% filter(labels %in% c("acousticness", "valence", "energy",
 
 #### Discussion
 
-Off the bat, we observe that `Receptivity` has increased over the years, meaning that Taylor Swift's audience are liking her songs more. Since her fans perception of her songs are directly influenced by the features of the songs, we can ascertain that changes in those features are most likely the reason for the increase in receptivity.
-We also notice that Valence and Energy are decreasing. This means that her songs are becoming sadder and less bold; more withdrawn and moody. Danceability has been on an upward trend, indicating greater emphasis on punch, rhythm and vibe in her songs. Tempo has also been decreasing, indicating slower songs.
-Acousticness seems to have the most interesting trend. Acousticness was low and decreasing from mid 2010s to 2015, before sharply increasing between 2015 and after 2020. 2015 to after 2020 is also the period when Taylor Swift's receptivity increased significantly, indicating that her audience responded positively to her change in musical style.
-Overall, there seems to be a noted shift towards rhythmic and punchy songs that are sad and acoustically driven. We think that her audience received this shift well because they were yearning for something different from the usual mainstream pop soundscape of the early 2000s and mid 2010s which is characterized by Electronic Dance music and piercing Disco pop sounds (Savage, 2020).
+Off the bat, we observe that `receptivity` has increased over the years, meaning that Taylor Swift's audience are liking her songs more. Since her fans perception of her songs are directly influenced by the features of the songs, we can ascertain that changes in those features are most likely the reason for the increase in `receptivity`.
+We also notice that `valence` and `energy` are decreasing. This means that her songs are becoming sadder and less bold; more withdrawn and moody. `Danceability` has been on an upward trend, indicating greater emphasis on punch, rhythm and vibe in her songs. `Tempo` has also been decreasing, indicating slower songs.
+`Acousticness` seems to have the most interesting trend. `Acousticness` was low and decreasing from mid 2010s to 2015, before sharply increasing between 2015 and after 2020. 2015 to after 2020 is also the period when Taylor Swift's `receptivity` increased significantly, indicating that her audience responded positively to her change in musical style.
+Overall, there seems to be a noted shift towards rhythmic and punchy songs that are sad and acoustically driven. We think that her audience received this shift well because they were yearning for something different from the usual mainstream pop soundscape of the early 2000s and mid 2010s which is characterised by Electronic Dance music and piercing Disco pop sounds (Savage, 2020).
 
 ### c. Which feature(s) has/have the greatest impact on Taylor Swift's songs?
 
@@ -380,8 +380,8 @@ most_popular_album_songs <- taylor_all_songs %>%
   select(album_name, track_number, track_name, danceability, acousticness, energy, valence)
 # Reshape the data into long format for plotting
 scaled_songs_long <- most_popular_album_songs %>%
-  pivot_longer(cols = danceability:valence, 
-               names_to = "feature", 
+  pivot_longer(cols = danceability:valence,
+               names_to = "feature",
                values_to = "value") %>%
   group_by(track_name) %>%
   mutate(total_value = sum(value)) %>%
@@ -391,7 +391,7 @@ scaled_songs_long <- most_popular_album_songs %>%
 feature_mean <- scaled_songs_long %>%
   select(feature, total_value) %>%
   group_by(feature) %>%
-  summarize(mean = mean(total_value)) %>%
+  summarise(mean = mean(total_value)) %>%
   arrange(mean) %>%
   pull(feature)
 
@@ -417,14 +417,14 @@ ggplot(scaled_songs_long, aes(x = value, y = as.factor(new_track_number), fill =
     aspect.ratio = 0.8,
     axis.title.y.left = element_text(vjust = 2, size = 11)
   ) +
-  scale_fill_viridis_d(labels = c("Acousticness","Danceability","Energy","Valence")) +
+  scale_fill_viridis_d(labels = c("Acousticness", "Danceability", "Energy", "Valence")) +
   coord_flip()
 
 # Display song names mapped to track numbers
 album_songs_table <- scaled_songs_long %>% select(c("track_name", "new_track_number")) %>% unique()
 songname_tracknumber_table <- cbind(album_songs_table$new_track_number, album_songs_table$track_name)
-kable(songname_tracknumber_table, 
-      col.names = c("Track Number", "Album Songs"), 
+kable(songname_tracknumber_table,
+      col.names = c("Track Number", "Album Songs"),
       caption = paste("Songs within", most_popular_album, "mapped to Track Number"))
 ```
 
