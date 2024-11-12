@@ -271,17 +271,17 @@ taylor_long <- taylor_all_songs %>% select(-mode) %>% pivot_longer(danceability:
 
 # Plot  
 ggplot(taylor_long %>% filter(labels != "tempo"), aes(y = labels, x = values, fill = labels)) +
-  geom_violin(show.legend = FALSE, alpha = 0.8, bw = 0.1, color = FALSE, width = 0.9) +
+  geom_violin(show.legend = FALSE, alpha = 0.8, bw = 0.1, color = FALSE, width = 0.9, fill = "#404f99") +
   geom_boxplot(show.legend = FALSE, alpha = 0.6, fill = "lightblue", outlier.shape = NA, width = 0.3) +
   theme_economist() +
-  labs(y = "", x = "Feature Strength (From 0 to 1)", title = "Variance of Musical Features for Swift's Songs") +
+  labs(y = "", x = "Feature Strength (From 0 to 1)", title = "Variance in Musical Features for Swift's Songs") +
   scale_y_discrete(labels = x_labels) +
-  scale_fill_colorblind() +
+  #scale_fill_brewer(palette = "Accent") +
   theme(
     axis.text.x = element_text(size = 6),
     axis.text.y = element_text(size = 8),
     axis.title.x = element_text(vjust = -1, size = 10),
-    plot.title = element_text(size = 16, hjust= 1.1),
+    plot.title = element_text(size = 16, hjust= 1.1), 
     aspect.ratio = 0.9,
     plot.background = element_rect(fill = "#fae7d7")
   )
