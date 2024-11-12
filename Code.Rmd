@@ -11,6 +11,7 @@ library(tidyverse)
 library(readr)
 library(knitr)
 library(ggthemes)
+library(tidytext) #install.packages("tidytext")
 ```
 
 ## Group members
@@ -455,22 +456,22 @@ scaled_songs_long <- scaled_songs_long %>%
   pivot_longer(cols = danceability:valence, names_to = "feature", values_to = "value")
 
 # Plot with sorted order
-ggplot(scaled_songs_long, aes(x = value, y = as.factor(new_track_number), fill = feature)) +
-  geom_bar(stat = "identity", position = "stack") +
+ggplot(scaled_songs_long, aes(y = value, x = reorder_within(track_number, value, feature), fill = feature)) +
+  geom_col() +
+  facet_wrap(~ feature, scales = "free_x") +
   theme_minimal() +
   labs(title = paste("Composition of Significant Features of each Song in the \nHighest Rated Album:", highest_rated_album),
-       x = "Total Magnitude of Features", y = "Songs (Track Number)",
-       fill = "Feature", subtitle = "Sorted by Total Score") +
+       y = "Strength of Features", x = "Songs",
+       fill = "Feature", subtitle = "Sorted by Feature Strength") +
   theme(
-    axis.text.y.left = element_text(size = 9),
+    axis.text.x = element_blank(),
     panel.grid.major.x = element_line(color = "#addced"),
     plot.title = element_text(size = 12, vjust = 2, face = "bold"),
     plot.subtitle = element_text(size = 8, face = 3),
     aspect.ratio = 0.8,
     axis.title.y.left = element_text(vjust = 2, size = 11)
   ) +
-  scale_fill_viridis_d(labels = c("Acousticness", "Danceability", "Energy", "Valence")) +
-  coord_flip()
+  scale_fill_viridis_d(labels = c("Acousticness", "Danceability", "Energy", "Valence"))
 
 # Display song names mapped to track numbers
 album_songs_table <- scaled_songs_long %>% select(c("track_name", "new_track_number")) %>% unique()
