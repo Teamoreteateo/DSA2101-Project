@@ -274,7 +274,7 @@ ggplot(taylor_long %>% filter(labels != "tempo"), aes(y = labels, x = values, fi
   geom_violin(show.legend = FALSE, alpha = 0.8, bw = 0.1, color = FALSE, width = 0.9) +
   geom_boxplot(show.legend = FALSE, alpha = 0.6, fill = "lightblue", outlier.shape = NA, width = 0.3) +
   theme_economist() +
-  labs(y = "", x = "Strength (From 0 to 1)", title = "Variance of Musical Features for Swift's Songs") +
+  labs(y = "", x = "Feature Strength (From 0 to 1)", title = "Variance of Musical Features for Swift's Songs") +
   scale_y_discrete(labels = x_labels) +
   scale_fill_colorblind() +
   theme(
@@ -421,17 +421,17 @@ This analysis complements the previous sections by showing the relative importan
 #### Plot
 ```{r proportion-plot-ALTERNATIVE}
 # Finding her most popular album
-most_popular_album <- taylor_album_summary %>%
+highest_rated_album <- taylor_album_summary %>%
   arrange(desc(Receptivity)) %>%
   head(1) %>%
   pull(album_name)
 
 # Filtering the songs from her most popular album
-most_popular_album_songs <- taylor_all_songs %>%
-  filter(album_name == most_popular_album) %>%
+highest_rated_album_songs <- taylor_all_songs %>%
+  filter(album_name == highest_rated_album) %>%
   select(album_name, track_number, track_name, danceability, acousticness, energy, valence)
 # Reshape the data into long format for plotting
-scaled_songs_long <- most_popular_album_songs %>%
+scaled_songs_long <- highest_rated_album_songs %>%
   pivot_longer(cols = danceability:valence,
                names_to = "feature",
                values_to = "value") %>%
@@ -458,7 +458,7 @@ scaled_songs_long <- scaled_songs_long %>%
 ggplot(scaled_songs_long, aes(x = value, y = as.factor(new_track_number), fill = feature)) +
   geom_bar(stat = "identity", position = "stack") +
   theme_minimal() +
-  labs(title = paste("Composition of Significant Features of each Song in the \nHighest Rated Album:", most_popular_album),
+  labs(title = paste("Composition of Significant Features of each Song in the \nHighest Rated Album:", highest_rated_album),
        x = "Total Magnitude of Features", y = "Songs (Track Number)",
        fill = "Feature", subtitle = "Sorted by Total Score") +
   theme(
@@ -477,7 +477,7 @@ album_songs_table <- scaled_songs_long %>% select(c("track_name", "new_track_num
 songname_tracknumber_table <- cbind(album_songs_table$new_track_number, album_songs_table$track_name)
 kable(songname_tracknumber_table,
       col.names = c("Track Number", "Album Songs"),
-      caption = paste("Songs within", most_popular_album, "mapped to Track Number"))
+      caption = paste("Songs within", highest_rated_album, "mapped to Track Number"))
 ```
 
 #### Discussion
