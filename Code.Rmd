@@ -269,20 +269,20 @@ x_labels <- c("Acousticness", "Danceability", "Energy", "Instrumentalness", "Liv
 taylor_long <- taylor_all_songs %>% select(-mode) %>% pivot_longer(danceability:tempo, values_to = "values", names_to = "labels") %>%
   mutate(labels <- as.factor(labels))
 
-# Plot
+# Plot  
 ggplot(taylor_long %>% filter(labels != "tempo"), aes(y = labels, x = values, fill = labels)) +
-  geom_violin(show.legend = FALSE, alpha = 0.8, bw = 0.1, color = FALSE) +
-  geom_boxplot(show.legend = FALSE, alpha = 0.6, fill = "lightblue", outlier.fill = "lightblue", width = 0.4) +
+  geom_violin(show.legend = FALSE, alpha = 0.8, bw = 0.1, color = FALSE, width = 0.9) +
+  geom_boxplot(show.legend = FALSE, alpha = 0.6, fill = "lightblue", outlier.shape = NA, width = 0.3) +
   theme_economist() +
-  labs(y = "", x = "Magnitude (From 0 to 1)", title = "Boxplot of musical features for Swift's songs") +
+  labs(y = "", x = "Strength (From 0 to 1)", title = "Boxplot of Musical Features for Swift's Songs") +
   scale_y_discrete(labels = x_labels) +
   scale_fill_colorblind() +
   theme(
     axis.text.x = element_text(size = 6),
     axis.text.y = element_text(size = 8),
     axis.title.x = element_text(vjust = -1, size = 10),
-    plot.title = element_text(size = 16),
-    aspect.ratio = 0.4,
+    plot.title = element_text(size = 16, hjust= 1.1),
+    aspect.ratio = 0.9,
     plot.background = element_rect(fill = "#fae7d7")
   )
 ```
