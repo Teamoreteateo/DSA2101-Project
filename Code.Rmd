@@ -475,12 +475,6 @@ ggplot(scaled_songs_long, aes(y = value, x = new_track_number, fill = feature)) 
   ) +
   scale_fill_viridis_d(labels = c("Acousticness", "Danceability", "Energy", "Valence"))
 
-# Display song names mapped to track numbers
-album_songs_table <- scaled_songs_long %>% select(c("track_name", "new_track_number")) %>% filter(feature == "acousticness") %>% unique()
-songname_tracknumber_table <- cbind(album_songs_table$new_track_number, album_songs_table$track_name)
-kable(songname_tracknumber_table,
-      col.names = c("Track Number", "Album Songs"),
-      caption = paste("Songs within", highest_rated_album, "mapped to Track Number"))
 ```
 
 #### Discussion
