@@ -63,7 +63,7 @@ For our project, we aim to answer the following question:
 ```bash
 How have changes in musical and lyrical features in Taylor Swift's songs resonated with her audience?
 ```
-This analysis will allow us to identify trends in musical characteristics and examine how stylistic changes in her songs which have affected the receptivity of her music to her audience. 
+This analysis will allow us to identify trends in musical characteristics and examine how stylistic changes in her songs which have affected the receptivity of her music to her audience, meaning how much they like her songs. 
 We also hope to understand her audience better by knowing their music preferences through this study. Hence, we can perhaps understand what makes Taylor Swift so popular.
 
 
@@ -258,7 +258,7 @@ taylor_album_summary <- taylor_album_summary %>% mutate(Receptivity = (metacriti
 
 #### Methodology
 We have chosen to use an overlayed boxplot and violin plot to represent the values of the song features, less tempo. This will allow us to examine the spread and distribution of values for each feature together with information about the interquartile range and median.
-The violin plot additionally shows potential polarisation in the data as it is a density plot of the values. Additionaly, a colourblind friendly scheme was used to differentiate each feature.
+The violin plot additionally shows potential polarisation in the data as it is a density plot of the values.
 
 #### Plot
 ```{r boxplot}
@@ -291,25 +291,26 @@ ggplot(taylor_long %>% filter(labels != "tempo"), aes(y = labels, x = values, fi
 
 #### Discussion
 
-From this visualisation, we can pinpoint those features with a higher variance, as they likely contribute more significantly to changes in her musical style, hence her receptivity.
+From this visualisation, we can pinpoint those features with a higher variance, as they likely contribute more significantly to changes in Taylor Swift's musical style and, in turn, her receptivity.
 By focusing on features that show the widest range (i.e. most diverse expressions) across her songs, we can identify the more significant attributes that make her music unique. 
 We will use these features in the next visualisation to examine their possible relationship with Swift's receptivity.  
 
-It appears that `valence`, `acousticness`, `energy` and `danceability` have the most variance - the tails for each feature spans the widest across the graph. This indicates vast differences between these features within Swift's songs. Such differences could indicate large dynamic shifts in the style of music produced, which will likely be received differently by the audience. 
-The rest of the musical features seem to be concentrated closer to zero, indicating that most of the features are weakly present and consistent throughout the songs. Additionally, since `loudness` values are mostly closer to 0, it indicates that Swift's songs are consistently moderately loud. Overall we gather that most of her songs are vocally driven (low `instrumentalness`), not spoken (low `speechiness`) and are not live (low `liveness`). 
-Examining the plot again for the above four features gives us more relationships to hypothesise about. The wide range in `valence` could indicate shifts in the happiness of her songs, like her songs becoming less happy. The range of `energy` indicates that there are vast differences in the power and drive of her songs. Large differences in `danceability` could indicate that Swift is either moving away or towards more danceable tunes. 
-Lastly, the difference in `acousticness` could indicate that Taylor Swift is also switching from commercial and electronic sounding songs to more acoustic songs. Moreover, scrutinising the violin plot of `acousticness` also hints at polarisation. There are two visible bulges in the plot, indicate two areas of high density. This means that Taylor's songs which have acoustic elements likely do not have any electronic elements, vice versa, indicating her preference for keeping the two type of songs separate.
-These plots were great at hinting at potential large differences in musical features within Swift's repertoire, but they do not give us any information about the trends of the features. We need a way to observe the changes in the highly variant features across time.
-Hence, we will be plotting `valence`, `acousticness`, `energy` and `danceability` in a line graph in the next part.
+It appears that `valence`, `acousticness` and `energy` have the most variance (the tails for each feature spans the widest across the graph) while `loudness` and `danceability` tie at almost equal span of values after them. These features with the widest range show notable diversity across her songs, suggesting that they play a key role in defining her sound. The large range of values in each feature could indicate large shifts in style, potentially garnering different audience responses.
+When comparing among those features, we can also see that the bulge of the violin plot for `loudness` is closer to its lowest value while for `dancebility` it sits closer to the middle of its span, hence indicating that the values for `danceability` are more spread out than `loudness`. Similarly, the remaining features - `speechiness`, `liveness` and `instrumentalness` - all have values concentrated towards the left, indicating consistency across these features. Thus, we will only consider
+`valence`, `acousticness`, `energy` and `danceability` as musical features to compare against Taylor Swift's receptivity due to their high span and variance in values. Moreover, a closer look at `acousticness` hints at a potential bi-modal distribution because another tiny bulge can be observed on the right side of its violin plot. Given that the values for this plot is obtained from each individual song by Swift, it could indicate that a sizeable group of her songs are purely acoustically driven.
+
+These plots were great at hinting at potential large differences in musical features within Swift's repertoire, but they do not give us any information about how these features correlate to her receptivity. Hence, we will be plotting the mean values of `valence`, `acousticness`, `energy` and `danceability` across each album in a line graph in the next part.
 
 
-### b. How have the features we selected influenced Taylor Swift's popularity?
+### b. How have the features we selected influenced Taylor Swift's receptivity?
 
 #### Methodology
 We plan to investigate how the selected features with the most variability (from part (a)) might impact Taylor Swift’s receptivity across her career. 
-By plotting these features along with a line representing her album receptivity over time, we will be able to observe patterns and potential correlations,
-thus revealing how changes in certain musical characteristics might cause a shift in listener interest and popularity. Normalised Tempo is also included here to analyse its trend with respect to her receptivity.
-Receptivity is read from the right y-axis while the feature values with normalised tempo are read from the left y-axis. Each album has a unique release date, allowing us to directly plot their attributes directly using the release dates. We obtain musical attribute data from `taylor_all_songs` (converted for plotting into `taylor_long`) 
+We arranged each album by receptivty to better compare the difference in receptivity with each of the features chosen. Then, we plotted smooth curves from the mean value of each feature for each album to observe the
+changes with respect to receptivity. The mean value of each feature is used as an approximate for the average strength of the feature in each album.
+
+Normalised Tempo is also included here to analyse its changes with respect to her receptivity.
+Receptivity is read from the right y-axis while the feature values with normalised tempo are read from the left y-axis. We obtain musical attribute data from `taylor_all_songs` (converted for plotting into `taylor_long`) 
 and Receptivity from `taylor_album_summary`. 
 
 *Disclaimer: Album Numbers reflected in the table and plot do not correspond to actual album numbers. They have been mapped to the Album Names according to the order seen in the plot for ease of reading.*
@@ -404,22 +405,25 @@ kable(albumname_tracknumber_table,
 
 #### Discussion
 
-Off the bat, we observe that `receptivity` has increased over the years, meaning that Taylor Swift's audience are liking her songs more. Since her fans perception of her songs are directly influenced by the features of the songs, we can ascertain that changes in those features are most likely the reason for the increase in `receptivity`.
-We also notice that `valence` and `energy` are decreasing. This means that her songs are becoming sadder and less bold; more withdrawn and moody. `Danceability` has been on an upward trend, indicating greater emphasis on punch, rhythm and vibe in her songs. `Tempo` has also been decreasing, indicating slower songs.
-`Acousticness` seems to have the most interesting trend. `Acousticness` was low and decreasing from mid 2010s to 2015, before sharply increasing between 2015 and after 2020. 2015 to after 2020 is also the period when Taylor Swift's `receptivity` increased significantly, indicating that her audience responded positively to her change in musical style.
-Overall, there seems to be a noted shift towards rhythmic and punchy songs that are sad and acoustically driven. We think that her audience received this shift well because they were yearning for something different from the usual mainstream pop soundscape of the early 2000s and mid 2010s which is characterised by Electronic Dance music and piercing Disco pop sounds (Savage, 2020).
 
-### c. Which feature(s) has/have the greatest impact on Taylor Swift's songs?
+The dual-axis plot reveals an exceptional increase in `acousticness` alongside a gradual decline in `energy`, which may correlate with album reception. This shift suggests that Taylor Swift’s evolving style has trended toward acoustic, introspective compositions, a style her audience appears to favor based on receptivity metrics. 
+Interestingly, while plot 2 displays consistency in `valence` and `danceability` due to averaging feature values per album, this contrasts with the broad spread seen in plot 1 for both of them, implying that her albums likely balance happy and sad songs, together with rhythmic and flowy songs. This balance across albums may contribute to Taylor Swift’s sustained appeal.
+Additionally, `tempo` appears to be consistent on average across all her albums with minimal change as well, showing that Swift's fans are content with the speed of her songs in general.
+
+`Acousticness` having the most interesting trend deserves some scrutiny. Although Swift's increase in receptivity did not increase proportionately with `acousticness`, it is important to consider that it did not decrease because it shows that her fans were happy with the switch-up.
+We think that her audience received this shift well because they were yearning for something different from the usual mainstream pop soundscape of the early 2000s and mid 2010s which is characterised by Electronic Dance music and piercing Disco pop sounds (Savage, 2020). 
+
+To test such a theory, we will be zooming into her highest rated album: Red (Taylor's Version), to examine the musical makeup of that album based on the four important musical features we picked out in plot 1. 
+
+### c. What defines a great album (Taylor's Version)?
 
 #### Methodology
-Lastly, we will be zooming into Swift's most highly rated album to investigate this subquestion. Here, we will examine how each feature contributes proportionally to her songs. 
-This stacked bar chart illustrates each song’s feature makeup within the album, revealing which musical elements are dominant in her songs and may have potentially driven their success. 
-This analysis complements the previous sections by showing the relative importance of each feature in her highest-rated album. You may refer to the table below the plot to check which songs correspond to the track numbers in the plot.
+To investigate this sub-question, we will examine how each feature varies across the songs in "Red (Taylor's Version)" to guage the rough musical make-up of the album. 
+Four bar charts have been plotted for each musical feature, with the bars arranged by the feature's strength values to observe the true range and spread of each feature in the album.
 
-*Disclaimer: Track Numbers reflected in the table and plot do not correspond to the official track numbers. They have been mapped to the track names according to the order seen in the plot for ease of reading.*
 
 #### Plot
-```{r proportion-plot-ALTERNATIVE}
+```{r faceted-bar-plot}
 # Finding her most popular album
 highest_rated_album <- taylor_album_summary %>%
   arrange(desc(Receptivity)) %>%
