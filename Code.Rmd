@@ -391,7 +391,7 @@ ggplot(taylor_album_plot %>% filter(labels %in% c("acousticness", "valence", "en
   panel.grid.minor.y = element_blank(),
   panel.grid.major.x = element_line(linetype = "dotted", color = "#b6cee2"),
   axis.line.y.right = element_line(colour = "Black"),
-  axis.ticks.y.right = element_line(color = "red"),
+  axis.ticks.y.right = element_line(color = "#2a2929"),
   axis.ticks.length.y.right = unit(.25, "cm"),
   axis.line.y.left = element_line(color = "brown"),
   axis.ticks.y.left = element_line(color = "red"),
