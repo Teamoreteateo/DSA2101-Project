@@ -260,7 +260,7 @@ taylor_album_summary <- taylor_album_summary %>% mutate(Receptivity = (metacriti
 We have chosen to use an overlayed boxplot and violin plot to represent the values of the song features, less tempo. This will allow us to examine the spread and distribution of values for each feature together with information about the interquartile range and median.
 The violin plot additionally shows potential polarisation in the data as it is a density plot of the values.
 
-#### Plot
+#### Plot 1
 ```{r boxplot}
 # Defining labels for usage
 x_labels <- c("Acousticness", "Danceability", "Energy", "Instrumentalness", "Liveness", "Loudness", "Speechiness", "Valence")
@@ -315,7 +315,7 @@ and Receptivity from `taylor_album_summary`.
 
 *Disclaimer: Album Numbers reflected in the table and plot do not correspond to actual album numbers. They have been mapped to the Album Names according to the order seen in the plot for ease of reading.*
 
-#### Plot
+#### Plot 2
 ```{r lineplot-dual-axes, fig.width=10, fig.height=4}
 taylor_album_plot <- taylor_album_summary %>% 
                     arrange(Receptivity) %>%
@@ -422,7 +422,7 @@ To investigate this sub-question, we will examine how each feature varies across
 Four bar charts have been plotted for each musical feature, with the bars arranged by the feature's strength values to observe the true range and spread of each feature in the album.
 
 
-#### Plot
+#### Plot 3
 ```{r faceted-bar-plot}
 # Finding her most popular album
 highest_rated_album <- taylor_album_summary %>%
@@ -484,13 +484,16 @@ kable(songname_tracknumber_table,
 ```
 
 #### Discussion
-The bar chart plot for Swift's highest rated album reveals the distribution of key musical features (i.e. `danceability`, `acousticness`, `energy`, and `valence`) across each track, sorted by total feature strengths. By arranging the songs in descending order of their overall feature composition, we get an intuitive sense of the relative importance and strength of each feature for individual songs in this album.
-Our visualisation shows a clear variability in how features contribute to individual songs. Songs with high total feature values tend to have substantial contributions from `danceability`, `energy` and `valence`, highlighting how upbeat tracks may play a significant role in the album's receptivity. `Acousticness`, though generally lower across tracks, appears sporadically higher in a few songs, suggesting moments where a more subdued, acoustic quality might contrast the otherwise energetic and dynamic nature of the album.
-From these insights, it becomes evident that Swift’s most succesful album combines a balance of high-energy elements with a degree of emotional resonance (`valence`), which could contribute significantly to listener engagement and receptivity. Acoustic elements, while less dominant, add texture to specific tracks, possibly creating memorable contrast and supporting the overall album narrative.
-This analysis indicates that `danceability`, `energy` and `valence` are the more dominant, high-variability features likely driving the album's success, while `acousticness` provide complementary qualities. Understanding this mix could provide insights into audience preferences and help pinpoint stylistic choices that resonate widely, explaining both the commercial and emotional impact of Swift's popular tracks. 
+In "Red (Taylor's Version)", the varied distribution of features reflects the album's emotional range and dynamic appeal. `acousticness` appears to be highly polarized, echoing the depiction in plot 1, with most songs having extremely low values close to zero but a few reaching very high peaks of around 0.8 in feature strength.
+This indicates a concoction of intimate and bold productions. `danceability` occupies a smaller but moderate range of values of around 0.4 to 0.7 in feature strength within this album, indicating a consistent and cohesive rhythm. 
+`energy` and `valence` both span a wide range of values but their distributions are different. Within `energy` it appears that most songs are energetically similar in the upper range with smaller differences in feature strength while a small group of songs have large differences in `energy` within the lower range.
+This reflects Swift's aim in diversifying this album with softer and intimate songs admist bold, powerful tunes. Lastly, `valence` appears steadily different across the songs. This ascertains our hypothesis in plot 2 that although the mean feature stength of `valence` was consistent throughout all her albums, within each album
+they might spread across a large range of values. That hypothesis, also derived from the observations of the distribution of `valence` values in plot 1, is supported by this observation in plot 3. The `valence` values hint at a careful and purposeful balance in emotions ranging in this album, from happy to sad. This blend of moods
+resonates with listeners who value both sad and happy songs, encapsulating the instricacies of relationships, hence enchancing the album's emotional appeal. 
 
-The critical acclaim of this album also likely means that Taylor Swift will be creating more songs in the future following the same musical pallate. We can perhaps anticipate more acoustic songs released alongside commercial tracks to satiate the hunger of her fans. However, music has an ever changing facade. What was popular last year could be boring this year, hence to predict trends in music is a little whimsical. Our analysis of the dataset also highlights this quality of music in how musical features are highly varied across songs and
-trends can sometimes alarmingly change course, like how `acousticness` suddenly spiked in 2015 for Taylor Swift's songs. However, it is still worth it to study what makes great songs, great.
+
+The critical acclaim of this album also likely means that Taylor Swift will be creating more songs in the future following the same musical pallate. We can perhaps anticipate more acoustic songs released alongside commercial tracks to satiate the hunger of her fans. However, music has an ever changing facade. What was popular last year could be boring this year, hence to predict trends in music is a little whimsical. 
+Our analysis of the dataset also highlights this quality of music in how musical features are highly varied across songs from the same artist. However, it is still worth it to study what makes great songs, great.
 
 
 ## 5. Teamwork
