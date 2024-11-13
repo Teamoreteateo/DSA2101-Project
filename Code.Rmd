@@ -486,7 +486,7 @@ they might spread across a large range of values. That hypothesis, also derived 
 resonates with listeners who value both sad and happy songs, encapsulating the instricacies of relationships, hence enchancing the album's emotional appeal. 
 
 
-The critical acclaim of this album also likely means that Taylor Swift will be creating more songs in the future following the same musical pallate. We can perhaps anticipate more acoustic songs released alongside commercial tracks to satiate the hunger of her fans. However, music has an ever changing facade. What was popular last year could be boring this year, hence to predict trends in music is a little whimsical. 
+The critical acclaim of this album also likely means that Taylor Swift will be creating more songs in the future following the same musical palette. We can perhaps anticipate more acoustic songs released alongside commercial tracks to satiate the hunger of her fans. However, music has an ever changing facade. What was popular last year could be boring this year, hence to predict trends in music is a little whimsical. 
 Our analysis of the dataset also highlights this quality of music in how musical features are highly varied across songs from the same artist. However, it is still worth it to study what makes great songs, great.
 
 
