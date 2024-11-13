@@ -261,7 +261,7 @@ We have chosen to use an overlayed boxplot and violin plot to represent the valu
 The violin plot additionally shows potential polarisation in the data as it is a density plot of the values.
 
 #### Plot 1
-```{r boxplot}
+```{r variance-plot}
 # Defining labels for usage
 x_labels <- c("Acousticness", "Danceability", "Energy", "Instrumentalness", "Liveness", "Loudness", "Speechiness", "Valence")
 
@@ -387,6 +387,9 @@ ggplot(taylor_album_plot %>% filter(labels %in% c("acousticness", "valence", "en
   theme_minimal() +
   theme(legend.position = "right",
   plot.title = element_text(hjust=0.4, face="bold", vjust = 2),
+  panel.grid.minor.x = element_blank(),
+  panel.grid.minor.y = element_blank(),
+  panel.grid.major.x = element_line(linetype = "dotted", color = "#b6cee2"),
   axis.line.y.right = element_line(colour = "Black"),
   axis.ticks.y.right = element_line(color = "red"),
   axis.ticks.length.y.right = unit(.25, "cm"),
