@@ -494,7 +494,7 @@ ggplot(taylor_long %>% filter(labels != "tempo"), aes(y = labels, x = values, fi
     axis.text.x = element_text(size = 10),
     axis.text.y = element_text(size = 10),
     axis.title.x = element_text(vjust = -2, size = 10),
-    plot.title = element_text(size = 16, face="bold"), 
+    plot.title = element_text(size = 16, hjust = 1, face = "bold"), 
     aspect.ratio = 0.9,
     panel.grid.major.x = element_blank(),
     panel.grid.major.y = element_line(color = "lightblue", linewidth = 0.5)
