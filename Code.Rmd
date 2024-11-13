@@ -399,8 +399,6 @@ kable(albumname_tracknumber_table,
       col.names = c("Album Number", "Album Songs"),
       caption = "Taylor Swift Album names mapped to Album Numbers")
 ```
-```
-
 
 #### Discussion
 
