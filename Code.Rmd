@@ -61,7 +61,7 @@ By exploring the given data, we aim to discover the patterns that have emerged t
 For our project, we aim to answer the following question:
 
 ```bash
-How have changes in musical and lyrical features in Taylor Swift's songs resonated with her audience?
+How have differences in musical and lyrical features in Taylor Swift's songs resonated with her audience?
 ```
 This analysis will allow us to identify trends in musical characteristics and examine how stylistic changes in her songs which have affected the receptivity of her music to her audience, meaning how much they like her songs. 
 We also hope to understand her audience better by knowing their music preferences through this study. Hence, we can perhaps understand what makes Taylor Swift so popular.
