@@ -274,7 +274,7 @@ ggplot(taylor_long %>% filter(labels != "tempo"), aes(y = labels, x = values, fi
   geom_violin(show.legend = FALSE, alpha = 0.8, bw = 0.1, color = FALSE, width = 0.9, fill = "#404f99") +
   geom_boxplot(show.legend = FALSE, alpha = 0.6, fill = "lightblue", outlier.shape = NA, width = 0.3) +
   theme_minimal() +
-  labs(y = "", x = "Feature Strength (From 0 to 1)", title = "Variance in Musical Features", subtitle = "... for Swift's Songs") +
+  labs(y = "", x = "Feature Strength (From 0 to 1)", title = "Distribution Patterns in Musical Features", subtitle = "... for Swift's Songs") +
   scale_y_discrete(labels = x_labels) + 
   #scale_fill_brewer(palette = "Accent") +
   theme(
