@@ -116,7 +116,7 @@ taylor_all_songs <- taylor_all_songs %>%
   select(album_name, album_release, track_number, track_name, danceability, energy, loudness, mode, speechiness, acousticness, instrumentalness, liveness, valence, tempo, explicit)
 
 taylor_albums <- taylor_albums %>%
-    select(!ep)
+  select(!ep)
 ```
 
 Then, we group the data by their **respective albums** for aggregating album data:
@@ -143,13 +143,13 @@ taylor_albums_na_count <- sapply(taylor_albums, function(x) sum(is.na(x)))
 print(taylor_albums_na_count)
 
 taylor_album_songs <- taylor_album_songs %>%
-    na.omit()
+  na.omit()
 
 taylor_all_songs <- taylor_all_songs %>%
-    na.omit()
+  na.omit()
 
 taylor_albums <- taylor_albums %>%
-    na.omit()
+  na.omit()
 ```
 
 Next we will check if data presented by `taylor_album_songs` and `taylor_all_songs` are the same, in case we are missing crucial differences.
@@ -269,19 +269,19 @@ x_labels <- c("Acousticness", "Danceability", "Energy", "Instrumentalness", "Liv
 taylor_long <- taylor_all_songs %>% select(-mode) %>% pivot_longer(danceability:tempo, values_to = "values", names_to = "labels") %>%
   mutate(labels <- as.factor(labels))
 
-# Plot  
+# Plot
 ggplot(taylor_long %>% filter(labels != "tempo"), aes(y = labels, x = values, fill = labels)) +
   geom_violin(show.legend = FALSE, alpha = 0.8, bw = 0.1, color = FALSE, width = 0.9, fill = "#404f99") +
   theme_minimal() +
   labs(y = "", x = "Feature Strength (From 0 to 1)", title = "Distribution Patterns in Musical Features", subtitle = "for Swift's Songs") +
-  scale_y_discrete(labels = x_labels) + 
-  #scale_fill_brewer(palette = "Accent") +
+  scale_y_discrete(labels = x_labels) +
+  # scale_fill_brewer(palette = "Accent") +
   theme(
     axis.text.x = element_text(size = 10),
-    axis.text.y = element_text(size = 10, hjust=0),
+    axis.text.y = element_text(size = 10, hjust = 0),
     axis.title.x = element_text(vjust = -2, size = 10),
-    plot.title = element_text(size = 16, hjust = 0, face = "bold"), 
-    plot.subtitle = element_text(size = 16, hjust= 0,face= "bold"),
+    plot.title = element_text(size = 16, hjust = 1.5, face = "bold"),
+    plot.subtitle = element_text(hjust = -0.24),
     aspect.ratio = 0.9,
     panel.grid.major.x = element_blank(),
     panel.grid.major.y = element_line(color = "lightblue", linewidth = 0.5)
@@ -316,11 +316,11 @@ and Receptivity from `taylor_album_summary`.
 
 #### Plot 2
 ```{r lineplot-dual-axes, fig.width=10, fig.height=4}
-taylor_album_plot <- taylor_album_summary %>% 
-                    arrange(Receptivity) %>%
-                    mutate(rank = row_number(), mean_tempo = mean_tempo-0.16) %>%
-                    pivot_longer(mean_loudness: Receptivity,names_to = "labels",values_to = "values") %>%
-                    mutate(labels = str_remove(labels,"mean_") )
+taylor_album_plot <- taylor_album_summary %>%
+  arrange(Receptivity) %>%
+  mutate(rank = row_number(), mean_tempo = mean_tempo - 0.16) %>%
+  pivot_longer(mean_loudness: Receptivity, names_to = "labels", values_to = "values") %>%
+  mutate(labels = str_remove(labels, "mean_"))
 
 highest_rated_album <- taylor_album_summary %>%
   arrange(desc(Receptivity)) %>%
@@ -337,13 +337,12 @@ ggplot(taylor_album_plot %>% filter(labels %in% c("acousticness", "valence", "en
   #stat_smooth(se = FALSE, geom = "area",
               #method = "loess", alpha = .1,
               #span = 0.9, aes(fill = labels), show.legend = F) +
-  geom_line(data = taylor_album_plot%>% filter(labels == "Receptivity"),
+  geom_line(data = taylor_album_plot %>% filter(labels == "Receptivity"),
             aes(y = values / 100),
             size = 1, linetype = "solid", lineend = "round") +
-  geom_point(data = taylor_album_plot%>% filter(labels == "Receptivity"),
-            aes(y = values / 100),
-            size = 1) +
-  
+  geom_point(data = taylor_album_plot %>% filter(labels == "Receptivity"),
+             aes(y = values / 100),
+             size = 1) +
   scale_y_continuous(
     name = "Feature Strength (0 - 1)",
     sec.axis = sec_axis(~ . * 100,
@@ -351,41 +350,32 @@ ggplot(taylor_album_plot %>% filter(labels %in% c("acousticness", "valence", "en
   labs(title = "Musical Attributes and Receptivity Across Taylor Swift Albums",
        x = "Album Number", y = "Feature Values") +
   scale_color_manual(values = c(
-                              "tempo" = "brown", 
-                              "acousticness" = "blue", 
-                              "valence" = "red", 
-                              "energy" = "green", 
-                              "danceability" = "purple", 
+                              "tempo" = "brown",
+                              "acousticness" = "blue",
+                              "valence" = "red",
+                              "energy" = "green",
+                              "danceability" = "purple",
                               "Receptivity" = "black"),
-                    labels = c("Acousticness","Danceability","Energy","Receptivity","Tempo","Valence"),
+                    labels = c("Acousticness", "Danceability", "Energy", "Receptivity", "Tempo", "Valence"),
                     name = "Legend",
                     guide  = guide_legend(order = 1)) +
   scale_fill_manual(values = c(
-                              "tempo" = "brown", 
-                              "acousticness" = "blue", 
-                              "valence" = "red", 
-                              "energy" = "green", 
-                              "danceability" = "purple"), 
-
-                              guide = "none",
-
+                              "tempo" = "brown",
+                              "acousticness" = "blue",
+                              "valence" = "red",
+                              "energy" = "green",
+                              "danceability" = "purple"),
+                    guide = "none",
                     labels = c("Acousticness", "Danceability", "Energy", "Tempo", "Valence")) +
-  
   scale_x_continuous(breaks = seq(1, 12, by = 1),  # Custom integer breaks
                      labels = as.character(seq(1, 12, by = 1))) +
-
-
-  geom_label(aes(label = "Top Album: Red (Taylor's Version)"), x=4.5, y=0.95, show.legend=F) +
-  
-  annotate("segment", x = 8.3, y = 0.95, xend = 12, yend = highest_rated_album/100, 
+  geom_label(aes(label = "Top Album: Red (Taylor's Version)"), x = 4.5, y = 0.95, show.legend = FALSE) +
+  annotate("segment", x = 8.3, y = 0.95, xend = 12, yend = highest_rated_album / 100,
            linetype = "dashed", color = "#a13a3a", size = 0.8) +
-
-  geom_point(aes(x=12, y=highest_rated_album/100), color = "#d72b2b", size = 7, shape =1) +
-  
-
+  geom_point(aes(x = 12, y = highest_rated_album / 100), color = "#d72b2b", size = 7, shape = 1) +
   theme_minimal() +
   theme(legend.position = "right",
-  plot.title = element_text(hjust=0.4, face="bold", vjust = 2),
+  plot.title = element_text(hjust = 0.4, face = "bold", vjust = 2),
   panel.grid.minor.x = element_blank(),
   panel.grid.minor.y = element_blank(),
   panel.grid.major.x = element_line(linetype = "dotted", color = "#b6cee2"),
@@ -397,7 +387,7 @@ ggplot(taylor_album_plot %>% filter(labels %in% c("acousticness", "valence", "en
   axis.ticks.length.y.left = unit(.25, "cm"),
   aspect.ratio = 0.8)
 
-  # Display song names mapped to track numbers
+# Display song names mapped to track numbers
 albums_table <- taylor_album_plot %>% select(c("album_name", "rank")) %>% unique()
 albumname_tracknumber_table <- cbind(albums_table$rank, albums_table$album_name)
 kable(albumname_tracknumber_table,
@@ -457,7 +447,6 @@ scaled_songs_long <- scaled_songs_long %>%
   arrange(feature, value) %>%
   group_by(feature) %>%
   mutate(new_track_number = row_number())
-  
 
 # Plot with sorted order
 ggplot(scaled_songs_long, aes(y = value, x = new_track_number, fill = feature)) +
@@ -476,7 +465,6 @@ ggplot(scaled_songs_long, aes(y = value, x = new_track_number, fill = feature)) 
     axis.title.y.left = element_text(vjust = 2, size = 11)
   ) +
   scale_fill_viridis_d(labels = c("Acousticness", "Danceability", "Energy", "Valence"))
-
 ```
 
 #### Discussion
