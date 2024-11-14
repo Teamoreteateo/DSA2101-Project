@@ -288,6 +288,27 @@ ggplot(taylor_long %>% filter(labels != "tempo"), aes(y = labels, x = values, fi
   )
 ```
 
+
+```{r violin-alternative}
+library(ggridges)
+ggplot(taylor_long %>% filter(labels != "tempo"), aes(x = values, y = labels, fill = ..density..)) +
+  geom_density_ridges_gradient(scale = 0.92, rel_min_height = 0.01, show.legend = FALSE) +
+  scale_fill_viridis_c(option = "magma", direction=-1) +
+  theme_minimal() +
+  labs(y = "", x = "Feature Strength (From 0 to 1)", 
+       title = "Distribution Patterns in Musical Features", 
+       subtitle = "for Swift's Songs") +
+  theme(
+    axis.text.x = element_text(size = 10),
+    axis.text.y = element_text(size = 10, hjust = 0),
+    axis.title.x = element_text(vjust = -2, size = 10),
+    plot.title = element_text(size = 16, hjust = 1.5, face = "bold"),
+    plot.subtitle = element_text(hjust = -0.24),
+    aspect.ratio = 1.0,
+    panel.grid.major.x = element_blank(),
+    panel.grid.major.y = element_line(color = "lightblue", linewidth = 0.5)
+  )
+```
 #### Discussion
 
 From this visualisation, we can pinpoint those features with a higher variance, as they likely contribute more significantly to changes in Taylor Swift's musical style and, in turn, her receptivity.
