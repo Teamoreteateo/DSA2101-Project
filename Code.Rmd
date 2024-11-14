@@ -302,13 +302,13 @@ ggplot(taylor_long %>% filter(labels != "tempo"), aes(x = values, y = labels, fi
        title = "Distribution Patterns in Musical Features", 
        subtitle = "for Swift's Songs") +
   theme(
-    axis.text.x = element_text(size = 10),
+    axis.text.x = element_text(size = 8),
     axis.text.y = element_text(size = 10, hjust = 0),
-    axis.title.x = element_text(vjust = -2, size = 10),
+    axis.title.x = element_text(vjust = -1, size = 10),
     plot.title = element_text(size = 16, hjust = 1.5, face = "bold"),
     plot.subtitle = element_text(hjust = -0.24),
     aspect.ratio = 1.0,
-    panel.grid.major.x = element_blank(),
+    panel.grid.minor.x = element_blank(),
     panel.grid.major.y = element_line(color = "lightblue", linewidth = 0.5)
   )
 ```
@@ -369,7 +369,7 @@ ggplot(taylor_album_plot %>% filter(labels %in% c("acousticness", "valence", "en
     name = "Feature Strength (0 - 1)",
     sec.axis = sec_axis(~ . * 100,
                         name = "Receptivity (%)")) + # (Holtz, n.d.)
-  labs(title = "Musical Attributes and Receptivity Across Taylor Swift Albums",
+  labs(title = "Musical Attributes and Receptivity Across \nTaylor Swift Albums",
        x = "Album Number", y = "Feature Values") +
   scale_color_manual(values = c(
                               "tempo" = "brown",
@@ -397,7 +397,7 @@ ggplot(taylor_album_plot %>% filter(labels %in% c("acousticness", "valence", "en
   geom_point(aes(x = 12, y = highest_rated_album / 100), color = "#d72b2b", size = 7, shape = 1) +
   theme_minimal() +
   theme(legend.position = "right",
-  plot.title = element_text(hjust = 0.4, face = "bold", vjust = 2),
+  plot.title = element_text(hjust = 0, face = "bold", vjust = 2),
   panel.grid.minor.x = element_blank(),
   panel.grid.minor.y = element_blank(),
   panel.grid.major.x = element_line(linetype = "dotted", color = "#b6cee2"),
