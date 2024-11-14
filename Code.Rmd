@@ -257,8 +257,8 @@ taylor_album_summary <- taylor_album_summary %>% mutate(Receptivity = (metacriti
 ### a. What are the most significant features?
 
 #### Methodology
-We have chosen to use an overlayed boxplot and violin plot to represent the values of the song features, less tempo. This will allow us to examine the spread and distribution of values for each feature together with information about the interquartile range and median.
-The violin plot additionally shows potential polarisation in the data as it is a density plot of the values.
+We have chosen to use a density ridge plot to represent the strength values of the song features, less tempo. This will allow us to examine the spread and distribution of values for each feature together with information about the interquartile range and median.
+Taller humps and darker colours represent regions of high concentration of values. This plot also allows us to catch potential multi-modal distributions in the features.
 
 #### Plot 1
 ```{r distribution-plot}
