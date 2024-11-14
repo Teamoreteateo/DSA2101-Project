@@ -502,8 +502,13 @@ Swift’s adaptive style, characterised by shifts in `acousticness`, `energy`, a
 
 
 ## 5. Teamwork
-
-
+Our group distributed the project tasks to leverage each member's strengths and ensure a balanced workload. 
+[Member A] took the lead on data cleaning and preprocessing, ensuring that the dataset was organized and ready for analysis. 
+[Member B] handled the initial exploratory data analysis, identifying patterns and potential correlations among features, which guided the selection of visualizations. 
+[Member C] focused on creating the visualizations in ggplot2, carefully crafting each plot to effectively highlight key trends. 
+[Member D] wrote the narrative for Plot 1 and Plot 2, explaining the variability and hypothesized correlations between features and receptivity. 
+[Member E] contributed to writing the analysis for Plot 3 and helped draft the overall summary and conclusions. 
+Finally, each member reviewed the final report, providing feedback and ensuring clarity and consistency across sections. This collaborative approach allowed us to pool our skills effectively and produce a comprehensive and cohesive analysis.
 
 ## 6. References
 Harmon, J. (2023, October 16). Taylor Swift. GitHub. https://github.com/rfordatascience/tidytuesday/blob/master/data/2023/2023-10-17/readme.md    

@@ -502,12 +502,40 @@ ggplot(taylor_long %>% filter(labels != "tempo"), aes(y = labels, x = values, fi
 
 ![](Code_files/figure-gfm/variance-plot-1.png)<!-- -->
 
-#### Discussion
+``` r
+library(ggridges)
+ggplot(taylor_long %>% filter(labels != "tempo"), aes(x = values, y = labels, fill = ..density..)) +
+  geom_density_ridges_gradient(scale = 0.92, rel_min_height = 0.01, show.legend = FALSE) +
+  scale_fill_viridis_c(option = "magma", direction=-1) +
+  theme_minimal() +
+  labs(y = "", x = "Feature Strength (From 0 to 1)", 
+       title = "Distribution Patterns in Musical Features", 
+       subtitle = "for Swift's Songs") +
+  theme(
+    axis.text.x = element_text(size = 10),
+    axis.text.y = element_text(size = 10, hjust = 0),
+    axis.title.x = element_text(vjust = -2, size = 10),
+    plot.title = element_text(size = 16, hjust = 1.5, face = "bold"),
+    plot.subtitle = element_text(hjust = -0.24),
+    aspect.ratio = 1.0,
+    panel.grid.major.x = element_blank(),
+    panel.grid.major.y = element_line(color = "lightblue", linewidth = 0.5)
+  )
+```
 
-This visualisation allows us to pinpoint features with higher variance,
-which likely contribute more significantly to shifts in Taylor Swift’s
-musical style and, in turn, her receptivity. The features with the
-widest range (i.e. `valence`, `acousticness`,`energy` and
+    ## Warning: The dot-dot notation (`..density..`) was deprecated in ggplot2 3.4.0.
+    ## ℹ Please use `after_stat(density)` instead.
+    ## This warning is displayed once every 8 hours.
+    ## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+    ## generated.
+
+    ## Picking joint bandwidth of 0.0367
+
+![](Code_files/figure-gfm/violin-alternative-1.png)<!-- --> \####
+Discussion This visualisation allows us to pinpoint features with higher
+variance, which likely contribute more significantly to shifts in Taylor
+Swift’s musical style and, in turn, her receptivity. The features with
+the widest range (i.e. `valence`, `acousticness`,`energy` and
 `danceability`) show notable diversity across her songs, suggesting they
 might play a key role in defining Swift’s music. This range of values in
 each feature may indicate dynamic shifts in style, potentially driving
@@ -812,6 +840,22 @@ retaining broad appeal, making her music both dynamic and consistently
 well-received.
 
 ## 5. Teamwork
+
+Our group distributed the project tasks to leverage each member’s
+strengths and ensure a balanced workload. \[Member A\] took the lead on
+data cleaning and preprocessing, ensuring that the dataset was organized
+and ready for analysis. \[Member B\] handled the initial exploratory
+data analysis, identifying patterns and potential correlations among
+features, which guided the selection of visualizations. \[Member C\]
+focused on creating the visualizations in ggplot2, carefully crafting
+each plot to effectively highlight key trends. \[Member D\] wrote the
+narrative for Plot 1 and Plot 2, explaining the variability and
+hypothesized correlations between features and receptivity. \[Member E\]
+contributed to writing the analysis for Plot 3 and helped draft the
+overall summary and conclusions. Finally, each member reviewed the final
+report, providing feedback and ensuring clarity and consistency across
+sections. This collaborative approach allowed us to pool our skills
+effectively and produce a comprehensive and cohesive analysis.
 
 ## 6. References
 
