@@ -261,7 +261,7 @@ We have chosen to use an overlayed boxplot and violin plot to represent the valu
 The violin plot additionally shows potential polarisation in the data as it is a density plot of the values.
 
 #### Plot 1
-```{r violin-alternative}
+```{r distribution-plot}
 # Defining labels for usage
 x_labels <- c("Acousticness", "Danceability", "Energy", "Instrumentalness", "Liveness", "Loudness", "Speechiness", "Valence")
 
@@ -282,7 +282,7 @@ ggplot(taylor_long %>% filter(labels != "tempo"), aes(x = values, y = labels, fi
     axis.text.y = element_text(size = 10, hjust = 0),
     axis.title.x = element_text(vjust = -1, size = 10),
     plot.title = element_text(size = 16, hjust = 1.5, face = "bold"),
-    plot.subtitle = element_text(hjust = -0.24),
+    plot.subtitle = element_text(hjust = -0.24,face="bold"),
     aspect.ratio = 1.0,
     panel.grid.minor.x = element_blank(),
     panel.grid.major.y = element_line(color = "lightblue", linewidth = 0.5)
