@@ -289,16 +289,14 @@ ggplot(taylor_long %>% filter(labels != "tempo"), aes(y = labels, x = values, fi
 ```
 
 #### Discussion
-
-From this visualisation, we can pinpoint those features with a higher variance, as they likely contribute more significantly to changes in Taylor Swift's musical style and, in turn, her receptivity.
-By focusing on features that show the widest range (i.e. most diverse expressions) across her songs, we can identify the more significant attributes that make her music unique. 
-We will use these features in the next visualisation to examine their possible relationship with Swift's receptivity.  
-
-It appears that `valence`, `acousticness` and `energy` have the most variance (the tails for each feature spans the widest across the graph) while `loudness` and `danceability` tie at almost equal span of values after them. These features with the widest range show notable diversity across her songs, suggesting that they play a key role in defining her sound. The large range of values in each feature could indicate large shifts in style, potentially garnering different audience responses.
-When comparing among those features, we can also see that the bulge of the violin plot for `loudness` is closer to its lowest value while for `dancebility` it sits closer to the middle of its span, hence indicating that the values for `danceability` are more spread out than `loudness`. Similarly, the remaining features - `speechiness`, `liveness` and `instrumentalness` - all have values concentrated towards the left, indicating consistency across these features. Thus, we will only consider
-`valence`, `acousticness`, `energy` and `danceability` as musical features to compare against Taylor Swift's receptivity due to their high span and variance in values. Moreover, a closer look at `acousticness` hints at a potential bi-modal distribution because another tiny bulge can be observed on the right side of its violin plot. Given that the values for this plot is obtained from each individual song by Swift, it could indicate that a sizeable group of her songs are purely acoustically driven.
-
-These plots were great at hinting at potential large differences in musical features within Swift's repertoire, but they do not give us any information about how these features correlate to her receptivity. Hence, we will be plotting the mean values of `valence`, `acousticness`, `energy` and `danceability` across each album in a line graph in the next part.
+This visualisation allows us to pinpoint features with higher variance, which likely contribute more significantly to shifts in Taylor Swift's musical style and, in turn, her receptivity. 
+The features with the widest range (i.e. `valence`, `acousticness`,`energy` and `danceability`) show notable diversity across her songs, suggesting they might play a key role in defining Swift's music. 
+This range of values in each feature may indicate dynamic shifts in style, potentially driving different audience responses. 
+Most other features, such as `loudness`, `instrumentalness`, `speechiness` and `liveness`, have a smaller variance which indicates their greater consistency throughout Swift's music.
+Interestingly, the density plot for `valence` posses symmetric tails and central bulge, suggesting a balance of happy and sad songs which could resonate with her listeners. 
+The polarised distribution of `acousticness`, with peaks at both ends of the plot, shows that Swift's acoustic songs have little electronic influence and vice versa. 
+This initial plot highlights large feature variations within her repertoire but lacks trend information over time. 
+Hence, in order to explore temporal changes, we will examine `valence`, `acousticness`, `energy`, and `danceability` in the next plot.
 
 
 ### b. How have the features we selected influenced Taylor Swift's receptivity?
