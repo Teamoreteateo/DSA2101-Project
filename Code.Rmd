@@ -269,7 +269,7 @@ x_labels <- c("Acousticness", "Danceability", "Energy", "Instrumentalness", "Liv
 taylor_long <- taylor_all_songs %>% select(-mode) %>% pivot_longer(danceability:tempo, values_to = "values", names_to = "labels") %>%
   mutate(labels <- as.factor(labels))
 
-ggplot(taylor_long %>% filter(labels != "tempo"), aes(x = values, y = labels, fill = ..density..)) +
+ggplot(taylor_long %>% filter(labels != "tempo"), aes(x = values, y = labels, fill = after_stat(density))) +
   geom_density_ridges_gradient(scale = 0.92, rel_min_height = 0.01, show.legend = FALSE) +
   scale_fill_viridis_c(option = "magma", direction=-1) +
   scale_y_discrete(labels = x_labels) +
