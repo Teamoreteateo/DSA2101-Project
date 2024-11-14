@@ -1358,21 +1358,25 @@ reading.</em></p>
 </table>
 <p>Taylor Swift Album names mapped to Album Numbers</p>
 <h4 id="discussion-1">Discussion</h4>
-<p>The dual-axis plot reveals an exceptional increase in
-<code>acousticness</code> alongside a gradual decline in
-<code>energy</code>, which may correlate with album reception. This
-shift suggests that Taylor Swift’s evolving style has trended toward
-acoustic, introspective compositions, a style her audience appears to
-favor based on receptivity metrics. Interestingly, while plot 2 displays
-consistency in <code>valence</code> and <code>danceability</code> due to
-averaging feature values per album, this contrasts with the broad spread
-seen in plot 1 for both of them, implying that her albums likely balance
-happy and sad songs, together with rhythmic and flowy songs. This
-balance across albums may contribute to Taylor Swift’s sustained appeal.
+<p>The dual-axis plot investigates potential correlations between key
+musical features and Swift’s reception by arranging her albums in order
+of ascending receptivity. The exceptional increase in
+<code>acousticness</code> alongside a steady decline in
+<code>energy</code> and <code>danceability</code> suggests that
+listeners may favor more acoustic and introspective compositions in her
+recent work, a shift that aligns with her evolving artistic style. This
+correlation between her musical style and her audience reception implies
+that her fans appreciate more acoustic, introspective songs. Although
+<code>valence</code> appears relatively stable in this plot (due to
+averaging feature values per album), Plot 3 reveals a broader range
+within individual songs. This contrast suggests that, while albums may
+average out in terms of emotional tone, Swift maintains a balance of
+happier and sadder tracks across each album, enhancing their appeal and
+allowing listeners to experience a more dynamic repertoire.
 Additionally, <code>tempo</code> appears to be consistent on average
 across all her albums with minimal change as well, showing that Swift’s
-fans are content with the speed of her songs in general.</p>
-<p><code>Acousticness</code> having the most interesting trend deserves
+fans are content with the speed of her songs in general.
+<code>Acousticness</code> having the most interesting trend deserves
 some scrutiny. Although Swift’s increase in receptivity did not increase
 proportionately with <code>acousticness</code>, it is important to
 consider that it did not decrease because it shows that her fans were
@@ -1380,11 +1384,10 @@ happy with the switch-up. We think that her audience received this shift
 well because they were yearning for something different from the usual
 mainstream pop soundscape of the early 2000s and mid 2010s which is
 characterised by Electronic Dance music and piercing Disco pop sounds
-(Savage, 2020).</p>
-<p>To test such a theory, we will be zooming into her highest rated
-album: Red (Taylor’s Version), to examine the musical makeup of that
-album based on the four important musical features we picked out in plot
-1.</p>
+(Savage, 2020). To test such a theory, we will be zooming into her
+highest rated album: Red (Taylor’s Version), to examine the musical
+makeup of that album based on the four important musical features we
+picked out in plot 1.</p>
 <h3 id="c-what-defines-a-great-album-taylors-version">c. What defines a
 great album (Taylor’s Version)?</h3>
 <h4 id="methodology-2">Methodology</h4>
@@ -1447,41 +1450,54 @@ to observe the true range and spread of each feature in the album.</p>
 <h4 id="discussion-2">Discussion</h4>
 <p>In “Red (Taylor’s Version)”, the varied distribution of features
 reflects the album’s emotional range and dynamic appeal.
-<code>acousticness</code> appears to be highly polarized, echoing the
-depiction in plot 1, with most songs having extremely low values close
+<code>Acousticness</code> appears to be highly polarised, echoing the
+depiction in plot 1, with most songs having extremely low values closer
 to zero but a few reaching very high peaks of around 0.8 in feature
-strength. This indicates a concoction of intimate and bold productions.
-<code>danceability</code> occupies a smaller but moderate range of
-values of around 0.4 to 0.7 in feature strength within this album,
-indicating a consistent and cohesive rhythm. <code>energy</code> and
-<code>valence</code> both span a wide range of values but their
+strength. This indicates a combination of Swift’s intimate and bold
+songs. <code>Danceability</code> occupies a smaller but moderate range
+of values of around 0.4 to 0.7 in feature strength within this album,
+indicating a consistent and cohesive rhythm. Both <code>energy</code>
+and <code>valence</code> span a wide range of values but their
 distributions are different. Within <code>energy</code> it appears that
 most songs are energetically similar in the upper range with smaller
 differences in feature strength while a small group of songs have large
 differences in <code>energy</code> within the lower range. This reflects
 Swift’s aim in diversifying this album with softer and intimate songs
-admist bold, powerful tunes. Lastly, <code>valence</code> appears
-steadily different across the songs. This ascertains our hypothesis in
-plot 2 that although the mean feature stength of <code>valence</code>
-was consistent throughout all her albums, within each album they might
-spread across a large range of values. That hypothesis, also derived
-from the observations of the distribution of <code>valence</code> values
-in plot 1, is supported by this observation in plot 3. The
-<code>valence</code> values hint at a careful and purposeful balance in
-emotions ranging in this album, from happy to sad. This blend of moods
-resonates with listeners who value both sad and happy songs,
+admist her other more powerful tunes. Lastly, <code>valence</code>
+appears steadily different across the songs. This ascertains our
+hypothesis in plot 2 that although the mean feature stength of
+<code>valence</code> was consistent throughout all her albums, within
+each album they might spread across a large range of values. That
+hypothesis, also derived from the observations of the distribution of
+<code>valence</code> values in plot 1, is supported by this observation
+in plot 3. The <code>valence</code> values hint at a purposeful balance
+in emotions ranging in this album, from happy to sad. This blend of
+moods resonates with listeners who value both sad and happy songs,
 encapsulating the instricacies of relationships, hence enchancing the
-album’s emotional appeal.</p>
-<p>The critical acclaim of this album also likely means that Taylor
-Swift will be creating more songs in the future following the same
-musical palette. We can perhaps anticipate more acoustic songs released
-alongside commercial tracks to satiate the hunger of her fans. However,
-music has an ever changing facade. What was popular last year could be
-boring this year, hence to predict trends in music is a little
-whimsical. Our analysis of the dataset also highlights this quality of
-music in how musical features are highly varied across songs from the
-same artist. However, it is still worth it to study what makes great
-songs, great.</p>
+album’s emotional appeal. The critical acclaim of this album also likely
+means that Taylor Swift will be creating more songs in the future
+following the same musical palette. We can perhaps anticipate more
+acoustic songs released alongside commercial tracks to satiate the
+hunger of her fans. However, music has an ever changing facade. What was
+popular last year could be boring this year, hence to predict trends in
+music is a little whimsical. Our analysis of the dataset also highlights
+this quality of music in how musical features are highly varied across
+songs from the same artist. However, it is still worth it to study what
+makes great songs, great.</p>
+<h3 id="summary-of-observed-patterns">Summary of Observed Patterns</h3>
+<p>In conclusion, our visualisations highlight Taylor Swift’s strategic
+approach to blending diverse musical attributes, reflecting both her
+versatility and responsiveness to audience preferences. The dual-axis
+plot suggests that her shift toward acoustic styles has resonated with
+listeners, while the spread of features in individual albums like Red
+(Taylor’s Version) indicates her commitment to providing emotional
+balance in her songs. The contrast between averaged and individual
+feature values also reveals how Swift maintains variety within albums,
+balancing happy and sad songs to maximize listener engagement. Swift’s
+adaptive style, characterised by shifts in <code>acousticness</code>,
+<code>energy</code>, and <code>valence</code>, demonstrates her ability
+to evolve artistically while retaining broad appeal, making her music
+both dynamic and consistently well-received.</p>
 <h2 id="id_5-teamwork">5. Teamwork</h2>
 <h2 id="id_6-references">6. References</h2>
 <p>Harmon, J. (2023, October 16). Taylor Swift. GitHub. <a href="https://github.com/rfordatascience/tidytuesday/blob/master/data/2023/2023-10-17/readme.md">https://github.com/rfordatascience/tidytuesday/blob/master/data/2023/2023-10-17/readme.md</a><br />
