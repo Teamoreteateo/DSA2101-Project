@@ -11,6 +11,7 @@ library(tidyverse)
 library(readr)
 library(knitr)
 library(ggthemes)
+library(ggridges) #install.packages("ggridges")
 ```
 
 ## Group members
@@ -260,38 +261,13 @@ We have chosen to use an overlayed boxplot and violin plot to represent the valu
 The violin plot additionally shows potential polarisation in the data as it is a density plot of the values.
 
 #### Plot 1
-```{r variance-plot}
+```{r violin-alternative}
 # Defining labels for usage
 x_labels <- c("Acousticness", "Danceability", "Energy", "Instrumentalness", "Liveness", "Loudness", "Speechiness", "Valence")
 
 # Convertion to long format for plotting
 taylor_long <- taylor_all_songs %>% select(-mode) %>% pivot_longer(danceability:tempo, values_to = "values", names_to = "labels") %>%
   mutate(labels <- as.factor(labels))
-
-# Plot
-ggplot(taylor_long %>% filter(labels != "tempo"), aes(y = labels, x = values, fill = labels)) +
-  geom_violin(show.legend = FALSE, alpha = 0.8, bw = 0.1, color = FALSE, width = 0.9, fill = "#404f99") +
-  theme_minimal() +
-  labs(y = "", x = "Feature Strength (From 0 to 1)", title = "Distribution Patterns in Musical Features", subtitle = "for Swift's Songs") +
-  scale_y_discrete(labels = x_labels) +
-  # scale_fill_brewer(palette = "Accent") +
-  theme(
-    axis.text.x = element_text(size = 10),
-    axis.text.y = element_text(size = 10, hjust = 0),
-    axis.title.x = element_text(vjust = -2, size = 10),
-    plot.title = element_text(size = 16, hjust = 1.5, face = "bold"),
-    plot.subtitle = element_text(hjust = -0.24),
-    aspect.ratio = 0.9,
-    panel.grid.major.x = element_blank(),
-    panel.grid.major.y = element_line(color = "lightblue", linewidth = 0.5)
-  )
-```
-
-
-```{r violin-alternative}
-library(ggridges)
-
-x_labels <- c("Acousticness", "Danceability", "Energy", "Instrumentalness", "Liveness", "Loudness", "Speechiness", "Valence")
 
 ggplot(taylor_long %>% filter(labels != "tempo"), aes(x = values, y = labels, fill = ..density..)) +
   geom_density_ridges_gradient(scale = 0.92, rel_min_height = 0.01, show.legend = FALSE) +
