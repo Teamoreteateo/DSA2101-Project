@@ -489,11 +489,11 @@ Still, our analysis offers insights into which musical elements may continue to 
 
 ## 5. Teamwork
 Each team member contributed uniquely to the project. 
-* Timothy focused on data cleaning, writing and editing the introduction and discussion sections, did some source research and assisted with some visualisation plotting.
-* Robin led the creation and design of the visualisations using ggplot2, selecting appropriate visual styles to illustrate our findings, along with assisting with the search for appropriate sources for the visualisations.
-* Joel assisted Robin with the continuous editing of the visualisations, identifying issues with each iteration and implementing appropriate changes to improve their styles. 
-* Zeen Kiat also assisted with the visualisations by supplying appropriate code to work with for illustrate our findings, additionally providing help with the mutation of the original data to fit our needs.
-* All members collaborated on reviewing and refining the final submission for clarity and cohesion.
+Timothy focused on data cleaning, writing and editing the introduction and discussion sections, did some source research and assisted with some visualisation plotting.
+Robin led the creation and design of the visualisations using ggplot2, selecting appropriate visual styles to illustrate our findings, along with assisting with the search for appropriate sources for the visualisations.
+Joel assisted Robin with the continuous editing of the visualisations, identifying issues with each iteration and implementing appropriate changes to improve their styles. 
+Zeen Kiat also assisted with the visualisations by supplying appropriate code to work with for illustrate our findings, additionally providing help with the mutation of the original data to fit our needs.
+All members collaborated on reviewing and refining the final submission for clarity and cohesion.
 
 ## 6. References
 Harmon, J. (2023, October 16). Taylor Swift. GitHub. https://github.com/rfordatascience/tidytuesday/blob/master/data/2023/2023-10-17/readme.md    
