@@ -667,7 +667,7 @@ album receptivity by arranging her albums in order of ascending
 receptivity. `Acousticness` tends to be higher in higher-rated albums,
 while `energy` and `danceability` tend to taper off in strength ,
 suggesting that Swift’s more popular albums lean toward acoustic and
-introspective qualities. Despite the wide range of `variance` values
+introspective qualities. Despite the wide range of `valence` values
 observed across Swift’s songs in Plot 1, we observed that `valence`
 strength appears rather stable across albums in this plot. Hence, we
 suggest that `valence` values could be distributed well throughout each
