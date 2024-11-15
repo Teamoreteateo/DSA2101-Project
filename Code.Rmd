@@ -88,12 +88,12 @@ track_attributes <- data.frame(
     "Measures the presence of spoken words in a track, with higher values indicating more speech-like content.",
     "Represents the likelihood that the track is acoustic, with higher values indicating more acoustic qualities.",
     "Predicts whether a track is instrumental, with higher values suggesting a lack of vocals.",
-    "Measures the presence of an audience in the recording, with higher values indicating a stronger likelihood that the track is live",
+    "Measures the presence of an audience in the recording, with higher values indicating a stronger likelihood that the track is live.",
     "Describes the musical positiveness conveyed, with higher values indicating more cheerful and happy tones.",
     "The speed of the track, measured in beats per minute (BPM).",
     "Indicates whether the track contains explicit content: 1 for explicit, 0 otherwise.",
-    "Average score of the album obtained from critics at Metacritic.com",
-    "Average score of the album obtained from average users at Meatcritic.com"
+    "Average score of the album obtained from critics at 'Metacritic.com'.",
+    "Average score of the album obtained from average users at 'Meatcritic.com'."
   )
 )
 kable(track_attributes, col.names = c("Variable", "Class", "Description"), align = "l")
