@@ -93,7 +93,7 @@ track_attributes <- data.frame(
     "The speed of the track, measured in beats per minute (BPM).",
     "Indicates whether the track contains explicit content: 1 for explicit, 0 otherwise.",
     "Average score of the album obtained from critics at 'Metacritic.com'.",
-    "Average score of the album obtained from average users at 'Meatcritic.com'."
+    "Average score of the album obtained from average users at 'Metacritic.com'."
   )
 )
 kable(track_attributes, col.names = c("Variable", "Class", "Description"), align = "l")
