@@ -639,7 +639,7 @@ albums_table <- taylor_album_plot %>% select(c("album_name", "rank")) %>% unique
 albumname_tracknumber_table <- cbind(albums_table$rank, albums_table$album_name)
 kable(albumname_tracknumber_table,
       col.names = c("Album Number", "Album Songs"),
-      caption = "(The table above shows Taylor Swift album names mapped to album numbers)")
+      title = "Taylor Swift Album Names mapped to Album Numbers")
 ```
 
 | Album Number | Album Songs                 |
@@ -656,8 +656,6 @@ kable(albumname_tracknumber_table,
 | 10           | evermore                    |
 | 11           | folklore                    |
 | 12           | Red (Taylor’s Version)      |
-
-(The table above shows Taylor Swift album names mapped to album numbers)
 
 #### Discussion
 
