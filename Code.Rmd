@@ -11,7 +11,7 @@ library(tidyverse)
 library(readr)
 library(knitr)
 library(ggthemes)
-library(ggridges) #install.packages("ggridges")
+library(ggridges)
 ```
 
 ## Group members
@@ -21,7 +21,7 @@ students <- data.frame(
   Matriculation_Number = c("A0282307H", "A0273151M", "A0271671A", "A0272851B")
 )
 
-kable(students, col.names = c("Group Members", "Matriculation Number"))
+kable(students, col.names = c("Names", "Matriculation Number"))
 ```
 
 ## Loading the Taylor Swift Datasets
@@ -384,7 +384,7 @@ albums_table <- taylor_album_plot %>% select(c("album_name", "rank")) %>% unique
 albumname_tracknumber_table <- cbind(albums_table$rank, albums_table$album_name)
 kable(albumname_tracknumber_table,
       col.names = c("Album Number", "Album Songs"),
-      caption = "Taylor Swift Album names mapped to Album Numbers")
+      caption = "(The table above shows Taylor Swift album names mapped to album numbers)")
 ```
 
 #### Discussion
@@ -415,6 +415,7 @@ highest_rated_album <- taylor_album_summary %>%
 highest_rated_album_songs <- taylor_all_songs %>%
   filter(album_name == highest_rated_album) %>%
   select(album_name, track_number, track_name, danceability, acousticness, energy, valence)
+
 # Reshape the data into long format for plotting
 scaled_songs_long <- highest_rated_album_songs %>%
   pivot_longer(cols = danceability:valence,

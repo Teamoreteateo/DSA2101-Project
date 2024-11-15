@@ -3,7 +3,7 @@ DSA2101 Group Project: Analysis of Taylor Swift Spotify Data
 
 ## Group members
 
-| Group Members        | Matriculation Number |
+| Names                | Matriculation Number |
 |:---------------------|:---------------------|
 | Chua Yong Sheng Joel | A0282307H            |
 | Lim Zeen Kiat        | A0273151M            |
@@ -639,7 +639,7 @@ albums_table <- taylor_album_plot %>% select(c("album_name", "rank")) %>% unique
 albumname_tracknumber_table <- cbind(albums_table$rank, albums_table$album_name)
 kable(albumname_tracknumber_table,
       col.names = c("Album Number", "Album Songs"),
-      caption = "Taylor Swift Album names mapped to Album Numbers")
+      caption = "(The table above shows Taylor Swift album names mapped to album numbers)")
 ```
 
 | Album Number | Album Songs                 |
@@ -657,7 +657,7 @@ kable(albumname_tracknumber_table,
 | 11           | folklore                    |
 | 12           | Red (Taylor’s Version)      |
 
-Taylor Swift Album names mapped to Album Numbers
+(The table above shows Taylor Swift album names mapped to album numbers)
 
 #### Discussion
 
@@ -711,6 +711,7 @@ highest_rated_album <- taylor_album_summary %>%
 highest_rated_album_songs <- taylor_all_songs %>%
   filter(album_name == highest_rated_album) %>%
   select(album_name, track_number, track_name, danceability, acousticness, energy, valence)
+
 # Reshape the data into long format for plotting
 scaled_songs_long <- highest_rated_album_songs %>%
   pivot_longer(cols = danceability:valence,
