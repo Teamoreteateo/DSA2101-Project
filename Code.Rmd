@@ -149,14 +149,18 @@ taylor_albums <- taylor_albums %>%
 Next we will check if data presented by `taylor_album_songs` and `taylor_all_songs` are the same, in case we are missing crucial differences.
 ```{r}
 names(taylor_album_songs) == names(taylor_all_songs)
+#Matching songs in taylor_album_songs to taylor_all_songs
 checking_conflicts_left <- taylor_album_songs %>% anti_join(taylor_all_songs, by = names(taylor_all_songs))
 glimpse(checking_conflicts_left)
+
+#Matching songs in taylor_all_songs to taylor_album_songs
 checking_conflicts_right <- taylor_all_songs %>% anti_join(taylor_album_songs, by = names(taylor_album_songs))
 glimpse(checking_conflicts_right)
 checking_conflicts_right$album_name %>% unique
 ```
 
-All the column names match for both tables. There were no non-matching songs in `taylor_album_songs` to `taylor_all_songs`. However, there were 3 albums: "Fearless", "Red" and "The Taylor Swift Holiday Collection", which were found in `taylor_all_songs` but not `taylor_album_songs`.
+All the column names match for both tables. There was no tibble formed in `checking_conflicts_left` hence, there are no non-matching songs in `taylor_album_songs` to `taylor_all_songs`. 
+However, there was a tibble formed in `checking_conflicts_right` indicating row mismatches. Upon examinging the tibble, there were 3 albums: "Fearless", "Red" and "The Taylor Swift Holiday Collection", which were found in `taylor_all_songs` but not `taylor_album_songs`.
 This means that we should use data from the overarching dataset to give us the widest coverage, hence use `taylor_all_songs`. 
 Next, since we will compare receptivity statistics by album, we need to check which albums are present in `taylor_all_songs` and `taylor_albums`.
 
