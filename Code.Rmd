@@ -1,11 +1,16 @@
 ---
-title: "DSA2101 Group Project: Analysis of Taylor Swift Spotify Data"
-output: github_document
+title: "DSA2101 Project"
+author: "No.1 Swifties (Taylor Swift 126721)"
+date: "`r Sys.Date()`"
+output: html_document
 ---
 
 ```{r setup, include=FALSE}
 
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(
+  echo = TRUE,
+  warning = FALSE,
+  message = FALSE)
 library(tidytuesdayR)
 library(tidyverse)
 library(readr)
@@ -13,6 +18,8 @@ library(knitr)
 library(ggthemes)
 library(ggridges)
 ```
+
+*Please install additional packages: "ggthemes", "ggridges", "tidytuesdayR".*
 
 ## Group members
 ```{r, echo = FALSE}
@@ -37,7 +44,7 @@ taylor_albums <- tuesdata$taylor_albums
 ## 1. Introduction
 
 Taylor Swift's music has had a significant impact on the global pop and country music scene. 
-In this project, we used the Taylor Swift Spotify data sourced from the TidyTuesday repository (Harmon, 2023) to analyse the musical and lyrical features of her music. 
+In this project, we used the Taylor Swift Spotify data sourced from the TidyTuesday repository (Harmon, 2023) to analyse the musical features of her music. 
 This dataset includes detailed audio attributes of her songs which we aim to use. 
 By exploring the given data, we aim to discover the patterns that have emerged throughout Taylor Swift’s career and gain insights into how her music has evolved.
 
@@ -55,9 +62,9 @@ By exploring the given data, we aim to discover the patterns that have emerged t
 For our project, we aim to answer the following question:
 
 ```bash
-How have differences in musical and lyrical features in Taylor Swift's songs resonated with her audience?
+How have differences in musical features in Taylor Swift's songs resonated with her audience?
 ```
-This analysis will allow us to identify trends in musical characteristics and examine how stylistic changes in her songs which have affected the receptivity of her music to her audience, meaning how much they like her songs. 
+This analysis will allow us to identify trends in musical characteristics and examine how stylistic changes in her songs have affected the receptivity of her music to her audience, meaning how much they like her songs. 
 We also hope to understand her audience better by knowing their music preferences through this study. Hence, we can perhaps understand what makes Taylor Swift so popular.
 
 
@@ -70,12 +77,12 @@ These features will enable us to compare the songs' descriptive features through
 track_attributes <- data.frame(
   Variable = c(
     "album_name", "album_release", "track_name", "danceability", "energy",
-    "loudness", "mode", "speechiness", "acousticness", "instrumentalness",
-    "liveness", "valence", "tempo", "explicit", "Metacritic Score", "User Score"
+    "loudness", "speechiness", "acousticness", "instrumentalness",
+    "liveness", "valence", "tempo", "Metacritic Score", "User Score"
   ),
   Class = c(
-    "character", "double", "character", "double", "double", "double", "integer",
-    "double", "double", "double", "double", "double", "double", "logical", "double", "double"
+    "character", "double", "character", "double", "double", "double",
+    "double", "double", "double", "double", "double", "double", "double", "double"
   ),
   Description = c(
     "Name of the album the track belongs to.",
@@ -84,14 +91,12 @@ track_attributes <- data.frame(
     "Measures how suitable a track is for dancing.",
     "Measures the intensity and activity of a track, with higher values indicating more energetic sounds.",
     "The overall volume of the track, measured in decibels (dB).",
-    "This is a categorical variable. It indicates the modality of the track: 1 for major, 0 for minor.",
     "Measures the presence of spoken words in a track, with higher values indicating more speech-like content.",
     "Represents the likelihood that the track is acoustic, with higher values indicating more acoustic qualities.",
     "Predicts whether a track is instrumental, with higher values suggesting a lack of vocals.",
     "Measures the presence of an audience in the recording, with higher values indicating a stronger likelihood that the track is live.",
     "Describes the musical positiveness conveyed, with higher values indicating more cheerful and happy tones.",
     "The speed of the track, measured in beats per minute (BPM).",
-    "Indicates whether the track contains explicit content: 1 for explicit, 0 otherwise.",
     "Average score of the album obtained from critics at 'Metacritic.com'.",
     "Average score of the album obtained from average users at 'Metacritic.com'."
   )
@@ -104,10 +109,10 @@ We'll start off by filtering for the features listed above. We do not need the "
 because we are interested in **all** the songs in her albums which are present in `taylor_albums`. 
 ```{r}
 taylor_album_songs <- taylor_album_songs %>%
-  select(album_name, album_release, track_number, track_name, danceability, energy, loudness, mode, speechiness, acousticness, instrumentalness, liveness, valence, tempo, explicit)
+  select(album_name, album_release, track_number, track_name, danceability, energy, loudness, speechiness, acousticness, instrumentalness, liveness, valence, tempo)
 
 taylor_all_songs <- taylor_all_songs %>%
-  select(album_name, album_release, track_number, track_name, danceability, energy, loudness, mode, speechiness, acousticness, instrumentalness, liveness, valence, tempo, explicit)
+  select(album_name, album_release, track_number, track_name, danceability, energy, loudness, speechiness, acousticness, instrumentalness, liveness, valence, tempo)
 
 taylor_albums <- taylor_albums %>%
   select(!ep)
@@ -148,19 +153,20 @@ taylor_albums <- taylor_albums %>%
 
 Next we will check if data presented by `taylor_album_songs` and `taylor_all_songs` are the same, in case we are missing crucial differences.
 ```{r}
+# Checking Column Names
 names(taylor_album_songs) == names(taylor_all_songs)
-#Matching songs in taylor_album_songs to taylor_all_songs
+# Matching songs in taylor_album_songs to taylor_all_songs
 checking_conflicts_left <- taylor_album_songs %>% anti_join(taylor_all_songs, by = names(taylor_all_songs))
 glimpse(checking_conflicts_left)
 
-#Matching songs in taylor_all_songs to taylor_album_songs
+# Matching songs in taylor_all_songs to taylor_album_songs
 checking_conflicts_right <- taylor_all_songs %>% anti_join(taylor_album_songs, by = names(taylor_album_songs))
 glimpse(checking_conflicts_right)
 checking_conflicts_right$album_name %>% unique
 ```
 
 All the column names match for both tables. There was no tibble formed in `checking_conflicts_left` hence, there are no non-matching songs in `taylor_album_songs` to `taylor_all_songs`. 
-However, there was a tibble formed in `checking_conflicts_right` indicating row mismatches in the other direction. Upon examinging the tibble, there were 3 albums: "Fearless", "Red" and "The Taylor Swift Holiday Collection", which were found in `taylor_all_songs` but not `taylor_album_songs`.
+However, there was a tibble formed in `checking_conflicts_right` indicating row mismatches in the other direction. Upon examining the tibble, there were 3 albums: "Fearless", "Red" and "The Taylor Swift Holiday Collection", which were found in `taylor_all_songs` but not `taylor_album_songs`.
 This means that we should use data from the overarching dataset to give us the widest coverage, hence use `taylor_all_songs`. 
 Next, since we will compare receptivity statistics by album, we need to check which albums are present in `taylor_all_songs` and `taylor_albums`.
 
@@ -183,7 +189,7 @@ for (i in 1:length(comp_table$album_name)){
 }
 
 combined_table <- cbind(comp_table$album_name, combined_table)
-knitr::kable(combined_table, col.names = c("All Albums", "Taylor Albums", "Taylor All Songs"), caption = "Comparison of album names between the tables")
+knitr::kable(combined_table, col.names = c("All Albums", "Taylor Albums", "Taylor All Songs"), caption = "Comparison of album names between the dataframes")
 ```
 
 Checking the table generated, "The Taylor Swift Holiday Collection" does not appear in `taylor_albums`, thus it will not be considered for receptivity comparison as there is no receptivity data. We will remove that album from `taylor_all_songs`.
@@ -228,7 +234,6 @@ taylor_album_summary <- taylor_all_songs %>% group_by(album_name) %>% summarise(
   mean_danceability = mean(danceability),
   mean_liveness = mean(liveness),
   mean_energy = mean(energy),
-  mean_mode = round(mean(mode)),
   mean_speechiness = mean(speechiness),
   mean_acousticness = mean(acousticness),
   mean_instrumentalness = mean(instrumentalness),
@@ -264,7 +269,7 @@ Taller humps and darker colours represent regions of high concentration of value
 x_labels <- c("Acousticness", "Danceability", "Energy", "Instrumentalness", "Liveness", "Loudness", "Speechiness", "Valence")
 
 # Convertion to long format for plotting
-taylor_long <- taylor_all_songs %>% select(-mode) %>% pivot_longer(danceability:tempo, values_to = "values", names_to = "labels") %>%
+taylor_long <- taylor_all_songs %>% pivot_longer(danceability:tempo, values_to = "values", names_to = "labels") %>%
   mutate(labels <- as.factor(labels))
 
 ggplot(taylor_long %>% filter(labels != "tempo"), aes(x = values, y = labels, fill = after_stat(density))) +
@@ -273,14 +278,12 @@ ggplot(taylor_long %>% filter(labels != "tempo"), aes(x = values, y = labels, fi
   scale_y_discrete(labels = x_labels) +
   theme_minimal() +
   labs(y = "", x = "Feature Strength",
-       title = "Distribution Patterns in Musical Features",
-       subtitle = "for Swift's Songs") +
+       title = "Distribution Patterns in Musical Features\nfor Swift's Songs",) +
   theme(
     axis.text.x = element_text(size = 8),
     axis.text.y = element_text(size = 10, hjust = 0),
     axis.title.x = element_text(vjust = -1, size = 10),
-    plot.title = element_text(size = 16, hjust = 1.5, face = "bold"),
-    plot.subtitle = element_text(hjust = -0.24, face = "bold"),
+    plot.title = element_text(size = 16, hjust = 0, face = "bold"),
     aspect.ratio = 1.0,
     panel.grid.minor.x = element_blank(),
     panel.grid.major.y = element_line(color = "lightblue", linewidth = 0.5)
