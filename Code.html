@@ -630,9 +630,9 @@ Group Project: Analysis of Taylor Swift Spotify Data</h1>
 </tr>
 </tbody>
 </table>
-<h2 id="loading-data">Loading Data</h2>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="co"># Load the Taylor Swift datasets</span></span>
-<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>tuesdata <span class="ot">&lt;-</span> tidytuesdayR<span class="sc">::</span><span class="fu">tt_load</span>(<span class="dv">2023</span>, <span class="at">week =</span> <span class="dv">42</span>)</span></code></pre></div>
+<h2 id="loading-the-taylor-swift-datasets">Loading the Taylor Swift
+Datasets</h2>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>tuesdata <span class="ot">&lt;-</span> tidytuesdayR<span class="sc">::</span><span class="fu">tt_load</span>(<span class="dv">2023</span>, <span class="at">week =</span> <span class="dv">42</span>)</span></code></pre></div>
 <pre><code>## ---- Compiling #TidyTuesday Information for 2023-10-17 ----
 ## --- There are 3 files available ---
 ## 
@@ -644,13 +644,8 @@ Group Project: Analysis of Taylor Swift Spotify Data</h1>
 ##   3 of 3: &quot;taylor_albums.csv&quot;</code></pre>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>taylor_album_songs <span class="ot">&lt;-</span> tuesdata<span class="sc">$</span>taylor_album_songs</span>
 <span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>taylor_all_songs <span class="ot">&lt;-</span> tuesdata<span class="sc">$</span>taylor_all_songs</span>
-<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>taylor_albums <span class="ot">&lt;-</span> tuesdata<span class="sc">$</span>taylor_albums</span>
-<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a></span>
-<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a><span class="co"># Save each dataset to new CSV files</span></span>
-<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a><span class="co"># write.csv(taylor_album_songs, &quot;taylor_album_songs.csv&quot;, row.names = FALSE)</span></span>
-<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a><span class="co"># write.csv(taylor_all_songs, &quot;taylor_all_songs.csv&quot;, row.names = FALSE)</span></span>
-<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a><span class="co"># write.csv(taylor_albums, &quot;taylor_albums.csv&quot;, row.names = FALSE)</span></span></code></pre></div>
-<p>=======</p>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>taylor_albums <span class="ot">&lt;-</span> tuesdata<span class="sc">$</span>taylor_albums</span></code></pre></div>
+<p>==============================</p>
 <h2 id="id_1-introduction">1. Introduction</h2>
 <p>Taylor Swift’s music has had a significant impact on the global pop
 and country music scene. In this project, we used the Taylor Swift
