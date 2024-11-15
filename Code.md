@@ -459,9 +459,8 @@ taylor_album_summary <- taylor_album_summary %>% mutate(Receptivity = (metacriti
 #### Methodology
 
 We have chosen to use a density ridge plot to represent the strength
-values of the song features, less tempo. This allows us to examine
-the spread and distribution of values for each feature together with
-information about the interquartile range and median. Taller humps and
+values of the song features, less tempo. This will allow us to examine
+the spread and distribution of values for each feature. Taller humps and
 darker colours represent regions of high concentration of values. This
 plot also allows us to catch potential multi-modal distributions in the
 features.
@@ -481,7 +480,7 @@ ggplot(taylor_long %>% filter(labels != "tempo"), aes(x = values, y = labels, fi
   scale_fill_viridis_c(option = "magma", direction = -1) +
   scale_y_discrete(labels = x_labels) +
   theme_minimal() +
-  labs(y = "", x = "Feature Strength (From 0 to 1)",
+  labs(y = "", x = "Feature Strength",
        title = "Distribution Patterns in Musical Features",
        subtitle = "for Swift's Songs") +
   theme(
@@ -536,16 +535,16 @@ each album to observe the changes with respect to receptivity. The mean
 value of each feature is used as an approximate for the average strength
 of the feature in each album.
 
-Normalised tempo is also included here to analyse its changes with
+Normalised Tempo is also included here to analyse its changes with
 respect to her receptivity. Receptivity is read from the right y-axis
-while the feature values (inclusive of normalised tempo) are read from the left
+while the feature values with normalised tempo are read from the left
 y-axis. We obtain musical attribute data from `taylor_all_songs`
-(converted for plotting into `taylor_long`) and receptivity from
+(converted for plotting into `taylor_long`) and Receptivity from
 `taylor_album_summary`.
 
 *Disclaimer: Album Numbers reflected in the table and plot do not
 correspond to actual album numbers. They have been mapped to the Album
-Names according to the order seen in the plot for the ease of reading.*
+Names according to the order seen in the plot for ease of reading.*
 
 #### Plot 2
 
@@ -664,7 +663,7 @@ Taylor Swift Album names mapped to Album Numbers
 
 The plot examines potential correlations between our selected features
 (i.e. `acousticness`, `valence`, `energy`, `danceability` & `tempo`) and
-album receptivity by arranging her albums in the order of ascending
+album receptivity by arranging her albums in order of ascending
 receptivity. `Acousticness` tends to be higher in higher-rated albums,
 while `energy` and `danceability` tend to taper off in strength ,
 suggesting that Swift’s more popular albums lean toward acoustic and
