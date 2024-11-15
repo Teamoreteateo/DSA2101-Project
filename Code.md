@@ -95,12 +95,12 @@ quantitative lense, allowing us to make judgements backed by figures.
 | speechiness | double | Measures the presence of spoken words in a track, with higher values indicating more speech-like content. |
 | acousticness | double | Represents the likelihood that the track is acoustic, with higher values indicating more acoustic qualities. |
 | instrumentalness | double | Predicts whether a track is instrumental, with higher values suggesting a lack of vocals. |
-| liveness | double | Measures the presence of an audience in the recording, with higher values indicating a stronger likelihood that the track is live |
+| liveness | double | Measures the presence of an audience in the recording, with higher values indicating a stronger likelihood that the track is live. |
 | valence | double | Describes the musical positiveness conveyed, with higher values indicating more cheerful and happy tones. |
 | tempo | double | The speed of the track, measured in beats per minute (BPM). |
 | explicit | logical | Indicates whether the track contains explicit content: 1 for explicit, 0 otherwise. |
-| Metacritic Score | double | Average score of the album obtained from critics at Metacritic.com |
-| User Score | double | Average score of the album obtained from average users at Meatcritic.com |
+| Metacritic Score | double | Average score of the album obtained from critics at ‘Metacritic.com’. |
+| User Score | double | Average score of the album obtained from average users at ‘Metacritic.com’. |
 
 ### Data cleaning
 
@@ -194,6 +194,7 @@ names(taylor_album_songs) == names(taylor_all_songs)
     ##  [1] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
 
 ``` r
+#Matching songs in taylor_album_songs to taylor_all_songs
 checking_conflicts_left <- taylor_album_songs %>% anti_join(taylor_all_songs, by = names(taylor_all_songs))
 glimpse(checking_conflicts_left)
 ```
@@ -218,6 +219,7 @@ glimpse(checking_conflicts_left)
     ## $ explicit         <lgl>
 
 ``` r
+#Matching songs in taylor_all_songs to taylor_album_songs
 checking_conflicts_right <- taylor_all_songs %>% anti_join(taylor_album_songs, by = names(taylor_album_songs))
 glimpse(checking_conflicts_right)
 ```
@@ -248,14 +250,17 @@ checking_conflicts_right$album_name %>% unique
     ## [1] "Fearless"                            "Red"                                
     ## [3] "The Taylor Swift Holiday Collection"
 
-All the column names match for both tables. There were no non-matching
-songs in `taylor_album_songs` to `taylor_all_songs`. However, there were
-3 albums: “Fearless”, “Red” and “The Taylor Swift Holiday Collection”,
-which were found in `taylor_all_songs` but not `taylor_album_songs`.
-This means that we should use data from the overarching dataset to give
-us the widest coverage, hence use `taylor_all_songs`. Next, since we
-will compare receptivity statistics by album, we need to check which
-albums are present in `taylor_all_songs` and `taylor_albums`.
+All the column names match for both tables. There was no tibble formed
+in `checking_conflicts_left` hence, there are no non-matching songs in
+`taylor_album_songs` to `taylor_all_songs`. However, there was a tibble
+formed in `checking_conflicts_right` indicating row mismatches in the
+other direction. Upon examinging the tibble, there were 3 albums:
+“Fearless”, “Red” and “The Taylor Swift Holiday Collection”, which were
+found in `taylor_all_songs` but not `taylor_album_songs`. This means
+that we should use data from the overarching dataset to give us the
+widest coverage, hence use `taylor_all_songs`. Next, since we will
+compare receptivity statistics by album, we need to check which albums
+are present in `taylor_all_songs` and `taylor_albums`.
 
 ``` r
 names1 <- taylor_albums %>% select(album_name) %>% unique() %>% arrange(album_name)
@@ -536,11 +541,12 @@ value of each feature is used as an approximate for the average strength
 of the feature in each album.
 
 Normalised `tempo` is also included here to analyse its changes with
-respect to her receptivity. Receptivity is read from the right y-axis
-while the feature values with normalised tempo are read from the left
-y-axis. We obtain musical attribute data from `taylor_all_songs`
-(converted for plotting into `taylor_long`) and `receptivity` from
-`taylor_album_summary`.
+respect to her receptivity. As its exact values are irrelevant, we have
+translated it downwards to avoid cluttering the middle of the plot.
+Receptivity is read from the right y-axis while the feature values with
+normalised tempo are read from the left y-axis. We obtain musical
+attribute data from `taylor_all_songs` (converted for plotting into
+`taylor_long`) and `receptivity` from `taylor_album_summary`.
 
 *Disclaimer: Album Numbers reflected in the table and plot do not
 correspond to actual album numbers. They have been mapped to the Album
@@ -551,7 +557,7 @@ Names according to the order seen in the plot for ease of reading.*
 ``` r
 taylor_album_plot <- taylor_album_summary %>%
   arrange(Receptivity) %>%
-  mutate(rank = row_number(), mean_tempo = mean_tempo - 0.16) %>%
+  mutate(rank = row_number(), mean_tempo = mean_tempo - 0.16) %>% # Mean_tempo translated downwards
   pivot_longer(mean_loudness: Receptivity, names_to = "labels", values_to = "values") %>%
   mutate(labels = str_remove(labels, "mean_"))
 
@@ -567,9 +573,6 @@ ggplot(taylor_album_plot %>% filter(labels %in% c("acousticness", "valence", "en
               formula = y ~ x,
               span = 1.2,
               size = 0.4)  +
-  #stat_smooth(se = FALSE, geom = "area",
-              #method = "loess", alpha = .1,
-              #span = 0.9, aes(fill = labels), show.legend = F) +
   geom_line(data = taylor_album_plot %>% filter(labels == "Receptivity"),
             aes(y = values / 100),
             size = 1, linetype = "solid", lineend = "round") +
@@ -692,7 +695,7 @@ Plot 1.
 #### Methodology
 
 To investigate this sub-question, we will examine how each feature
-varies across the songs in “Red (Taylor’s Version)” to guage the rough
+varies across the songs in “Red (Taylor’s Version)” to gauge the rough
 musical make-up of the album. Four bar charts have been plotted for each
 musical feature, with the bars arranged by the feature’s strength values
 to observe the true range and spread of each feature in the album.
@@ -720,14 +723,7 @@ scaled_songs_long <- highest_rated_album_songs %>%
   mutate(total_value = sum(value)) %>%
   ungroup()
 
-# Check the mean value of each feature
-feature_mean <- scaled_songs_long %>%
-  select(feature, total_value) %>%
-  group_by(feature) %>%
-  summarise(mean = mean(total_value)) %>%
-  arrange(mean) %>%
-  pull(feature)
-
+# Arranging feature strength within each facet
 scaled_songs_long <- scaled_songs_long %>%
   arrange(feature, value) %>%
   group_by(feature) %>%
