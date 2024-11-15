@@ -445,8 +445,8 @@ exploring the “user reviews” section (Metacritic, n.d.). We will
 aggregate these into one statistic, “Receptivity”, weighted by their
 respective ranges.
 
-Hence we use the following formula: Receptivity =
-(metacritic_score+(user_score\*10))/2
+Hence we use the following formula: **Receptivity = (metacritic_score +
+(user_score \* 10)) / 2**
 
 ``` r
 taylor_album_summary <- taylor_album_summary %>% mutate(Receptivity = (metacritic_score + user_score * 10) / 2)
@@ -774,17 +774,17 @@ span a wide range of values but their distributions are different.
 Within `energy` it appears that most songs are energetically similar in
 the upper range with smaller differences in feature strength while a
 small group of songs have large differences in `energy` within the lower
-range, creatning a rich emotional mix. Lastly, `valence` appears
-steadily different across the songs. This ascertains our hypothesis in
-Plot 2 that although the mean feature stength of `valence` was
-consistent throughout all her albums, within each album they might
-spread across a large range of values. That hypothesis, also derived
-from the observations of the distribution of `valence` values in Plot 1,
-is supported by this observation in Plot 3. The `valence` values hint at
-a purposeful balance in emotions ranging in this album, from happy to
-sad. This blend of moods resonates with listeners who value both sad and
+range, creating a rich emotional mix. Lastly, `valence` appears steadily
+different across the songs. This ascertains our hypothesis in Plot 2
+that although the mean feature stength of `valence` was consistent
+throughout all her albums, within each album they might spread across a
+large range of values. That hypothesis, also derived from the
+observations of the distribution of `valence` values in Plot 1, is
+supported by this observation in Plot 3. The `valence` values hint at a
+purposeful balance in emotions ranging in this album, from happy to sad.
+This blend of moods resonates with listeners who value both sad and
 happy songs, encapsulating the instricacies of relationships, hence
-enchancing the album’s emotional appeal. The critical acclaim of this
+enhancing the album’s emotional appeal. The critical acclaim of this
 album also likely means that Taylor Swift will be creating more songs in
 the future following the same musical palette. We can perhaps anticipate
 more acoustic songs released alongside commercial tracks to satiate the

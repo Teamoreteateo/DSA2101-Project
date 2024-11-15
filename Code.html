@@ -1120,8 +1120,8 @@ the user score has a different range of 0 to 10 which we noticed when
 exploring the “user reviews” section (Metacritic, n.d.). We will
 aggregate these into one statistic, “Receptivity”, weighted by their
 respective ranges.</p>
-<p>Hence we use the following formula: Receptivity =
-(metacritic_score+(user_score*10))/2</p>
+<p>Hence we use the following formula: <strong>Receptivity =
+(metacritic_score + (user_score * 10)) / 2</strong></p>
 <div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" tabindex="-1"></a>taylor_album_summary <span class="ot">&lt;-</span> taylor_album_summary <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">Receptivity =</span> (metacritic_score <span class="sc">+</span> user_score <span class="sc">*</span> <span class="dv">10</span>) <span class="sc">/</span> <span class="dv">2</span>)</span></code></pre></div>
 <h2 id="id_3-visualisations-and-discussions">3. Visualisations and
 Discussions</h2>
@@ -1463,7 +1463,7 @@ values but their distributions are different. Within <code>energy</code>
 it appears that most songs are energetically similar in the upper range
 with smaller differences in feature strength while a small group of
 songs have large differences in <code>energy</code> within the lower
-range, creatning a rich emotional mix. Lastly, <code>valence</code>
+range, creating a rich emotional mix. Lastly, <code>valence</code>
 appears steadily different across the songs. This ascertains our
 hypothesis in Plot 2 that although the mean feature stength of
 <code>valence</code> was consistent throughout all her albums, within
@@ -1473,7 +1473,7 @@ hypothesis, also derived from the observations of the distribution of
 in Plot 3. The <code>valence</code> values hint at a purposeful balance
 in emotions ranging in this album, from happy to sad. This blend of
 moods resonates with listeners who value both sad and happy songs,
-encapsulating the instricacies of relationships, hence enchancing the
+encapsulating the instricacies of relationships, hence enhancing the
 album’s emotional appeal. The critical acclaim of this album also likely
 means that Taylor Swift will be creating more songs in the future
 following the same musical palette. We can perhaps anticipate more
