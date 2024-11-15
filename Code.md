@@ -783,7 +783,7 @@ observations of the distribution of `valence` values in Plot 1, is
 supported by this observation in Plot 3. The `valence` values hint at a
 purposeful balance in emotions ranging in this album, from happy to sad.
 This blend of moods resonates with listeners who value both sad and
-happy songs, encapsulating the instricacies of relationships, hence
+happy songs, encapsulating the intricacies of relationships, hence
 enhancing the album’s emotional appeal. The critical acclaim of this
 album also likely means that Taylor Swift will be creating more songs in
 the future following the same musical palette. We can perhaps anticipate
