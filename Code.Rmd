@@ -401,7 +401,7 @@ To test such a theory, we will be exploring her highest rated album: "Red (Taylo
 ### c. What defines a great album (Taylor's Version)?
 
 #### Methodology
-To investigate this sub-question, we will examine how each feature varies across the songs in "Red (Taylor's Version)" to guage the rough musical make-up of the album. 
+To investigate this sub-question, we will examine how each feature varies across the songs in "Red (Taylor's Version)" to gauge the rough musical make-up of the album. 
 Four bar charts have been plotted for each musical feature, with the bars arranged by the feature's strength values to observe the true range and spread of each feature in the album.
 
 #### Plot 3
