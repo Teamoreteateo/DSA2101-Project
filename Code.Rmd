@@ -304,7 +304,7 @@ We plan to investigate how the selected features with the most variability (from
 We arranged each album by receptivty to better compare the difference in receptivity with each of the features chosen. Then, we plotted smooth curves from the mean value of each feature for each album to observe the
 changes with respect to receptivity. The mean value of each feature is used as an approximate for the average strength of the feature in each album.
 
-Normalised `tempo` is also included here to analyse its changes with respect to her receptivity.
+Normalised `tempo` is also included here to analyse its changes with respect to her receptivity. As its exact values are irrelevant, we have translated it downwards to avoid cluttering the middle of the plot.
 Receptivity is read from the right y-axis while the feature values with normalised tempo are read from the left y-axis. We obtain musical attribute data from `taylor_all_songs` (converted for plotting into `taylor_long`) 
 and `receptivity` from `taylor_album_summary`. 
 
@@ -314,7 +314,7 @@ and `receptivity` from `taylor_album_summary`.
 ```{r lineplot-dual-axes, fig.width=10, fig.height=4}
 taylor_album_plot <- taylor_album_summary %>%
   arrange(Receptivity) %>%
-  mutate(rank = row_number(), mean_tempo = mean_tempo - 0.16) %>%
+  mutate(rank = row_number(), mean_tempo = mean_tempo - 0.16) %>% # Mean_tempo translated downwards
   pivot_longer(mean_loudness: Receptivity, names_to = "labels", values_to = "values") %>%
   mutate(labels = str_remove(labels, "mean_"))
 
